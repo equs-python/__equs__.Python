@@ -1,1 +1,1 @@
-# workshop-2019
+# EQUS Python workshop 2019
