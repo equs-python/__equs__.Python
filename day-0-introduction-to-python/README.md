@@ -14,38 +14,3 @@ Here's the detailed plan for the day:
 6. Object-oriented aspects: classes and inheritance
 7. Common scientific libraries for Python
 8. If time permits: Advanced topics such as exceptions
-
-
-# 1. Basic command line usage
-
-Opening a terminal. Navigating through directories. Basic actions: executing files, creating and deleting files and directories, copying and moving.
-
-Command line alternatives for windows? Git Bash! (for later!)
-
-# 2. Hello Python!
-
-General intro. What is Python. What's it for. Who's behind it. How is it different from other languages. etc.
-
-A few words on Python 2 vs 3.
-
-# 3. Python in the command line and in files
-
-## 3.1 Command line interpreter
-
-## 3.2 Python files
-
-# 4. Variables and control statements
-
-# 5. Functions
-
-# 6. Object-oriented programming
-
-# 7. Python libraries
-
-## 7.1 NumPy
-
-## 7.2 Matplotlib
-
-## 7.3 SciPy
-
-# 8. Advanced topics
