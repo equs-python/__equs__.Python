@@ -16,17 +16,17 @@ We have designed the workshop to be modular in order to accommodate a variety of
 
 ## Schedule
 
-Below is the preliminary workshop schedule. Note that we have included a lot of free time - this is to give us enough time to discuss any questions or problems that came up during the tutorials.
+Below is the preliminary workshop schedule. This schedule is not finalised yet - we will be making changes to it until the workshop. Note that we have included a lot of free time - this is to give us enough time to discuss any questions or problems that came up during the tutorials.
 
 | Time | Tuesday | Wednesday | Thursday | Friday |
 | ------------- |:-------------:|:-------------:|:-------------:|:-------------:|
 | 9.00 - 9.30     | Coffee on arrival | Coffee on arrival | Coffee on arrival | Coffee on arrival |
-| 9.30 - 10.30 | Getting started with Python <br> *Virginia Frey*| Packaging Python code *Virginia Frey* | | Introduction to [pyGSTi](http://www.pygsti.info/) <br> *Kenny Rudinger & Erik Nielsen*|
+| 9.30 - 10.30 | Getting started with Python <br> *Virginia Frey*| Packaging Python code <br> *Virginia Frey* | Interfacing with experiment hardware <br> *Lachlan Rogers* | Introduction to [pyGSTi](http://www.pygsti.info/) <br> *Kenny Rudinger & Erik Nielsen*|
 | 10.30 - 11.00 | Break | Break | Break | Break |
-| 11.00 - 12.00 | Basic Python programming <br> *Alan Robertson*| Documentation, unit testing and linting <br> *Virginia Frey*| | Introduction to [QCoDes](http://qcodes.github.io/Qcodes/) <br> *Jana Darulová* |
+| 11.00 - 12.00 | Basic Python programming <br> *Alan Robertson*| Documentation, unit testing and linting <br> *Virginia Frey*| Interfacing with experiment hardware <br> *Lachlan Rogers* | Introduction to [QCoDes](http://qcodes.github.io/Qcodes/) <br> *Jana Darulová* |
 | 12.00 - 13.00 | Lunch | Lunch | Lunch | Lunch |
-| 13.00 - 14.00 | Advanced Python programming <br> *Virginia Frey* | Version control with git and GitHub <br> *Alan Robertson* | | Introduction to [Qiskit](https://qiskit.org/) <br> *Anna Phan* |
-| 14.00 - 14.30 |  Break | Break | Break | Break |
-| 14.30 - 15.30 | Python for scientific computing <br> *Yuval Sanders* | Surprise coding project | | Introduction to [pyQuil](http://docs.rigetti.com/en/stable/) <br> *Josh Combes* |
-| 15.30 - 16.00 |  Break | Break | Break | Break | 
+| 13.00 - 14.00 | Advanced Python programming <br> *Virginia Frey* | Version control with git and GitHub <br> *Alan Robertson* | Interfacing with experiment hardware <br> *Lachlan Rogers* | Introduction to [Qiskit](https://qiskit.org/) <br> *Anna Phan* |
+| 14.00 - 14.30 |  Break | Break |  | Break |
+| 14.30 - 15.30 | Python for scientific computing <br> *Yuval Sanders* | Surprise coding project | | Introduction to [qinfer](http://qinfer.org) <br> *Chris Ferrie* |
+| 15.30 - 16.00 |  Break | Break |  | Break | 
 | 16.00 - 17.00 | Python for scientific computing <br> *Lachlan Rogers* | Surprise coding project | | Introduction to [OpenFermion](https://github.com/quantumlib/OpenFermion) <br> *Ryan Babbush*|
