@@ -12,7 +12,7 @@ Here's the detailed plan for the day:
 4. Simple variables and control statements
 5. Functions in Python
 6. Object-oriented aspects: classes and inheritance
-7. Common scientific libraries for Python
+7. Common scientific libraries for Python **!! include jupyter here !!**
 8. If time permits: Advanced topics such as exceptions
 
 
