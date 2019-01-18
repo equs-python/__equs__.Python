@@ -1,3 +1,13 @@
+# FIRST THINGS FIRST
+
+Open Git Bash
+
+```
+$ git clone https://github.com/equs-python/__equs__.Python
+$ cd __equs__.Python
+$ git checkout -b yuval_branch
+```
+
 # Day 1 - Python modules and git
 
 Today we will teach you how to properly package your Python code. For this, we will collaboratively build a Python package. You will learn how to document your code, spread it over multiple files, and how to write automated unit tests. To keep track of revision history, we will create a repository on GitHub. We will show you how to use git) and GitHub to develop and maintain code projects, especially when there are multiple contributors.
