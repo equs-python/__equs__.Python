@@ -268,13 +268,55 @@ So we can skip specifying the individual scripts which shortens our import synta
 
 ## 1.4 Importing from different locations
 
-Add path to `sys.path`, motivate following section.
+All of the examples above worked because we were importing modules from the same directory that our top-level script was in. If we want to import module that lie in a different directory, we have two options:
 
+1. We can provide the explicit path to the module
+2. We can *install* the module - and Python will create all required references for us
 
+We will deal with the second point in more detail later on, for now we just take a quick look at how to add an explicit path to a module. For this, we use the built-in `sys` library and add the path to the module to `sys`'s `path` variable like so:
 
-  
+```python
+import sys
+sys.path.append('path/to/my/module')
+```
 
-# 2. Python packages - writing `setup.py`
+Let's take a look at an example. Suppose we are in the same directoy as our `more_files` folder and we want to import `yet_another_function` from `yet_another_file.py`.
+
+```
+we are here
+more_files
+    - another_file.py
+    - yet_another_file.py
+```
+
+So here's what we can do:
+
+```python
+import sys
+sys.path.append('more_files')
+from yet_another_file import yet_another_function
+```
+And you can test for yourself that this works.
+
+The `sys.path` variable contains all directories in which Python will look for modules when you're trying to import something. Take a look at what's in there with `print(sys.path)`!
+
+# 2. Python packages - installation
+
+What does it mean to install a Python package? What is a `setup.py` file? What is `pip`? These are terms that you may or may not have come across before, and now we will shed some light onto what they mean and do. Here we keep the discussion fairly short, so if you want to learn more check out the following link:
+
+[Official Python tutorial on package installation](https://packaging.python.org/tutorials/installing-packages/)
+
+In short, installing a (pure) Python package means that the module code with all its subdirectories is copied into the `site-packages` directory in the Python installation folder.
+
+As an example, let's find the location of an installed Python module. Open an interactive session and type the following:
+
+```python
+>>> import numpy as np
+>>> np.__file__
+```
+
+The `__file__` attribute is another special attribute (just like the `__name__` attribute that we encountered above).
+
 
 Why `setup.py`? What does "installation" mean exactly? How is it different from `pip`?
 
