@@ -26,7 +26,7 @@ Below is the preliminary workshop schedule. This schedule is not finalised yet -
 | 11.00 - 12.00 | Basic Python programming <br> *Alan Robertson*| Documentation, unit testing and linting <br> *Virginia Frey*| Interfacing with experiment hardware <br> *Lachlan Rogers* | Introduction to [QCoDes](http://qcodes.github.io/Qcodes/) <br> *Jana Darulová* |
 | 12.00 - 13.00 | Lunch <br> *(on your own)* | Lunch <br> *(on your own)* | Lunch <br> *(on your own)* | Lunch <br> *(catered)* |
 | 13.00 - 14.00 | Lunch <br> *(on your own)* | Lunch <br> *(on your own)* | Lunch <br> *(on your own)* | Introduction to [Qiskit](https://qiskit.org/) <br> *Anna Phan*  |
-| 14.00 - 14.30 | Advanced Python programming <br> *Virginia Frey* | Version control with git and GitHub <br> *Alan Robertson* | Interfacing with experiment hardware <br> *Lachlan Rogers* | Break <br> *& debugging* |
-| 14.30 - 15.30 | Advanced Python programming <br> *Virginia Frey* |Version control with git and GitHub <br> *Alan Robertson* | TBA | Introduction to [qinfer](http://qinfer.org) <br> *Chris Ferrie* |
+| 14.00 - 14.30 | Advanced Python programming <br> *Virginia Frey* | Version control with git and GitHub <br> *Alan Robertson* | TBA | Break <br> *& debugging* |
+| 14.30 - 15.30 | Advanced Python programming <br> *Virginia Frey* | Surprise coding project | TBA | Introduction to [qinfer](http://qinfer.org) <br> *Chris Ferrie* |
 | 15.30 - 16.00 |  Afternoon tea <br> *& debugging* | Afternoon tea <br> *& debugging* |  | Afternoon tea <br> *& debugging* | 
 | 16.00 - 17.00 | Python for scientific computing <br> *Yuval Sanders* | Surprise coding project | | Introduction to [OpenFermion](https://github.com/quantumlib/OpenFermion) <br> *Ryan Babbush*|
