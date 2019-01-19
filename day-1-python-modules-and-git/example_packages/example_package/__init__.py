@@ -1,0 +1,1 @@
+from .example_module import my_module_function
