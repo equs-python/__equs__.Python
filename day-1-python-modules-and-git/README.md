@@ -2,27 +2,26 @@
 
 Open Git Bash
 
-```
+```bash
 $ git clone https://github.com/equs-python/__equs__.Python
 $ cd __equs__.Python
-$ git checkout -b yuval_branch
+$ git checkout -b my_branch
+$ code .
 ```
 
 # Day 1 - Python modules and git
 
-Today we will teach you how to properly package your Python code. For this, we will collaboratively build a Python package. You will learn how to document your code, spread it over multiple files, and how to write automated unit tests. To keep track of revision history, we will create a repository on GitHub. We will show you how to use git) and GitHub to develop and maintain code projects, especially when there are multiple contributors.
+Today we teach you how to properly package your Python code. For this, we collaboratively build a Python package. You learn how to document your code, spread it over multiple files, and how to write automated unit tests. To keep track of revision history, we create a repository on GitHub and show you how to use git and GitHub to develop and maintain code projects, especially when there are multiple contributors.
 
 
 Here are the specific topics of the day:
 
 1. Python packages part 1: using multiple files
 2. Python packages part 2: Package installation with `setup.py`'s
-3. Documenting your code
-4. Unit tests
-5. Maintaining coding hygiene: Linting
-6. Controlling revision history with git
-7. Using GitHub to share and collaborate
-8. Code project
+3. Python packages part 3: Documenting, testing and linting code
+4. Controlling revision history with git
+5. Using GitHub to share and collaborate
+6. Code project
 
 
 # 1. Python packages - using multiple files
@@ -206,7 +205,7 @@ and equivalently:
 # yet_another_file.py
 
 def yet_another_function(argument):
-    print('Yet another function call with {}'.formata(argument)
+    print('Yet another function call with {}'.format(argument)
 ```
 
 Now let's import those functions into an interactive session. As before, we will use the dot-notation to navigate between Python objects. In fact, when you use the auto-completion function in an `ipython` session, you can see that Python recognises the directory structure.
@@ -316,38 +315,286 @@ What does it mean to install a Python package? What is a `setup.py` file? What i
 
 [Official Python tutorial on package installation](https://packaging.python.org/tutorials/installing-packages/)
 
-In short, installing a (pure) Python package means that the module code with all its subdirectories is copied into the `site-packages` directory in the Python installation folder.
+In short, installing a (pure) Python package means that the package code with all its modules in subdirectories is copied into the `site-packages` directory in the Python installation folder. This is the default directory for all Python packages. Every package that lives in there can be imported from every other project or (i)python prompts.
 
-As an example, let's find the location of an installed Python module. Open an interactive session and type the following:
+As a first example, let's find the location of an installed Python package. Open an interactive session and type the following:
 
 ```python
 >>> import numpy as np
 >>> np.__file__
+/home/virginia/.miniconda3/lib/python3.7/site-packages/numpy/__init__.py
 ```
 
-The `__file__` attribute is another special attribute (just like the `__name__` attribute that we encountered above).
+The `__file__` attribute is another special attribute (just like the `__name__` attribute that we encountered above). It contains the path to the top-level module that is imported. Now note that the actual path will look different on every computer/operating system.
+
+So does that mean that if we want a package to be available everywhere that we just need to copy it into the `site-packages` folder? For simple Python packages that do not require additional compilation the answer is yes - and, more general, every package that can be found under any of the paths listed in `sys.path` can be imported from everywhere.
+
+However, the actual installation of a Python package does a few more things than simply just copying the code...
+
+### 2.1 Installing a Python package
+
+There are two main options for installing Python packages, and while they might look very different at first, they actually have a lot in common and down at their core do the same thing.
+
+#### 2.1.1 Installing from source
+
+The first option to install a new Python package is called "installation from source". This means that you have the source code of the package available locally on your machine, after e.g. cloning it from a GitHub repository. The package contains a special file called `setup.py`, that has all the installation instructions in it.
+
+For example, consider the following directory structure:
+
+```shell
+example_package/
+    - __init__.py
+    - example_module.py
+setup.py
+```
+
+The `example_module.py` is a short script that contains a single function:
+
+```python
+# example_module.py
+def my_module_function():
+    print('This is a function in example_module!')
+```
+
+The `setup.py` file lives outside of the package directory. In order to install this package, we run the following command in the terminal:
+
+```shell
+$ python setup.py install
+```
+We will have a look at what `setup.py` looks like in a moment, but first let's have a look at what it *does*:
+
+Navigate into the `example_module` directory and run this command. Python will now create a bunch of files and references to your package - those store distribution and build information which we won't go into any detail here. At the end of all the output that you get from running this command you should see something like:
+
+```shell
+Installed /home/virginia/.miniconda3/lib/python3.7/site-packages/example_package-0.0-py3.7.egg
+Processing dependencies for example-package==0.0
+Finished processing dependencies for example-package==0.0
+```
+
+Now let's see if it worked! Open your favourite interactive console and try to import the package:
+
+```python
+>>> from example_package import my_module_function
+>>> my_module_function()
+'This is a function in example_module!'
+```
+And if you can see the output above then you've installed the package successfully! You can also check the `site-packages` directory now to see that it's there!
+
+#### 2.1.2 Installing via pip
+
+The example above - *installation from source* - requires us to have our own, local copy of the source code. Alternatively, if you want to install a package whose source code you do not have, you can use a package manager like `pip` or `conda`. They both access online servers that store Python packages. `pip` accesses the PyPI (Python package index) that currently has more than 150k packages available.
+
+(*Note that `pip` can also install from source - and in fact what `pip` does is actually running `python setup.py install` after it downloaded the package files.*)
+
+Check out PyPI [https://pypi.org/](https://pypi.org/) right now! To see a list of all the packages on PyPI, you can add the word "simple" at the end of the URL - such that it reads [https://pypi.org/simple](https://pypi.org/simple).
+
+`pip` is a command line tool - that means that it is used from the command line. Have a look at your pip right now! Open a terminal and type:
+
+```shell
+$ pip
+```
+
+This will print out a reference guide for how to use `pip`. To install a package, we call it like this:
+
+```shell
+$ pip install <package_name>
+```
+
+Where we replace `<package name>` with the actual name of the package. We can also uninstall packages with pip:
+
+```shell
+$ pip uninstall <package_name>
+```
+
+To view all the packages we have installed, type:
+
+```shell
+$ pip list
+```
+
+And if you need more information on how to use a specific command with `pip`, you can add `--help` at the end of each command. For example, take a look at the output from
+
+```shell
+$ pip install --help
+```
+
+#### Pip installation example: the funniest joke
+
+Let's take a look at an example: We want to install a Python package called `funniest-joke`. This is a very light-weight package that contains the [funniest joke in the world](https://www.youtube.com/watch?v=ienp4J3pW7U).
+
+To install it, open a terminal and type the following:
+
+```shell
+$ pip install funniest-joke
+```
+
+Now let's have a look at this joke! Open a Python terminal and type:
+
+```python
+>>> import funniest_joke
+>>> funniest_joke.joke()
+```
+Now if you are running this in Python 3 (which is what we're using on all workshop computers) this code won't execute and you will see an error message. The reason for this is that this project was developed for Python 2 only.
+
+Installing a Python module and not being able to use it properly because of version incompabilities is something that will happen to you a lot, so we want to use this example to show you some basic techniques on how to deal with those errors. The errors in this example aren't obvious for Python newbies, so if they don't make any sense to you right now don't be discouraged but instead try to *focus on the process of finding* those errors.
+
+First of all, the error message that you should see looks like this:
+
+```python
+>>> import funniest_joke
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+<ipython-input-3-6230e76666e1> in <module>
+----> 1 import funniest_joke
+
+~/.miniconda3/lib/python3.7/site-packages/funniest_joke/__init__.py in <module>
+      3 '''
+      4 
+----> 5 from text import joke
+      6 del text
+      7 
+
+ModuleNotFoundError: No module named 'text'
+'''
+```
+We have seen this type of error before! And it links to the `__init__.py` file of the `funniest_joke` package. The reason for this error is quite subtle: the script is missing a dot in the import statement. Instead of 
+
+```python
+from text import joke
+```
+
+it should be
+
+```python
+from .text import joke
+```
+
+The dot infront of `.text` indicates a relative import and that's a requirement for packages in Python 3. This module was written for Python 2 only. But since we know how to fix this problem, and we know where Python keeps its packages, let's fix it!
+
+After this, the import should work as expected. However, there are still two more problems to fix. The first one relates to how Python 2 and 3 handle strings - and without going into too much detail here - what you need to do to fix it is to remove the `.decode('utf-8')` in the `text.py` file.
+
+And the last error message that we expect relates to the syntax of the `print` function. In Python 2, `print` is a statement and you can call it without brackets. In Python 3, you need brackets around the arguments because `print` is now a function.
+
+Once you've fixed all three errors, you should be able to print out the joke! It should look like this:
+
+```python
+>>> import funniest_joke
+>>> funniest_joke.joke()
+'<p>Wenn ist das Nunst\\u00fcck git und Slotermeyer? Ja! ... Beiherhund das Oder die Flipperwaldt gersput.</p>'
+```
+
+Those symbols that you see in the text are unicode symbols that are not rendered properly in the terminal.
+
+Once you're done with this, let's uninstall this package of - indeed very questionable - humor:
+
+```shell
+$ pip uninstall funniest-joke
+```
+
+And check that the source files have disappeared!
+
+#### Package development
+
+Once you've installed a package, in order to make any changes to it you need to edit the files in `site-packages`, as we've done in the example above. This is quite inconvenient for when you are still actively developing a package and would like to keep the code somehwere more accessible.
+
+In this case, you can ask Python to make an installation that *links* to your actual package directory. In order to do that, you should install it using the `develop` keyword instead of the `install` keyword like so:
+
+```shell
+$ python setup.py develop
+```
 
 
-Why `setup.py`? What does "installation" mean exactly? How is it different from `pip`?
+This way, Python will create a symbolic link to the actual directory in which the source code lives, and it will access this directory when the package is imported - instead of making its own copy in `site-packages` at the time of installation.
 
-- `python setup.py install` vs `python setup.py develop`
-- How to write the `setup.py` file
+Try it out with the `example_package`!
+
+By the way, it is possible to achieve the same thing with `pip`. The syntax for this is
+
+```shell
+$ pip install -e <package_name>
+```
+
+Where the `-e` flag stands for editable and `<package_name>` here would be `example_package`. You would have to execute this command in the package directory.
+
+
+## 2.2 What goes into a `setup.py` file?
+
+Here is the content of the `setup.py` file in our `example_package`:
+
+```python
+"""
+Setup file for the example_module
+"""
+from setuptools import setup
+
+setup(
+    name='example_package',
+    version='0.0',
+    description='An example Python module',
+    author='Mr. X',
+    author_email='python@equs.org',
+    packages=['example_package']
+)
+```
+
+We import the `setup` function from Python's built-in `setuptools` package and call it with a series of arguments that describe the package. Most importantly, note the `packages` keyword: here we list the name of the module that actually gets installed. We can have several module names here if we want - and they would all get installed under the name specified in the `name` keyword at the top.
+
+Let's have a look at a few more add-ons that you can put into a `setup.py` file to make life more exciting.
+
+### 2.2.1 Adding installation requirements to `setup.py`
+
+Often you will find yourself using other modules in your Python package - for instance when you're writing a numerical package you will most likely use `numpy` or `scipy`. You can (and should!) add this information to your `setup.py` file:
+
+```python
+from setuptools import setup
+setup(
+    [...]
+    install_requires=['numpy', 'scipy']
+)
+```
+
+Where we omitted the rest of the code from above for simplicity.
+
+You can also specify versions for those modules, by using:
+
+```python
+install_requires=['numpy>=1.13', 'scipy>=1.1']
+```
+
+Edit the `setup.py` file in this example and re-run the installation command to see how addind requirements changes the behavior.
+
+### 2.2.2 Command-line entry points
+
 - optional: command line entry points?
 
-# 3. Documenting your code
+# 3. Python packages - documentation, unit testing and linting
 
-- Why documentation saves lifes
-- Documentation styles (first reference to PEP8)
+    “Code is more often read than written.”
+
+    — Guido Van Rossum
+
+Guido Van Rossum, the creator of the Python programming language made this very simple, yet incredibly meaningful statement above.
+
+What we take from this is that it is immensly important *how* you write your code - be it for yourself or for other people. Have you ever found yourself in a situation where you had to use a piece of code that you've written many months ago (without documentation), and puzzled over what the code does? Or even worse, have you perhaps changed an auxilirary file, or upgraded your compiler/interpreter since then and now the old code doesn't run anymore? Or have you ever worked on a project collaboratively and found it extremely difficult to make out what other people's code is doing?
+
+For all of those reasons, there exist coding standards - these are a collection of good practices which - when taken to heart - make each and everyone of us a better person. Here we want to give you an overview of the three main components of those standards: documentation, testing and linting. And because this is a Python workshop, we use the official [PEP8 Python style guide](https://www.python.org/dev/peps/pep-0008/).
+
+
+## 3.1 Let there be documentation
+
+
+- commenting vs documenting
 - Writing doc-strings
-- (compiling doc-strings into documentation?)
+- python 3.5+ feature: type hints
+- (compiling doc-strings into documentation?) - reference to sphinx
   
-# 4. Unit tests
+## 3.2. Let there be tests
 
 - When to write tests (create a `tests/` directory in module directory)
 - Python unit testing libraries
 - Introduction to `pytest`
 
-# 5. Maintaining code hygiene: Linting!
+## 3.3. Let there be coding standards
 
 - Why lint
 - PEP8
