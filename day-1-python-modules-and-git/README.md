@@ -834,11 +834,246 @@ Here, the function expects a string as input, and returns a string. Note that th
   
 ## 3.2. Let there be tests
 
-- When to write tests (create a `tests/` directory in module directory)
-- Python unit testing libraries
-- Introduction to `pytest`
+It goes without saying that every code that you plan to put to use needs to be tested. Chances are you are already doing this - even if perhaps not in an automated fashion. Here we take a look at how to write automated tests, structure them, and what modules we have got available in Python to run those tests.
+
+### 3.2.1 Testing basics: the `assert` statement
+
+The core idea behind writing tests is that we know what the expected output of the function (or more general, object) that we want to test is. So what we need to do is to *assert* that the actual output matches the expected one.
+
+For problems like this, Python has got the built-in `assert` statement which takes to inputs: `True` or `False`. If provided with a condition that evaluates to `True`, nothing happens and the code execution continues. If provided with `False`, it raises an `AssertionError` exception and the execution flow is interrupted.
+
+Try it for yourself:
+
+```python
+>>> assert True # This works
+>>> assert False # This will raise an error
+---------------------------------------------------------------------------
+AssertionError                            Traceback (most recent call last)
+<ipython-input-1-a871fdc9ebee> in <module>
+----> 1 assert False
+
+AssertionError: 
+```
+
+Now let's have a look at how to use this `assert` statement to write an actual test. Suppose we have the following function:
+
+```python
+def add_two(number: float) -> float:
+    """ Adds  the number 2 to a given input float. """
+    return number + 2
+```
+
+In order to test this function, we would use the assert statement as follows:
+
+```python
+>>> assert add_two(2) == 4
+>>> assert add_two(0) == 2
+```
+
+We know what the expected outcome is, so here we assert that that's the case. Now imagine someone meddled with that function, and changed its behavior such that it no longer adds 2 to a given input. Then the `assert` statements would catch that.
+
+This was a very simple example of how to use the `assert` statement. Now let's have a look at how we can build test cases from there.
+
+### 3.2.2 Building unit tests
+
+The general layout for tests within a package is to have a separate folder for tests within your project directory.
+
+Take for example our `example_packages` directory:
+
+```shell
+example_packages/
+    - example_package/
+        - __init__.py
+        - example_module.py
+    - setup.py
+    - tests/
+        - tests.py # And more
+```
+
+Within the `tests` folder, we have one or more Python scripts that contain tests for each aspect of the package.
+
+**NEED better examples!**
+
+EXAMPLE: need to rework example_module a bit ... fill in a bit more code ... maybe this can be a simple numeric module? add two numbers, subtract? Ideally something more exciting than this.
+
+This is what the `test_example_module.py` looks like:
+
+```python
+def test_add_two():
+    assert condition_1
+    assert condition_2
+
+def test_subtract_two():
+    assert condition_3
+    assert condition_4()
+
+def test_ ...?
+```
+
+Now that we have written a bunch of tests, perhaps the most straight-forward thing to do is to call all those functions in a row and make sure they all run smoothly. For exactly this purpose, there exist a series of Python modules which do exactly that for us - but automated and with lots of other nifty features.
+
+
+#### 3.2.3 Running your tests - Python test suites
+
+Among the most popular test runners for Python are:
+
+- [unittest](https://docs.python.org/3/library/unittest.html)
+- [nose or nose2](https://nose2.readthedocs.io/en/latest/getting_started.html)
+- [pytest](https://docs.pytest.org/en/latest/)
+
+
+`unittest` is part of Python's standard library, while the other two modules are add-ons that you can install via `pip`. Both `unittest` and `nose` require you to build classes for every test that inherit from `unittest` baseclasses and have their own implementation of the `assert` statement. `pytest` on the other hand can use the `assert` statement directly (while also being able to work with the `unittest` and `nose` syntax). This is why in this tutorial we concentrate on `pytest` only. You can check out this [comprehensive unit test tutorial](https://realpython.com/python-testing/) to learn more about the other two test runners.
+
+#### 3.2.4 Using `pytest` to test your code
+
+`pytest` ships with most Python distributions, but should you not already have it you can install it via
+
+```shell
+$ pip install pytest
+```
+
+Once installed, you can take a look at how it's used by typing:
+
+```shell
+$ pytest --help
+usage: pytest [options] [file_or_dir] [file_or_dir] [...]
+...
+```
+
+This will print out a comprehensive list of possible arguments and expressions for `pytest`. In the simplest case, you just need to navigate to the directory where the `tests/` folder lives and simply run
+
+```shell
+$ pytest
+```
+
+`pytest` will automatically enter the `tests/` folder and execute every function whose name matches the pattern `def test_*()`, and it will check every file that whose name matches the pattern `test*.py`.
+
+Let's have a look at what `pytest` does in our example module. Recall our package structure:
+
+```shell
+** execute pytest here **
+example_package/
+    - __init__.py
+    - example_module.py
+setup.py
+tests/
+    -tests.py
+```
+
+TODO
+
+```shell
+$ pytest
+... output
+```
+
+And this is what it looks like if a test is failing:
+
+TODO
+
+```shell
+$ pytest
+... output
+```
+
 
 ## 3.3. Let there be linters
+
+The term linting refers to the process of analysing source code in any language to flag possible programming errors, bugs and undesired stylistic constructions. A linter is a program or tool that does exactly  that.
+
+You have probably already come across linters without even noticing it. They are built into many IDEs (Integrated Development Enviroment) and flag things like unequal numbers of brackets at the beginning or end of an instruction, or when you're trying to call a function with the wrong number of arguments. As such, they are incredibly useful in letting you know that your code won't run properly - even before you first tested it.
+
+In addition to syntax testing, a linter can also provide feedback on stylistic elements: it can, for instance, detect duplicated code and recommend that you do some refactoring there. Or it can help you enforce certain style guide lines across a project, to manage, for example, naming conventions of functions and variables, or how doc-strings should be formatted. Therefore, *using a linter can help you enforce and maintain proper code quality.*
+
+### 3.3.1 Choice of linter: the `pylint` module
+
+Just as we had various choices for test runners, we also have several choices for linters in Python. Check out [this comprehensive tutorial]() for an overview and some background on linting in Python.
+
+Here, we concentrate on `pylint`, a light-weight yet powerful package that integrates easily with many Python IDEs and ships with many Python distributions. If you haven't got it already you can install it via:
+
+```shell
+$ pip install pylint
+```
+
+Note that `pylint` recently stopped supporting Python 2.
+
+To get an overview of how it works, simply type `pylint` into a terminal:
+
+```shell
+$ pylint
+Usage:  pylint [options] modules_or_packages
+
+  Check that module(s) satisfy a coding standard (and more !).
+
+    pylint --help
+
+  Display this help message and exit.
+...
+```
+
+Let's have a look at an example. Consider our first example of the `quantum_measurement.py` function:
+
+```python
+import numpy as np
+
+def M(rho, n=1):
+    m = rho.shape[0]//2
+    prjs =[np.kron(s[:, np.newaxis],s[:, np.newaxis].T)
+        for s in np.eye(m * 2)]
+    pr =[np.abs(np.trace(prj.dot(rho))) for prj in prjs]
+    res= np.random.choice(
+        [i for i in range(m*2)], n, p=pr)
+    return [np.eye(m*2)[r,:] for r in res]
+```
+
+Here's how `pylint` rates our code:
+
+```shell
+$ pylint quantum_measurement_1.py
+************* Module quantum_measurement_1
+quantum_measurement_1.py:5:9: C0326: Exactly one space required after assignment
+    prjs =[np.kron(s[:, np.newaxis],s[:, np.newaxis].T)
+         ^ (bad-whitespace)
+quantum_measurement_1.py:5:35: C0326: Exactly one space required after comma
+    prjs =[np.kron(s[:, np.newaxis],s[:, np.newaxis].T)
+                                   ^ (bad-whitespace)
+quantum_measurement_1.py:6:0: C0330: Wrong continued indentation (add 3 spaces).
+        for s in np.eye(m * 2)]
+        ^  | (bad-continuation)
+quantum_measurement_1.py:7:7: C0326: Exactly one space required after assignment
+    pr =[np.abs(np.trace(prj.dot(rho))) for prj in prjs]
+       ^ (bad-whitespace)
+quantum_measurement_1.py:8:7: C0326: Exactly one space required before assignment
+    res= np.random.choice(
+       ^ (bad-whitespace)
+quantum_measurement_1.py:10:0: C0304: Final newline missing (missing-final-newline)
+quantum_measurement_1.py:10:25: C0326: Exactly one space required after comma
+    return [np.eye(m*2)[r,:] for r in res]
+                         ^ (bad-whitespace)
+quantum_measurement_1.py:1:0: C0111: Missing module docstring (missing-docstring)
+quantum_measurement_1.py:3:0: C0103: Function name "M" doesn't conform to snake_case naming style (invalid-name)
+quantum_measurement_1.py:3:0: C0103: Argument name "n" doesn't conform to snake_case naming style (invalid-name)
+quantum_measurement_1.py:3:0: C0111: Missing function docstring (missing-docstring)
+quantum_measurement_1.py:4:4: C0103: Variable name "m" doesn't conform to snake_case naming style (invalid-name)
+quantum_measurement_1.py:7:4: C0103: Variable name "pr" doesn't conform to snake_case naming style (invalid-name)
+
+--------------------------------------------------------------------
+Your code has been rated at -8.57/10
+```
+
+```shell
+$ pylint --help-message=missing-docstring
+:missing-docstring (C0111): *Missing %s docstring*
+  Used when a module, function, class or method has no docstring.Some special
+  methods like __init__ doesn't necessary require a docstring. This message
+  belongs to the basic checker.
+```
+
+
+
+
+
+
 
 - Why lint
 - PEP8
@@ -847,6 +1082,10 @@ Here, the function expects a string as input, and returns a string. Note that th
 - Editing the `.pylintrc` file
 
 # 6. Controlling revision history with git
+
+- What is git
+- git bash on windows
+- super simple git workflow - init, add, commit. View history.
 
 # 7. Using GitHub to share code and collaborate
 
