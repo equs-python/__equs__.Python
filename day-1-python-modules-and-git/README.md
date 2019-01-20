@@ -516,6 +516,14 @@ $ pip install -e <package_name>
 
 Where the `-e` flag stands for editable and `<package_name>` here would be `example_package`. You would have to execute this command in the package directory.
 
+Now take another look at the output of
+
+```shell
+$ pip list
+```
+
+The module should now come up with its path next to it.
+
 
 ## 2.2 What goes into a `setup.py` file?
 
@@ -539,7 +547,7 @@ setup(
 
 We import the `setup` function from Python's built-in `setuptools` package and call it with a series of arguments that describe the package. Most importantly, note the `packages` keyword: here we list the name of the module that actually gets installed. We can have several module names here if we want - and they would all get installed under the name specified in the `name` keyword at the top.
 
-Let's have a look at a few more add-ons that you can put into a `setup.py` file to make life more exciting.
+Let's have a look at a few more add-ons that you can put into a `setup.py` file to make life more exciting. For a full and comprehensive description, check out the [setuptools documentation](https://setuptools.readthedocs.io/en/latest/setuptools.html).
 
 ### 2.2.1 Adding installation requirements to `setup.py`
 
@@ -548,7 +556,7 @@ Often you will find yourself using other modules in your Python package - for in
 ```python
 from setuptools import setup
 setup(
-    [...]
+    [...] # Truncated for readability
     install_requires=['numpy', 'scipy']
 )
 ```
@@ -565,28 +573,264 @@ Edit the `setup.py` file in this example and re-run the installation command to 
 
 ### 2.2.2 Command-line entry points
 
-- optional: command line entry points?
+As a nifty little feature of your package installation, you can create a command-line entry point - that is a command that you run in the command line which executes a certain piece of Python code associated with your package.
+
+For example, let's suppose we want to add a command line entry for a command that we call `call_my_module`, and which executes the `my_module_function` function in the `example_package` from above.
+
+Do do that, we add a module called `command_line.py` to our example_package:
+
+```
+example_package/
+    - __init__.py
+    - example_module.py
+    - command_line.py
+setup.py
+```
+
+We let this script import our function from `example_module.py` and define a new function called `main` which executes that function:
+
+```python
+# command_line.py
+from .example_module import my_module_function
+
+def main():
+    my_module_function()
+```
+
+Now, to our `setup.py` script we add:
+
+```python
+from setuptools import setup
+setup(
+    [...] # Truncated for readability
+    entry_points={
+        'console_scripts':
+            ['call_my_module=example_package.command_line:main'],
+    }
+)
+```
+
+Here we are assigning the desired function call to the command `call_my_module`.
+
+Try it out! Rerun
+
+```shell
+$ python setup.py develop
+```
+
+And then:
+
+```shell
+$ call_my_module
+```
+
+
 
 # 3. Python packages - documentation, unit testing and linting
 
     “Code is more often read than written.”
 
-    — Guido Van Rossum
+    — Guido van Rossum
 
-Guido Van Rossum, the creator of the Python programming language made this very simple, yet incredibly meaningful statement above.
+Guido van Rossum, the creator of the Python programming language made this very simple, yet incredibly meaningful statement above.
 
 What we take from this is that it is immensly important *how* you write your code - be it for yourself or for other people. Have you ever found yourself in a situation where you had to use a piece of code that you've written many months ago (without documentation), and puzzled over what the code does? Or even worse, have you perhaps changed an auxilirary file, or upgraded your compiler/interpreter since then and now the old code doesn't run anymore? Or have you ever worked on a project collaboratively and found it extremely difficult to make out what other people's code is doing?
 
-For all of those reasons, there exist coding standards - these are a collection of good practices which - when taken to heart - make each and everyone of us a better person. Here we want to give you an overview of the three main components of those standards: documentation, testing and linting. And because this is a Python workshop, we use the official [PEP8 Python style guide](https://www.python.org/dev/peps/pep-0008/).
+For all of those reasons, there exist coding standards - these are a collection of good practices which - when taken to heart - make each and every one of us a better person. Here we want to give you an overview of the three main components of those standards: documentation, testing and linting. And because this is a Python workshop, we use the official [PEP8 Python style guide](https://www.python.org/dev/peps/pep-0008/).
 
 
 ## 3.1 Let there be documentation
 
+We assume that we can skip the argument on whether or not one should write documentation for code, and instead start with an illustrative example. We have an intentionally (arguably) badly written, undocumented and uncommented piece of code below. Can you figure out what it does?
 
-- commenting vs documenting
-- Writing doc-strings
-- python 3.5+ feature: type hints
-- (compiling doc-strings into documentation?) - reference to sphinx
+```python
+import numpy as np
+
+def M(rho, n=1):
+    m = rho.shape[0]//2
+    prjs =[np.kron(s[:, np.newaxis],s[:, np.newaxis].T)
+        for s in np.eye(m * 2)]
+    pr =[np.abs(np.trace(prj.dot(rho))) for prj in prjs]
+    res= np.random.choice(
+        [i for i in range(m*2)], n, p=pr)
+    return [np.eye(m*2)[r,:] for r in res]
+```
+
+The function `M` performs a measurement on a quantum state by projecting into the z-eigenbasis. The input state needs to be a density matrix. It's used in the following fashion:
+
+```python
+>>> import numpy as np
+>>> rho = np.array([[0.5, 0.5], [0.5, 0.5]])
+>>> M(rho, 3)
+[array([0., 1.]), array([0., 1.]), array([1., 0.])]
+```
+
+Where we have prepared the maximally mixed state of a single qubit system and performed three measurements on it.
+
+Now let's improve the readability of this piece of code to make it easier to use, understand and potentially modify. We will do this in three steps:
+
+- Improve readability
+- Add in-line comments
+- Add documentation
+
+### 3.1.1 Code should be readable on its own
+
+Of course we are advocating for commenting and documentation here, but the first thing you should consider when writing code for yourself or others is that the code should be readable on its own. You can achieve this by e.g. using self-explanatory variable names, spaces and indents, as well as spreading long lines of code over multiple lines.
+
+Here is a revised version of the function above where we changed all variable names and modified the formatting of the code:
+
+```python
+import numpy as np
+
+def measure_state(state, number_of_samples=1):
+    num_qubits = state.shape[0] // 2
+    projectors = [
+        np.kron(
+            pure_state_vector[:, np.newaxis],
+            pure_state_vector[:, np.newaxis].T
+        )
+        for pure_state_vector in np.eye(num_qubits * 2)
+    ]
+    outcome_probabilities = [
+        np.abs(np.trace(projector.dot(state))) for projector in projectors
+    ]
+    results = np.random.choice(
+        [i for i in range(num_qubits * 2)],
+        number_of_samples,
+        p=outcome_probabilities)
+    return [
+        np.eye(num_qubits*2)[result, :] for result in results
+    ]
+```
+
+This is the exact same code as the one above, but with more descriptive variable names and cleaner code formatting. The overall amount of code gets longer when you do this, but we believe the gain in readability is worth it. And because it's still the same code, there are no losses in terms of performance.
+
+### 3.1.2 Comments explain why, code explains how
+
+Now that the code is more or less readable on its own, we continue with inserting comments to offer some additional explanations on what the code is doing. The general guide lines for in-line comments are that they should be consise (you can get more verbose in the documentation), at the appropriate position in the code, and describing what and why the code is doing what it's doing. The *how* should be self-explanatory if you made your code readable following the advise from the previous section.
+
+See below for our revised example:
+
+```python
+import numpy as np
+
+def measure_state(state, number_of_samples=1):
+    num_qubits = state.shape[0] // 2
+    # Prepare basis projectors in form of density matrices
+    # Note: to calculate the tensor product we require column
+    # vectors; we use the np.newaxis command for that
+    projectors = [
+        np.kron(
+            pure_state_vector[:, np.newaxis],
+            pure_state_vector[:, np.newaxis].T
+        )
+        for pure_state_vector in np.eye(num_qubits * 2)
+    ]
+    # Calculate the outcome probabilities using Born's rule
+    outcome_probabilities = [
+        np.abs(np.trace(projector.dot(state))) for projector in projectors
+    ]
+    # Randomly draw results from a uniform distribution
+    # weighted by the outcome probabilities
+    results = np.random.choice(
+        [i for i in range(num_qubits * 2)],
+        number_of_samples,
+        p=outcome_probabilities)
+    return [
+        np.eye(num_qubits*2)[result, :] for result in results
+    ]
+```
+
+### 3.1.3 Write documentation
+
+Many people, especially those new to programming, or those working mainly on their own, stop after adding in-line comments to their code. However, as soon as a project becomes bigger or has multiple people working on or using it, writing proper documentation is crucial.
+
+In Python (and other programming languages), it is common practice to write so-called *doc-strings*. A doc-string, as the name suggests, is a string that contains documentation. These are typically spread over multiple lines and every function, class and module in Python should have one - and in fact already *has* one, implicitly. This can be exposed using a special attribute called `__doc__`, that every Python object has.
+
+Let's have a look! Open a console and type:
+
+```python
+>>> print(len.__doc__)
+Return the number of items in a container.
+
+```
+
+This is the doc-string of the built-in `len` function in Python. When you write your own function, you can give it a doc-string by inserting a (optionally) multi-line string right below the `def` statement:
+
+```python
+>>> def foo():
+    """
+    This is my function foo.
+    It prints the word 'bar' to the console.
+    """
+    print('bar')
+>>> print(foo.__doc__)
+    This is my function foo.
+    It prints the word 'bar' to the console.
+```
+And we can do the same for classes and modules.
+
+#### 3.1.3.1 What goes into a doc-string?
+
+A doc-string should explain what the function/class/module is used for, and how it is used. In very simple cases, it is sufficient to provide a single line doc-string, like for example in the `len` function.
+
+Broadly speaking, for more complex Python functions (or classes), doc-strings should contain the following:
+
+-  Brief explanation of the object and its purpose
+-  Enumerated description of inputs and outputs
+-  Any exceptions that are raised
+-  Examples
+-  Further notes and comments
+
+Under these considerations, this is how we would write a doc-string for our `measure_state` function:
+
+```python
+def measure_state(state, number_of_samples=1):
+    """Performs a projective measurement of a quantum state in the Z-basis
+
+    Parameters
+    ----------
+    state : numpy array
+        The state in density matrix representation
+    number_of_samples : int, optional
+        How often to perform a measurement. Defaults to 1.
+
+    Returns
+    -------
+    list
+        A list of state vectors for each measurement
+
+    Examples
+    -------
+    Single-qubit pure state measurement:
+        >>> import numpy as np
+        >>> state = np.array([[0, 0], [0, 1]])
+        >>> measure_state(state, 2)
+        [array([0., 1.]), array([0., 1.])]
+    """
+    # source code here
+```
+
+There are several different style guides for doc-strings. Among the most commonly used styles are:
+
+- [Google doc-strings](https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings)
+- [NumPy doc-strings](https://numpydoc.readthedocs.io/en/latest/format.html)
+- [reStructured Text doc-strings](http://docutils.sourceforge.net/rst.html)
+
+
+#### 3.1.3.2 New feature in Python 3.5+: type hinting
+
+In Python version 3.5, the [typing](https://docs.python.org/3/library/typing.html) module was introduced which provides syntactic means to display input and output types - as is common practice in many other (typed) languages.
+
+Here is an example from the module documentation:
+
+```python
+def greeting(name: str) -> str:
+    return 'Hello ' + name
+```
+
+Here, the function expects a string as input, and returns a string. Note that this is merely an annotation, you can still call the function with a different input type or change the return type of the function without getting into trouble. However, it definitely is quite neat and useful for documentation purposes.
+
   
 ## 3.2. Let there be tests
 
@@ -594,7 +838,7 @@ For all of those reasons, there exist coding standards - these are a collection 
 - Python unit testing libraries
 - Introduction to `pytest`
 
-## 3.3. Let there be coding standards
+## 3.3. Let there be linters
 
 - Why lint
 - PEP8
