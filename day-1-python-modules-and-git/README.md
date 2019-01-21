@@ -666,6 +666,8 @@ def M(rho, n=1):
     return [np.eye(m*2)[r,:] for r in res]
 ```
 
+*(You can find this file under examples/doc_test_lint/)*
+
 The function `M` performs a measurement on a quantum state by projecting into the z-eigenbasis. The input state needs to be a density matrix. It's used in the following fashion:
 
 ```python
@@ -888,39 +890,97 @@ This was a very simple example of how to use the `assert` statement. Now let's h
 
 The general layout for tests within a package is to have a separate folder for tests within your project directory.
 
-Take for example our `example_packages` directory:
+For example:
 
 ```shell
-example_packages/
-    - example_package/
+top_level_direcory/
+    - my_package/
         - __init__.py
-        - example_module.py
+        - my_module_1.py
+        - my_module_2.py
+        - ...
     - setup.py
     - tests/
-        - tests.py # And more
+        - test_my_module_1.py
+        - test_my_module_2.py
+        - ... # You can never have too many tests!
 ```
 
-Within the `tests` folder, we have one or more Python scripts that contain tests for each aspect of the package.
+Within the `tests` folder, we have one or more Python scripts that contain tests for each aspect of the package. A common way to organise tests is to create separate test files for the separate modules in your package.
 
-**TODO:** *NEED better examples!*
 
-EXAMPLE: need to rework example_module a bit ... fill in a bit more code ... maybe this can be a simple numeric module? add two numbers, subtract? Ideally something more exciting than this.
+### Example: bulding tests for `measure_state`
 
-This is what the `test_example_module.py` looks like:
+As an example, let's build some tests for the `measure_state` function from the documentation section. Before writing a test, you should think about:
+
+- What is the simplest example for how my function should work?
+- What are the edge cases?
+
+In our example, perhaps the simplest case would be the measurement of a pure state in the z-basis - this should always return the input state because that's the basis we're measuring in. So a test for this could look like this:
 
 ```python
-def test_add_two():
-    assert condition_1
-    assert condition_2
+# test_measurement.py
+def test_pure_state_measurement():
+    """ Testing the measurement of a pure state in Z """
+    # Test 1: State |0>, one measurement
+    state = np.array([[1, 0], [0, 0]])
+    expected_result = np.array([1, 0])
+    actual_result = measure_state(state, number_of_samples=1)
 
-def test_subtract_two():
-    assert condition_3
-    assert condition_4()
+    # Numpy's version of the assert statement for arrays
+    assert np.allclose(expected_result, actual_result)
 
-def test_ ...?
+    # Test 2: State |1>, one measurement
+    state = np.array([[0, 0], [0, 1]])
+    expected_result = np.array([0, 1])
+    actual_result = measure_state(state, number_of_samples=1)
+
+    assert np.allclose(expected_result, actual_result)
 ```
 
-Now that we have written a bunch of tests, perhaps the most straight-forward thing to do is to call all those functions in a row and make sure they all run smoothly. For exactly this purpose, there exist a series of Python modules which do exactly that for us - but automated and with lots of other nifty features.
+Where we have used the `np.allclose` function that takes two `numpy` arrays as input and returns `True` when all elements are equal (that is, up to numeric precision), and `False` if that's not the case.
+
+Now the next thing we might do is to test that this outcome is reliable under our random sampling. So let's write another test that tests the statistics of a pure state measurement in z:
+
+```python
+# test_measurement.py
+def test_pure_state_measurement_stats():
+    """ Testing the measurement of a pure state in Z """
+    # Test 1: State |0>, 100 measurements
+    state = np.array([[1, 0], [0, 0]])
+    expected_result = np.array([1, 0])
+    actual_results = measure_state(state, number_of_samples=100)
+
+    for actual_result in actual_results:
+        assert np.allclose(expected_result, actual_result)
+```
+
+Now let's think about edge cases. If we measure a maximally mixed state in the z-basis, then we should get either outcome 50% of the time. So let's write a test for that too:
+
+```python
+# test_measurement.py
+
+def test_mixed_state_measurement_stats():
+    """ Testing the statistics of a maximally mixed state
+        measurement in Z
+    """
+    # State (|0> + |1>)/sqrt(2), 5000 measurements
+    state = np.array([[0.5, 0.5], [0.5, 0.5]])
+    number_of_samples = 5000
+    actual_results = measure_state(
+        state, number_of_samples=number_of_samples
+    )
+    # Count how often the |0> and |1> state were measured
+    _, counts = np.unique(
+        actual_results, return_counts=True, axis=0
+    )
+    tolerance = 0.05
+    assert abs(counts[0] / number_of_samples - 0.5) < tolerance
+```
+
+Here we're applying a common trick to test whether two numbers are close: we specified an acceptable tolerance and check that our outcome is close to the target value (here 0.5).
+
+Now that we have written a bunch of tests, perhaps the most straight-forward thing to do is to call all those functions in a row and make sure they all run smoothly. But this is a bit cumbersome and we don't want to do this everytime we change our code. For exactly this purpose, there exist a series of Python modules which do exactly that for us - but automated and with lots of other nifty features.
 
 
 #### 2.2.3 Running your tests - Python test suites
@@ -956,38 +1016,32 @@ This will print out a comprehensive list of possible arguments and expressions f
 $ pytest
 ```
 
-`pytest` will automatically enter the `tests/` folder and execute every function whose name matches the pattern `def test_*()`, and it will check every file that whose name matches the pattern `test*.py`.
+`pytest` will automatically enter `tests/` folders, look through every modules whose name matches the pattern `test*.py`, and execute every function whose name matches the pattern `def test_*()`.
 
-Let's have a look at what `pytest` does in our example module. Recall our package structure:
+### Problem: Run `pytest` on `test_measurement.py` (5 minutes)
 
-```shell
-** execute pytest here **
-example_package/
-    - __init__.py
-    - example_module.py
-setup.py
-tests/
-    -tests.py
-```
+## \*\*\*\* PROBLEM: Run `pytest` (5 minutes) \*\*\*\*
 
-TODO
+Open a terminal, navigate to the `examples/doc_test_lint/` directory and run:
 
 ```shell
 $ pytest
-... output
+============================= test session starts ==============================
+platform linux -- Python 3.7.1, pytest-4.0.2, py-1.7.0, pluggy-0.8.0
+rootdir: /home/virginia/Documents/python_workshop_19/general-content/day-1-python-modules-and-git/examples/doc_test_lint, inifile:
+collected 3 items                                                              
+
+test_measurement.py ...                                                  [100%]
+
+=========================== 3 passed in 0.10 seconds ===========================
 ```
 
-And this is what it looks like if a test is failing:
-
-TODO
-
-```shell
-$ pytest
-... output
-```
+The output should look something like the above. Now modify one or more tests such that they fail, and rerun `pytest` on that.
 
 
-## 2.3. Let there be linters
+## \*\*\*\*
+
+## 2.3. Let there be linters (15 minutes)
 
 The term linting refers to the process of analysing source code in any language to flag possible programming errors, bugs and undesired stylistic constructions. A linter is a program or tool that does exactly  that.
 
@@ -1037,39 +1091,38 @@ def M(rho, n=1):
 Here's how `pylint` rates our code:
 
 ```shell
-$ pylint quantum_measurement_1.py
-************* Module quantum_measurement_1
-quantum_measurement_1.py:5:9: C0326: Exactly one space required after assignment
+$ pylint measurement_1.py
+************* Module measurement_1
+measurement_1.py:13:9: C0326: Exactly one space required after assignment
     prjs =[np.kron(s[:, np.newaxis],s[:, np.newaxis].T)
          ^ (bad-whitespace)
-quantum_measurement_1.py:5:35: C0326: Exactly one space required after comma
+measurement_1.py:13:35: C0326: Exactly one space required after comma
     prjs =[np.kron(s[:, np.newaxis],s[:, np.newaxis].T)
                                    ^ (bad-whitespace)
-quantum_measurement_1.py:6:0: C0330: Wrong continued indentation (add 3 spaces).
+measurement_1.py:14:0: C0330: Wrong continued indentation (add 3 spaces).
         for s in np.eye(m * 2)]
         ^  | (bad-continuation)
-quantum_measurement_1.py:7:7: C0326: Exactly one space required after assignment
+measurement_1.py:15:7: C0326: Exactly one space required after assignment
     pr =[np.abs(np.trace(prj.dot(rho))) for prj in prjs]
        ^ (bad-whitespace)
-quantum_measurement_1.py:8:7: C0326: Exactly one space required before assignment
+measurement_1.py:16:7: C0326: Exactly one space required before assignment
     res= np.random.choice(
        ^ (bad-whitespace)
-quantum_measurement_1.py:10:0: C0304: Final newline missing (missing-final-newline)
-quantum_measurement_1.py:10:25: C0326: Exactly one space required after comma
+measurement_1.py:18:0: C0304: Final newline missing (missing-final-newline)
+measurement_1.py:18:25: C0326: Exactly one space required after comma
     return [np.eye(m*2)[r,:] for r in res]
                          ^ (bad-whitespace)
-quantum_measurement_1.py:1:0: C0111: Missing module docstring (missing-docstring)
-quantum_measurement_1.py:3:0: C0103: Function name "M" doesn't conform to snake_case naming style (invalid-name)
-quantum_measurement_1.py:3:0: C0103: Argument name "n" doesn't conform to snake_case naming style (invalid-name)
-quantum_measurement_1.py:3:0: C0111: Missing function docstring (missing-docstring)
-quantum_measurement_1.py:4:4: C0103: Variable name "m" doesn't conform to snake_case naming style (invalid-name)
-quantum_measurement_1.py:7:4: C0103: Variable name "pr" doesn't conform to snake_case naming style (invalid-name)
+measurement_1.py:11:0: C0103: Function name "M" doesn't conform to snake_case naming style (invalid-name)
+measurement_1.py:11:0: C0103: Argument name "n" doesn't conform to snake_case naming style (invalid-name)
+measurement_1.py:11:0: C0111: Missing function docstring (missing-docstring)
+measurement_1.py:12:4: C0103: Variable name "m" doesn't conform to snake_case naming style (invalid-name)
+measurement_1.py:15:4: C0103: Variable name "pr" doesn't conform to snake_case naming style (invalid-name)
 
 --------------------------------------------------------------------
-Your code has been rated at -8.57/10
+Your code has been rated at -7.14/10 (previous run: -5.71/10, -1.43)
 ```
 
-So overall you can tell that `pylint` isn't very  happy with our code. It even gave us a negative overall score. Note that point ratings just get added up and we could in principle disable negative scores by capping it at zero. Let's leave it at that for now though. The goal is, unsurprisingly, to reach 10/10.
+So overall you can tell that `pylint` isn't very  happy with our code. It even gave us a negative overall score. Note that point ratings just get added up and we could in principle disable negative scores by capping it at zero. Let's leave it at that for now though, but note that the goal -unsurprisingly- is to reach 10/10.
 
 Let's have a look at what those messages mean. We can get some information on each category of `pylint` messages by using the `--help-message` argument in the terminal:
 

@@ -1,3 +1,11 @@
+"""
+Example file for the __equs__.Python workshop 2019
+
+https://github.com/equs-python/__equs__.Python
+
+This file contains the measure_state function which
+performs a measurement of a given quantum state.
+"""
 import numpy as np
 
 def M(rho, n=1):
