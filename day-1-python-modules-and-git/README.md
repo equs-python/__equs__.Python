@@ -1,30 +1,39 @@
-# FIRST THINGS FIRST
-
-Open Git Bash
-
-```bash
-$ git clone https://github.com/equs-python/__equs__.Python
-$ cd __equs__.Python
-$ git checkout -b my_branch
-$ code .
-```
-
-# Day 1 - Python modules and git
+# \_\_equs\_\_.Python workshop 2019
+## Day 1 - Python modules and Git
 
 Today we teach you how to properly package your Python code. For this, we collaboratively build a Python package. You learn how to document your code, spread it over multiple files, and how to write automated unit tests. To keep track of revision history, we create a repository on GitHub and show you how to use git and GitHub to develop and maintain code projects, especially when there are multiple contributors.
 
 
 Here are the specific topics of the day:
 
-1. Python packages part 1: using multiple files
-2. Python packages part 2: Package installation with `setup.py`'s
-3. Python packages part 3: Documenting, testing and linting code
-4. Controlling revision history with git
-5. Using GitHub to share and collaborate
-6. Code project
+**TODO:** *insert hyperlinks to module content pages*
+
+1. Python packaging
+   1.  Organising code across multiple files
+   2.  Package installation with `setup.py`'s
+   3.  Documenting, testing and linting code
+2. Managing Python projects with Git and Github
+3. Code project
 
 
-# 1. Python packages - using multiple files
+
+## Getting started
+
+To get started, download the tutorial content to your local machine (if you haven't already done so yesterday). Open the Git Bash and type:
+
+```bash
+$ git clone https://github.com/equs-python/__equs__.Python
+$ cd __equs__.Python
+$ code .
+```
+
+And with that, let's go!
+
+# 1. Python packaging (1 1/2 hours)
+
+In this tutorial we cover the process of building packages in Python. We start from the very basics of what a Python package is and how to install it, and make our way up from there to build an installable Python package ourselves at the end of this session.
+
+## 1.1 Organising code across multiple files
 
 When your code project becomes large, it is useful to spread your code over individual files, ideally sorted by functionality. In this section we demonstrate how this can be done in Python. We start by having a closer look at what the `import` statement, which we've seen before, actually does.
 
@@ -34,7 +43,7 @@ When your code project becomes large, it is useful to spread your code over indi
 - using folders - introduce `__init__.py`
 
 
-## 1.1 The `import` statement
+### 1.1.1 The `import` statement
 
 Previously, when we wanted to execute code in a Python file, we used the command line to run:
 
@@ -59,7 +68,7 @@ $ python my_file.py
 5
 ```
 
-### 1.1.1 Importing a Python script
+#### 1.1.1.1 Importing a Python script
 
 Now let's have a look at how we can import the contents of the file into an interactive terminal session. We could also use a `jupyter` notebook here and the code would be the same, but let's keep it simple and stick with the terminal for now. We use the `import` statement just as we've seen before:
 
@@ -80,7 +89,7 @@ Once we've imported the file, we have access to all the Python objects that were
 4
 ```
 
-### 1.1.2 Namespaces and aliases
+#### 1.1.1.2 Namespaces and aliases
 
 When we import our script using the syntax above, we implicitly create a so-called namespace for all the objects in our script. To access those variables, we use the dot-notation, which we have seen before in connection with classes, and in fact modules too (recall `numpy` and `matplotlib`). We can use the same notation here because *everything is an object* in Python, including individual scripts, and more general modules.
 
@@ -95,7 +104,7 @@ It is up to us how we call our namespace for imported scripts. We have seen the 
 
 Now we have made an alias for our script and called it `mf`. Introducing aliases that are shorter that the actual script name is often convenient because  it reduces the amount of text you have to write!
 
-### 1.1.3 Importing only selected objects
+#### 1.1.1.3 Importing only selected objects
 
 Instead of importing all the objects in a script, you can also just import the ones you selected. The syntax for this is as follows:
 
@@ -121,7 +130,7 @@ Please don't name a variable (or any other object - ever) `f` though.
 
 
 
-### 1.1.4 For completeness: star-imports (don't do this!)
+#### 1.1.1.4 For completeness: star-imports (don't do this!)
 
 The last option to import the contents of a script are so-called star-imports (or *-imports). Here, the objects in the script are imported into the namespace of the current session, and we don't need script name or alias to access them. The syntax for that is as follows:
 
@@ -138,7 +147,7 @@ While this might look convenient, we strongly recommend that you don't do this. 
 
 
 
-### 1.2 What if I don't want to run executable code in my script?
+#### 1.1.2 What if I don't want to run executable code in my script?
 
 Often when you find yourself working across multiple files, you have some executable code in those scripts that is useful to have when you execute the scripts themselves - like for instance some code that tests that your functions are working correctly - but you do not want to the code to be executed when you're just importing stuff from your script.
 
@@ -177,7 +186,7 @@ $ python my_file.py
 And here we would get the expected output, because the script was executed as top-level script.
 
 
-## 1.3 Multiple Python files and folders
+### 1.1.3 Multiple Python files and folders
 
 As projects grow in size, it often makes sense to organise different Python scripts in different directories, i.e. folders.
 
@@ -246,7 +255,7 @@ Another function call now working!
 
 The import is working correctly, and Python recognises `my_file.py` as a module.
 
-### 1.3.1 What goes into `__init__.py`?
+#### 1.1.3.1 What goes into `__init__.py`?
 
 *Recall the `__init__` method for Python classes. Creating a file like this in a (module) folder has the same effect!*
 
@@ -275,7 +284,7 @@ Yet another function now imported too!
 So we can skip specifying the individual scripts which shortens our import syntax. Hurray!
 
 
-## 1.4 Importing from different locations
+### 1.1.4 Importing from different locations
 
 All of the examples above worked because we were importing modules from the same directory that our top-level script was in. If we want to import module that lie in a different directory, we have two options:
 
@@ -309,7 +318,7 @@ And you can test for yourself that this works.
 
 The `sys.path` variable contains all directories in which Python will look for modules when you're trying to import something. Take a look at what's in there with `print(sys.path)`!
 
-# 2. Python packages - installation
+## 1.2 Python package installation
 
 What does it mean to install a Python package? What is a `setup.py` file? What is `pip`? These are terms that you may or may not have come across before, and now we will shed some light onto what they mean and do. Here we keep the discussion fairly short, so if you want to learn more check out the following link:
 
@@ -331,11 +340,11 @@ So does that mean that if we want a package to be available everywhere that we j
 
 However, the actual installation of a Python package does a few more things than simply just copying the code...
 
-### 2.1 Installing a Python package
+### 1.2.1 Installing a Python package
 
 There are two main options for installing Python packages, and while they might look very different at first, they actually have a lot in common and down at their core do the same thing.
 
-#### 2.1.1 Installing from source
+#### 1.2.1.1 Installing from source
 
 The first option to install a new Python package is called "installation from source". This means that you have the source code of the package available locally on your machine, after e.g. cloning it from a GitHub repository. The package contains a special file called `setup.py`, that has all the installation instructions in it.
 
@@ -380,7 +389,7 @@ Now let's see if it worked! Open your favourite interactive console and try to i
 ```
 And if you can see the output above then you've installed the package successfully! You can also check the `site-packages` directory now to see that it's there!
 
-#### 2.1.2 Installing via pip
+#### 1.2.1.2 Installing via pip
 
 The example above - *installation from source* - requires us to have our own, local copy of the source code. Alternatively, if you want to install a package whose source code you do not have, you can use a package manager like `pip` or `conda`. They both access online servers that store Python packages. `pip` accesses the PyPI (Python package index) that currently has more than 150k packages available.
 
@@ -419,6 +428,8 @@ $ pip install --help
 ```
 
 #### Pip installation example: the funniest joke
+
+**TODO** *decide whether or not we keep this example - maybe switch to a simpler package?*
 
 Let's take a look at an example: We want to install a Python package called `funniest-joke`. This is a very light-weight package that contains the [funniest joke in the world](https://www.youtube.com/watch?v=ienp4J3pW7U).
 
@@ -525,7 +536,7 @@ $ pip list
 The module should now come up with its path next to it.
 
 
-## 2.2 What goes into a `setup.py` file?
+## 1.2.2 What goes into a `setup.py` file?
 
 Here is the content of the `setup.py` file in our `example_package`:
 
@@ -549,7 +560,7 @@ We import the `setup` function from Python's built-in `setuptools` package and c
 
 Let's have a look at a few more add-ons that you can put into a `setup.py` file to make life more exciting. For a full and comprehensive description, check out the [setuptools documentation](https://setuptools.readthedocs.io/en/latest/setuptools.html).
 
-### 2.2.1 Adding installation requirements to `setup.py`
+### 1.2.2.1 Adding installation requirements to `setup.py`
 
 Often you will find yourself using other modules in your Python package - for instance when you're writing a numerical package you will most likely use `numpy` or `scipy`. You can (and should!) add this information to your `setup.py` file:
 
@@ -571,7 +582,7 @@ install_requires=['numpy>=1.13', 'scipy>=1.1']
 
 Edit the `setup.py` file in this example and re-run the installation command to see how addind requirements changes the behavior.
 
-### 2.2.2 Command-line entry points
+### 1.2.2.2 Command-line entry points
 
 As a nifty little feature of your package installation, you can create a command-line entry point - that is a command that you run in the command line which executes a certain piece of Python code associated with your package.
 
@@ -625,8 +636,7 @@ $ call_my_module
 ```
 
 
-
-# 3. Python packages - documentation, unit testing and linting
+# 2. Documentation, unit testing and linting (1 hour)
 
     “Code is more often read than written.”
 
@@ -639,7 +649,7 @@ What we take from this is that it is immensly important *how* you write your cod
 For all of those reasons, there exist coding standards - these are a collection of good practices which - when taken to heart - make each and every one of us a better person. Here we want to give you an overview of the three main components of those standards: documentation, testing and linting. And because this is a Python workshop, we use the official [PEP8 Python style guide](https://www.python.org/dev/peps/pep-0008/).
 
 
-## 3.1 Let there be documentation
+## 2.1 Let there be documentation (15 minutes)
 
 We assume that we can skip the argument on whether or not one should write documentation for code, and instead start with an illustrative example. We have an intentionally (arguably) badly written, undocumented and uncommented piece of code below. Can you figure out what it does?
 
@@ -673,7 +683,7 @@ Now let's improve the readability of this piece of code to make it easier to use
 - Add in-line comments
 - Add documentation
 
-### 3.1.1 Code should be readable on its own
+### 2.1.1 Code should be readable on its own
 
 Of course we are advocating for commenting and documentation here, but the first thing you should consider when writing code for yourself or others is that the code should be readable on its own. You can achieve this by e.g. using self-explanatory variable names, spaces and indents, as well as spreading long lines of code over multiple lines.
 
@@ -705,7 +715,7 @@ def measure_state(state, number_of_samples=1):
 
 This is the exact same code as the one above, but with more descriptive variable names and cleaner code formatting. The overall amount of code gets longer when you do this, but we believe the gain in readability is worth it. And because it's still the same code, there are no losses in terms of performance.
 
-### 3.1.2 Comments explain why, code explains how
+### 2.1.2 Comments explain why, code explains how
 
 Now that the code is more or less readable on its own, we continue with inserting comments to offer some additional explanations on what the code is doing. The general guide lines for in-line comments are that they should be consise (you can get more verbose in the documentation), at the appropriate position in the code, and describing what and why the code is doing what it's doing. The *how* should be self-explanatory if you made your code readable following the advise from the previous section.
 
@@ -741,11 +751,11 @@ def measure_state(state, number_of_samples=1):
     ]
 ```
 
-### 3.1.3 Write documentation
+### 2.1.3 Write documentation
 
 Many people, especially those new to programming, or those working mainly on their own, stop after adding in-line comments to their code. However, as soon as a project becomes bigger or has multiple people working on or using it, writing proper documentation is crucial.
 
-In Python (and other programming languages), it is common practice to write so-called *doc-strings*. A doc-string, as the name suggests, is a string that contains documentation. These are typically spread over multiple lines and every function, class and module in Python should have one - and in fact already *has* one, implicitly. This can be exposed using a special attribute called `__doc__`, that every Python object has.
+In Python (and other programming languages), it is common practice to write so-called *docstrings*. A docstring, as the name suggests, is a string that contains documentation. These are typically spread over multiple lines and every function, class and module in Python should have one - and in fact already *has* one, implicitly. This can be exposed using a special attribute called `__doc__`, that every Python object has.
 
 Let's have a look! Open a console and type:
 
@@ -755,7 +765,7 @@ Return the number of items in a container.
 
 ```
 
-This is the doc-string of the built-in `len` function in Python. When you write your own function, you can give it a doc-string by inserting a (optionally) multi-line string right below the `def` statement:
+This is the docstring of the built-in `len` function in Python. When you write your own function, you can give it a docstring by inserting a (optionally) multi-line string right below the `def` statement:
 
 ```python
 >>> def foo():
@@ -770,11 +780,11 @@ This is the doc-string of the built-in `len` function in Python. When you write 
 ```
 And we can do the same for classes and modules.
 
-#### 3.1.3.1 What goes into a doc-string?
+#### 2.1.3.1 What goes into a docstring?
 
-A doc-string should explain what the function/class/module is used for, and how it is used. In very simple cases, it is sufficient to provide a single line doc-string, like for example in the `len` function.
+A docstring should explain what the function/class/module is used for, and how it is used. In very simple cases, it is sufficient to provide a single line docstring, like for example in the `len` function.
 
-Broadly speaking, for more complex Python functions (or classes), doc-strings should contain the following:
+Broadly speaking, for more complex Python functions (or classes), docstrings should contain the following:
 
 -  Brief explanation of the object and its purpose
 -  Enumerated description of inputs and outputs
@@ -782,7 +792,7 @@ Broadly speaking, for more complex Python functions (or classes), doc-strings sh
 -  Examples
 -  Further notes and comments
 
-Under these considerations, this is how we would write a doc-string for our `measure_state` function:
+Under these considerations, this is how we would write a docstring for our `measure_state` function:
 
 ```python
 def measure_state(state, number_of_samples=1):
@@ -811,14 +821,14 @@ def measure_state(state, number_of_samples=1):
     # source code here
 ```
 
-There are several different style guides for doc-strings. Among the most commonly used styles are:
+There are several different style guides for docstrings. Among the most commonly used styles are:
 
-- [Google doc-strings](https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings)
-- [NumPy doc-strings](https://numpydoc.readthedocs.io/en/latest/format.html)
-- [reStructured Text doc-strings](http://docutils.sourceforge.net/rst.html)
+- [Google docstrings](https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings)
+- [NumPy docstrings](https://numpydoc.readthedocs.io/en/latest/format.html)
+- [reStructured Text docstrings](http://docutils.sourceforge.net/rst.html)
 
 
-#### 3.1.3.2 New feature in Python 3.5+: type hinting
+#### 2.1.3.2 New feature in Python 3.5+: type hinting
 
 In Python version 3.5, the [typing](https://docs.python.org/3/library/typing.html) module was introduced which provides syntactic means to display input and output types - as is common practice in many other (typed) languages.
 
@@ -832,11 +842,11 @@ def greeting(name: str) -> str:
 Here, the function expects a string as input, and returns a string. Note that this is merely an annotation, you can still call the function with a different input type or change the return type of the function without getting into trouble. However, it definitely is quite neat and useful for documentation purposes.
 
   
-## 3.2. Let there be tests
+## 2.2. Let there be tests (25 minutes)
 
 It goes without saying that every code that you plan to put to use needs to be tested. Chances are you are already doing this - even if perhaps not in an automated fashion. Here we take a look at how to write automated tests, structure them, and what modules we have got available in Python to run those tests.
 
-### 3.2.1 Testing basics: the `assert` statement
+### 2.2.1 Testing basics: the `assert` statement
 
 The core idea behind writing tests is that we know what the expected output of the function (or more general, object) that we want to test is. So what we need to do is to *assert* that the actual output matches the expected one.
 
@@ -874,7 +884,7 @@ We know what the expected outcome is, so here we assert that that's the case. No
 
 This was a very simple example of how to use the `assert` statement. Now let's have a look at how we can build test cases from there.
 
-### 3.2.2 Building unit tests
+### 2.2.2 Building unit tests
 
 The general layout for tests within a package is to have a separate folder for tests within your project directory.
 
@@ -892,7 +902,7 @@ example_packages/
 
 Within the `tests` folder, we have one or more Python scripts that contain tests for each aspect of the package.
 
-**NEED better examples!**
+**TODO:** *NEED better examples!*
 
 EXAMPLE: need to rework example_module a bit ... fill in a bit more code ... maybe this can be a simple numeric module? add two numbers, subtract? Ideally something more exciting than this.
 
@@ -913,7 +923,7 @@ def test_ ...?
 Now that we have written a bunch of tests, perhaps the most straight-forward thing to do is to call all those functions in a row and make sure they all run smoothly. For exactly this purpose, there exist a series of Python modules which do exactly that for us - but automated and with lots of other nifty features.
 
 
-#### 3.2.3 Running your tests - Python test suites
+#### 2.2.3 Running your tests - Python test suites
 
 Among the most popular test runners for Python are:
 
@@ -924,7 +934,7 @@ Among the most popular test runners for Python are:
 
 `unittest` is part of Python's standard library, while the other two modules are add-ons that you can install via `pip`. Both `unittest` and `nose` require you to build classes for every test that inherit from `unittest` baseclasses and have their own implementation of the `assert` statement. `pytest` on the other hand can use the `assert` statement directly (while also being able to work with the `unittest` and `nose` syntax). This is why in this tutorial we concentrate on `pytest` only. You can check out this [comprehensive unit test tutorial](https://realpython.com/python-testing/) to learn more about the other two test runners.
 
-#### 3.2.4 Using `pytest` to test your code
+#### 2.2.4 Using `pytest` to test your code
 
 `pytest` ships with most Python distributions, but should you not already have it you can install it via
 
@@ -977,15 +987,15 @@ $ pytest
 ```
 
 
-## 3.3. Let there be linters
+## 2.3. Let there be linters
 
 The term linting refers to the process of analysing source code in any language to flag possible programming errors, bugs and undesired stylistic constructions. A linter is a program or tool that does exactly  that.
 
 You have probably already come across linters without even noticing it. They are built into many IDEs (Integrated Development Enviroment) and flag things like unequal numbers of brackets at the beginning or end of an instruction, or when you're trying to call a function with the wrong number of arguments. As such, they are incredibly useful in letting you know that your code won't run properly - even before you first tested it.
 
-In addition to syntax testing, a linter can also provide feedback on stylistic elements: it can, for instance, detect duplicated code and recommend that you do some refactoring there. Or it can help you enforce certain style guide lines across a project, to manage, for example, naming conventions of functions and variables, or how doc-strings should be formatted. Therefore, *using a linter can help you enforce and maintain proper code quality.*
+In addition to syntax testing, a linter can also provide feedback on stylistic elements: it can, for instance, detect duplicated code and recommend that you do some refactoring there. Or it can help you enforce certain style guide lines across a project, to manage, for example, naming conventions of functions and variables, or how docstrings should be formatted. Therefore, *using a linter can help you enforce and maintain proper code quality.*
 
-### 3.3.1 Choice of linter: the `pylint` module
+### 2.3.1 Choice of linter: the `pylint` module
 
 Just as we had various choices for test runners, we also have several choices for linters in Python. Check out [this comprehensive tutorial]() for an overview and some background on linting in Python.
 
@@ -1073,7 +1083,7 @@ $ pylint --help-message=missing-docstring
   belongs to the basic checker.
 ```
 
-`pylint` requires you to add doc-strings to modules, classes and functions, and flags an error if it can't find them.
+`pylint` requires you to add docstrings to modules, classes and functions, and flags an error if it can't find them.
 
 **Bad whitespace**
 
@@ -1101,10 +1111,10 @@ Per default, `pylint` abides to fairly well defined naming conventions for const
 
 If you haven't come across regular expressions before, all this means is that function and variable names should have only have lower case letters, numbers and underscores and consist of at least 2 letters. 
 
-TODO: Alan can you check this.
+**TODO:** *Alan can you check this.*
 
 
-### 3.3.2 Don't agree with `pylint`? Make your own rules
+### 2.3.2 Don't agree with `pylint`? Make your own rules
 
 If you find some of the stylistic requirements of the default `pylint` configuration unreasonable or too cumbersome, or you would like to enforce additional, custom style codes then you can do so by editing the `.pylintrc` file. This file contains the default configuration for the linter and it is generated automatically when installing `pylint`.
 
@@ -1131,7 +1141,7 @@ $ pylint quantum_measurement.py --rcfile=<path-to-your-.pylintrc>
 ## \*\*\*\*
 
 
-# 6. Controlling revision history with git (30 minutes)
+# 2. Controlling revision history with git (30 minutes)
 
 When you develop a piece of code, be it in Python, Matlab, Latex, or whatever else, over time you will find yourself making changes to that code, to improve, expand or simply just change the behavior of it.
 
@@ -1145,7 +1155,7 @@ By far the most popular choice for this is Git, which is an incredibly powerful,
 
 Git is cross-platform compatible and can be used with or without GitHub, which is an online platform that integrates Git into an online host for code projects. In order to use GitHub, you need a GitHub account. To use Git, you merely need to provide Git with some user information (like name and email) for it to keep track of what changes were made by your identity.
 
-## 6.1 Using Git in the command line (15 minutes)
+## 2.1 Using Git in the command line (15 minutes)
 
 For this tutorial, we have installed [Git for Windows](https://git-scm.com/download/win) on the lab computers, which ships with its own Bash console.
 
@@ -1268,7 +1278,7 @@ Then have a look at the output of `git log`.
 There are a variety of options to compare different versions of a file, the most convenient ones are when using code editors that integrate with Git, like VSCode for example. GitHub too allows for a user-friendly comparison. Git also allows us to go back in time to specific versions of the code, but we won't go into much more detail on this at this stage.
 
 
-# 7. Using GitHub to share code and collaborate (15 Minutes)
+## 2.2 Using GitHub to share code and collaborate (15 Minutes)
 
 GitHub allows us to host our repositories online, which is a great way of collaborating or publishing code projects. To get started on an online repository you can:
 
@@ -1441,7 +1451,7 @@ Now let's have a look on the project page!
 In order to merge our changes into the `master` branch, we open a *Pull Request*, or PR for short. This will run `pytest` and `pylint` for us, and only if those tests pass will we be allowed to merge the PR. Moreover, the `master` branch also requires PRs to be reviewd and accepted by one of the repository administrators. We will go through this procedure online.
 
 
-# 8. Code project (2+ hours)
+# 3. Code project (2+ hours)
 
 **Note: to participate in this project you will need a GitHub account.**
 
