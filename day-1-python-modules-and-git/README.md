@@ -995,8 +995,6 @@ Here, we concentrate on `pylint`, a light-weight yet powerful package that integ
 $ pip install pylint
 ```
 
-Note that `pylint` recently stopped supporting Python 2.
-
 To get an overview of how it works, simply type `pylint` into a terminal:
 
 ```shell
@@ -1061,6 +1059,12 @@ quantum_measurement_1.py:7:4: C0103: Variable name "pr" doesn't conform to snake
 Your code has been rated at -8.57/10
 ```
 
+So overall you can tell that `pylint` isn't very  happy with our code. It even gave us a negative overall score. Note that point ratings just get added up and we could in principle disable negative scores by capping it at zero. Let's leave it at that for now though. The goal is, unsurprisingly, to reach 10/10.
+
+Let's have a look at what those messages mean. We can get some information on each category of `pylint` messages by using the `--help-message` argument in the terminal:
+
+**Missing docstring**
+
 ```shell
 $ pylint --help-message=missing-docstring
 :missing-docstring (C0111): *Missing %s docstring*
@@ -1069,25 +1073,211 @@ $ pylint --help-message=missing-docstring
   belongs to the basic checker.
 ```
 
+`pylint` requires you to add doc-strings to modules, classes and functions, and flags an error if it can't find them.
+
+**Bad whitespace**
+
+```shell
+$ pylint --help-message=bad-whitespace
+:bad-whitespace (C0326): *%s space %s %s %s*
+  Used when a wrong number of spaces is used around an operator, bracket or
+  block opener. This message belongs to the format checker.
+```
+
+Whitespaces are a notorious issue of discussion in Python, in particular because the entire programming syntax relies on indentation. However, what `pylint` is telling us here is that it expects whitespaces after assignments and commas, which is in fact quite reasonable - in Latex or just normal written texts you also use spaces between words and punctuation to improve readability.
+
+**Invalid name**
+
+```shell
+$ pylint --help-message=invalid-name
+:invalid-name (C0103): *%s name "%s" doesn't conform to %s*
+  Used when the name doesn't conform to naming rules associated to its type
+  (constant, variable, class...). This message belongs to the basic checker.
+```
+
+Per default, `pylint` abides to fairly well defined naming conventions for constants, variable, function and class names. To figure out `pylint` is expecting exactly we can re-run the linter with the additional argument `--include-naming-hint=y`, to find that function and variable names are being matched to the following regular expression:
+
+`(([a-z_][a-z0-9_]{2,})|(_[a-z0-9_]*)|(__[a-z][a-z0-9_]+__))$'`
+
+If you haven't come across regular expressions before, all this means is that function and variable names should have only have lower case letters, numbers and underscores and consist of at least 2 letters. 
+
+TODO: Alan can you check this.
 
 
+### 3.3.2 Don't agree with `pylint`? Make your own rules
 
+If you find some of the stylistic requirements of the default `pylint` configuration unreasonable or too cumbersome, or you would like to enforce additional, custom style codes then you can do so by editing the `.pylintrc` file. This file contains the default configuration for the linter and it is generated automatically when installing `pylint`.
 
+At any point, you can ask `pylint` to generate a copy of this file for you that you can customise as desired.
 
+## \*\*\*\* PROBLEM: DIY linting (5-10 minutes) \*\*\*\*
 
-- Why lint
-- PEP8
-- Overview of Python linters
-- Introduction to `pylint`
-- Editing the `.pylintrc` file
+Create and edit a `.pylintrc` file. Open a terminal and type:
+
+```shell
+$ pylint --generate-rcfile > .pylintrc
+```
+
+This will create a file called `.pylintrc` in the current directory. Open the file in your favourite editor and take a look.
+
+Find the the list of disabled messages under the `[MESSAGES CONTROL]` section, and add `bad-whitespace` to this list. Then re-run the linter using this file as follows:
+
+```shell
+$ pylint quantum_measurement.py --rcfile=<path-to-your-.pylintrc>
+```
+
+**Optional:** Can you find the expression that `pylint` uses to calculate the score and cap it at zero?
+
+## \*\*\*\*
+
 
 # 6. Controlling revision history with git
 
-- What is git
-- git bash on windows
-- super simple git workflow - init, add, commit. View history.
+When you develop a piece of code, be it in Python, Matlab, Latex, or whatever else, over time you will find yourself making changes to that code, to improve, expand or simply just change the behavior of it.
+
+How do you keep track of different versions of your code there?
+
+If you're a newbie to programming, chances are you might have used different files, e.g. `my_awesome_code_v0.py`, `my_awesome_code_v1.py` and so on. While this may work in a small capacity, it certainly doesn't scale well for larger projects or when multiple people are working on the same project together and you want to keep track of who did what and when.
+
+For this reason, there exist so-called version control managers. These are programs that keep track of revision history of text-based files, allow you to store comments alongside of every revision iteration,and enable you to easily compare or switch back to older versions if required.
+
+By far the most popular choice for this is Git, which is an incredibly powerful, well-maintained, open-source project originially started by Linus Torvalds (creator of the Linux operating kernel).
+
+Git is cross-platform compatible and can be used with or without GitHub, which is an online platform that integrates Git into an online host for code projects. In order to use GitHub, you need a GitHub account. To use Git, you merely need to provide Git with some user information (like name and email) for it to keep track of what changes were made by your identity.
+
+## 6.1 Using Git in the command line
+
+For this tutorial, we have installed [Git for Windows](https://git-scm.com/download/win) on the lab computers, which ships with its own Bash console.
+
+Open the Git Bash console and type `git` to get an overview of how to use it:
+
+```bash
+$ git
+usage: git [--version] [--help] [-C <path>] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+
+These are common Git commands used in various situations:
+
+start a working area (see also: git help tutorial)
+   clone      Clone a repository into a new directory
+   init       Create an empty Git repository or reinitialize an existing one
+
+work on the current change (see also: git help everyday)
+   add        Add file contents to the index
+   mv         Move or rename a file, a directory, or a symlink
+   reset      Reset current HEAD to the specified state
+   rm         Remove files from the working tree and from the index
+```
+
+At any point in time, you can call `git --help` to get more information, and, in particular, you can also call `--help` on a specific command to see how it works.
+
+Let's walk through an example of how to initialise a Git project, or, to be more specific, a *repository* as Git-speak would have us call it.
+
+### Step 1: Create an empty repository
+
+Open a Git Bash console, create a new folder and initialise an empty repository:
+
+```bash
+$ mkdir my_git_repo
+$ cd my_git_repo
+$ git init
+```
+
+This should print something like `Initialized empty Git repository in ../../my_git_repo/.git/`. And if you have a look into the folder, you will find that Git created a new folder called `.git` (you might have to enable the viewing of hidden files in your explorer). In this folder, Git stores information about all the files in the repository.
+
+At any point in time, you can call `git status` in that repository to see what's going on in the repository.
+
+### Step 2: Add a new file for tracking
+
+Now that we have the repository set up, let's create a file and add it to the file tracking index.
+
+Create a simple file called `my_file.txt` or similar, and add a few lines of text to it:
+
+```shell
+# my_file.txt
+This is a text file.
+We will track its revision history with git.
+```
+Now go back to Git Bash and type:
+
+```bash
+$ git status
+On branch master
+
+Initial commit
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	my_file.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+
+You can see that Git recognised that a new file was added to the repository, but it's telling us that the file is currently "untracked". Let's add this file to tracking via:
+
+```bash
+$ git add my_file.txt
+```
+
+Now if we print out `git status` again we should see the following:
+
+```bash
+$ git status
+On branch master
+
+Initial commit
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+	new file:   my_file.txt
+```
+
+Git has now added the file to its tracking system and expects us to *commit* the file. Committing a file means that we are saving its current status as a checkpoint in the version history. To commit our file, we run:
+
+```bash
+$ git commit -m "My first version of my_file.txt"
+[master (root-commit) eb42456] My first version of my_file.txt
+ 1 file changed, 2 insertions(+)
+ create mode 100644 my_file.txt
+```
+
+If you haven't set up a Git identiy yet, Git will at this stage ask you who you are. Follow the command prompts to provide a name and email address, and then run the command above again.
+
+Now if we run `git status` again, we should see the following:
+
+```bash
+$ git status
+On branch master
+nothing to commit, working directory clean
+```
+
+
+### \*\*\*\* PROBLEM: Change the file, add and commit (5 minutes)\*\*\*\*
+
+Now let's make a change to our file, and then add and commit the new version. Check the output of `git status` between the different stages.
+
+Then have a look at the output of `git log`.
+
+### \*\*\*\*
+
+There are a variety of options to compare different versions of a file, the most convenient ones are when using code editors that integrate with Git, like VSCode for example. GitHub too allows for a user-friendly comparison. Git also allows us to go back in time to specific versions of the code, but we won't go into much more detail on this at this stage.
+
 
 # 7. Using GitHub to share code and collaborate
+
+GitHub allows us to host our repositories online, which is a great way of collaborating or publishing code projects. To get started on an online repository you can:
+
+- Upload an existing repository from your local machine
+- Download an existing repository from GitHub
+
+Here we will walk through an example of downloading an existing repository, making a change to it (add and commit that change), and then uploading this change to the online repository.
+
+**TODO** Example with two_qubit_simulator. Make a new branch. Make a change to that branch. Push to remote. Make a Pull Request (Use protected branch)!
 
 # 8. Code project
 
