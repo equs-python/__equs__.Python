@@ -9,6 +9,12 @@ $ git checkout -b my_branch
 $ code .
 ```
 
+
+# -1. Setup your system
+If windows, sit back and relax
+If Linux/Mac virtualbox or hyper-v
+Should be pretty straight-forward
+
 # Day 0 - Basic introduction to Python
 
 Here we introduce you to the basic usage of the Python language. We start with basic syntax, including types, control flow, and functions. We then introduce object-oriented programming, a common paradigm in code development. With these concepts under our belt, we are ready to introduce the core package for numerical programming in Python: [NumPy](http://www.numpy.org/). We conclude with an introduction to two other important packages for scientific use: [matplotlib](https://www.matplotlib.org/) for plotting and [SciPy](https://www.scipy.org/) for advanced numerical functionality.
@@ -25,7 +31,6 @@ Here's the detailed plan for the day:
 6. Object-oriented aspects: classes and inheritance
 7. Common scientific libraries for Python **!! include jupyter here !!**
 8. If time permits: Advanced topics such as exceptions
-
 
 # 1. Basic command line usage
 
@@ -51,8 +56,8 @@ These terminals take commands in the form of text and return responses in the fo
 | Move a file | `mv <source> <destination>` | `mv <source> <destination>` |
 | List processes and pids| `ps au` (or `top` or `htop`)| `tasklist` |
 | Killing a process| `kill <pid>` | `taskkill /F /PID <pid>` |
-| Shutdown | shutdown now | poweroff -s -t 0 |
-| Restart | restart now | poweroff -r -t 0 |
+| Shutdown | `shutdown now` | `poweroff -s -t 0` |
+| Restart | `restart now` | `poweroff -r -t 0` |
 | Execute a file | `<command to run file> <path to file>` | `{I've forgotten the windows one}` |
 | Executing a Python file | `python <path to file>` | `python ./<path to file>` |
 
@@ -64,9 +69,9 @@ The terminal is an incredibly useful tool that we will be using throughout the w
 ## 1.1 [Problem (5-10 minutes)]
 
 Get used to the command line:
-... Open up a terminal and try to navigate from your current position to the topmost (root) directory and then back to your own Documents folder.
-... Once you've managed this, try to find the process ID of your terminal emulator and get it to terminate its own process. 
-... If you don't have a keybinding to open your terminal, set one up.
+- Open up a terminal and try to navigate from your current position to the topmost (root) directory and then back to your own Documents folder.
+- Once you've managed this, try to find the process ID of your terminal emulator and get it to terminate its own process. 
+- If you don't have a keybinding to open your terminal, set one up.
 
 As ever, if you are stuck or unsure about what to do, ask sooner rather than later. 
 
@@ -126,10 +131,10 @@ help(type)
 ## 2.2 [Problem (5 minutes)]
 
 Some very basic Python:
-... Initialise a variable to some negative or complex number.
-... Figure out how to take the absolute value of your variable. The `help` function will be useful here. There may be more than one way to do this.
-... What is the type of the help function?
-... What is the type of the type function?
+- Initialise a variable to some negative or complex number.
+- Figure out how to take the absolute value of your variable. The `help` function will be useful here. There may be more than one way to do this.
+- What is the type of the help function?
+- What is the type of the type function?
 
 
 
@@ -149,11 +154,11 @@ The start of an indented block is also indicated by a colon on the preceding lin
 ## 3.3 [Problem (10 minutes)]
 
 Getting used to Loops and Switches:
-... Write a loop to print each number from 2 to 100
-... Modify your previous code to print each even number from 2 to 100
-... Modify your previous code to print each prime number from 2 to 100
-... If you have time left over increase this to primes up to 10000 and `import time` to use the time.time() function to test the speed of your code. If you don't know what this function does, don't forget to use `help()`.
-... Again, if you have spare time, try to improve the performance of your code
+- Write a loop to print each number from 2 to 100
+- Modify your previous code to print each even number from 2 to 100
+- Modify your previous code to print each prime number from 2 to 100
+- If you have time left over increase this to primes up to 10000 and `import time` to use the time.time() function to test the speed of your code. If you don't know what this function does, don't forget to use `help()`.
+- Again, if you have spare time, try to improve the performance of your code
 
 
 # 4. Collections
@@ -172,14 +177,18 @@ python my_file.py
 
 Occasionally it's useful for a program to not just be a hard coded blob that needs to be opened and modified before 
 
+```
+
+```
+
 
 ## 4.2 [Problem (10 minutes)]
 
 Implement the hailstone problem in a Python file, your program will take a single integer as a command line argument as a starting value, you should print each intermediary value.  
-... If the number is negative or zero then the program stops
-... If the number is 1 then the program stops
-... If the number is even divide it by 2
-... If the number is odd multiply is by 3 and add one
+- If the number is negative or zero then the program stops
+- If the number is 1 then the program stops
+- If the number is even divide it by 2
+- If the number is odd multiply is by 3 and add one
 
 
 ## 4.3 Standard Input
@@ -325,21 +334,21 @@ Calls the initialiser method `__init__` and returns a new instance of the intege
 
 Here are a few useful (non-scientific) general libraries. 
 
-... ipython - A better python CLI, strict upgrade from the regular one, no reason not to use it really.
+- ipython - A better python CLI, strict upgrade from the regular one, no reason not to use it really.
 
-... sys - A few good system level Python features, such as command line arguments, Python versions and other utilities
+- sys - A few good system level Python features, such as command line arguments, Python versions and other utilities
 
-... os - Operating system features, make directories, move files and delete files, check what OS is being run or find the user's name
+- os - Operating system features, make directories, move files and delete files, check what OS is being run or find the user's name
 
-... time - All things to do with timing
+- time - All things to do with timing
 
-... rand - Random numbers and their uses, may not be suitable for cryptographic randomness
+- rand - Random numbers and their uses, may not be suitable for cryptographic randomness
 
-... sockets - For when you need a network socket (more on this in future days).
+- sockets - For when you need a network socket (more on this in future days).
 
-... pickle - Good for compacting Python object data to reload it later
+- pickle - Good for compacting Python object data to reload it later
 
-... matplotlib - Basic plotting library, basically the same as the matlab one there are others out there but most are just fancy wrappers for this 
+- matplotlib - Basic plotting library, basically the same as the matlab one there are others out there but most are just fancy wrappers for this 
 
 These libraries can be included using the `import` keyword, as you've probably seen further up. You can also import libraries as a separate keyword in case you're too lazy to type out the full library name each time. For instance the numpy library is regularly imported as np.
 
