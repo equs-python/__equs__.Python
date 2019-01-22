@@ -1,30 +1,39 @@
-# FIRST THINGS FIRST
-
-Open Git Bash
-
-```bash
-$ git clone https://github.com/equs-python/__equs__.Python
-$ cd __equs__.Python
-$ git checkout -b my_branch
-$ code .
-```
-
-# Day 1 - Python modules and git
+# \_\_equs\_\_.Python workshop 2019
+## Day 1 - Python modules and Git
 
 Today we teach you how to properly package your Python code. For this, we collaboratively build a Python package. You learn how to document your code, spread it over multiple files, and how to write automated unit tests. To keep track of revision history, we create a repository on GitHub and show you how to use git and GitHub to develop and maintain code projects, especially when there are multiple contributors.
 
 
 Here are the specific topics of the day:
 
-1. Python packages part 1: using multiple files
-2. Python packages part 2: Package installation with `setup.py`'s
-3. Python packages part 3: Documenting, testing and linting code
-4. Controlling revision history with git
-5. Using GitHub to share and collaborate
-6. Code project
+**TODO:** *insert hyperlinks to module content pages*
+
+1. Python packaging
+   1.  Organising code across multiple files
+   2.  Package installation with `setup.py`'s
+   3.  Documenting, testing and linting code
+2. Managing Python projects with Git and Github
+3. Code project
 
 
-# 1. Python packages - using multiple files
+
+## Getting started
+
+To get started, download the tutorial content to your local machine (if you haven't already done so yesterday). Open the Git Bash and type:
+
+```bash
+$ git clone https://github.com/equs-python/__equs__.Python
+$ cd __equs__.Python
+$ code .
+```
+
+And with that, let's go!
+
+# 1. Python packaging (1 1/2 hours)
+
+In this tutorial we cover the process of building packages in Python. We start from the very basics of what a Python package is and how to install it, and make our way up from there to build an installable Python package ourselves at the end of this session.
+
+## 1.1 Organising code across multiple files
 
 When your code project becomes large, it is useful to spread your code over individual files, ideally sorted by functionality. In this section we demonstrate how this can be done in Python. We start by having a closer look at what the `import` statement, which we've seen before, actually does.
 
@@ -34,7 +43,7 @@ When your code project becomes large, it is useful to spread your code over indi
 - using folders - introduce `__init__.py`
 
 
-## 1.1 The `import` statement
+### 1.1.1 The `import` statement
 
 Previously, when we wanted to execute code in a Python file, we used the command line to run:
 
@@ -59,7 +68,7 @@ $ python my_file.py
 5
 ```
 
-### 1.1.1 Importing a Python script
+#### 1.1.1.1 Importing a Python script
 
 Now let's have a look at how we can import the contents of the file into an interactive terminal session. We could also use a `jupyter` notebook here and the code would be the same, but let's keep it simple and stick with the terminal for now. We use the `import` statement just as we've seen before:
 
@@ -80,7 +89,7 @@ Once we've imported the file, we have access to all the Python objects that were
 4
 ```
 
-### 1.1.2 Namespaces and aliases
+#### 1.1.1.2 Namespaces and aliases
 
 When we import our script using the syntax above, we implicitly create a so-called namespace for all the objects in our script. To access those variables, we use the dot-notation, which we have seen before in connection with classes, and in fact modules too (recall `numpy` and `matplotlib`). We can use the same notation here because *everything is an object* in Python, including individual scripts, and more general modules.
 
@@ -95,7 +104,7 @@ It is up to us how we call our namespace for imported scripts. We have seen the 
 
 Now we have made an alias for our script and called it `mf`. Introducing aliases that are shorter that the actual script name is often convenient because  it reduces the amount of text you have to write!
 
-### 1.1.3 Importing only selected objects
+#### 1.1.1.3 Importing only selected objects
 
 Instead of importing all the objects in a script, you can also just import the ones you selected. The syntax for this is as follows:
 
@@ -121,7 +130,7 @@ Please don't name a variable (or any other object - ever) `f` though.
 
 
 
-### 1.1.4 For completeness: star-imports (don't do this!)
+#### 1.1.1.4 For completeness: star-imports (don't do this!)
 
 The last option to import the contents of a script are so-called star-imports (or *-imports). Here, the objects in the script are imported into the namespace of the current session, and we don't need script name or alias to access them. The syntax for that is as follows:
 
@@ -138,7 +147,7 @@ While this might look convenient, we strongly recommend that you don't do this. 
 
 
 
-### 1.2 What if I don't want to run executable code in my script?
+#### 1.1.2 What if I don't want to run executable code in my script?
 
 Often when you find yourself working across multiple files, you have some executable code in those scripts that is useful to have when you execute the scripts themselves - like for instance some code that tests that your functions are working correctly - but you do not want to the code to be executed when you're just importing stuff from your script.
 
@@ -177,7 +186,7 @@ $ python my_file.py
 And here we would get the expected output, because the script was executed as top-level script.
 
 
-## 1.3 Multiple Python files and folders
+### 1.1.3 Multiple Python files and folders
 
 As projects grow in size, it often makes sense to organise different Python scripts in different directories, i.e. folders.
 
@@ -246,7 +255,7 @@ Another function call now working!
 
 The import is working correctly, and Python recognises `my_file.py` as a module.
 
-### 1.3.1 What goes into `__init__.py`?
+#### 1.1.3.1 What goes into `__init__.py`?
 
 *Recall the `__init__` method for Python classes. Creating a file like this in a (module) folder has the same effect!*
 
@@ -275,7 +284,7 @@ Yet another function now imported too!
 So we can skip specifying the individual scripts which shortens our import syntax. Hurray!
 
 
-## 1.4 Importing from different locations
+### 1.1.4 Importing from different locations
 
 All of the examples above worked because we were importing modules from the same directory that our top-level script was in. If we want to import module that lie in a different directory, we have two options:
 
@@ -309,7 +318,7 @@ And you can test for yourself that this works.
 
 The `sys.path` variable contains all directories in which Python will look for modules when you're trying to import something. Take a look at what's in there with `print(sys.path)`!
 
-# 2. Python packages - installation
+## 1.2 Python package installation
 
 What does it mean to install a Python package? What is a `setup.py` file? What is `pip`? These are terms that you may or may not have come across before, and now we will shed some light onto what they mean and do. Here we keep the discussion fairly short, so if you want to learn more check out the following link:
 
@@ -331,11 +340,11 @@ So does that mean that if we want a package to be available everywhere that we j
 
 However, the actual installation of a Python package does a few more things than simply just copying the code...
 
-### 2.1 Installing a Python package
+### 1.2.1 Installing a Python package
 
 There are two main options for installing Python packages, and while they might look very different at first, they actually have a lot in common and down at their core do the same thing.
 
-#### 2.1.1 Installing from source
+#### 1.2.1.1 Installing from source
 
 The first option to install a new Python package is called "installation from source". This means that you have the source code of the package available locally on your machine, after e.g. cloning it from a GitHub repository. The package contains a special file called `setup.py`, that has all the installation instructions in it.
 
@@ -380,7 +389,7 @@ Now let's see if it worked! Open your favourite interactive console and try to i
 ```
 And if you can see the output above then you've installed the package successfully! You can also check the `site-packages` directory now to see that it's there!
 
-#### 2.1.2 Installing via pip
+#### 1.2.1.2 Installing via pip
 
 The example above - *installation from source* - requires us to have our own, local copy of the source code. Alternatively, if you want to install a package whose source code you do not have, you can use a package manager like `pip` or `conda`. They both access online servers that store Python packages. `pip` accesses the PyPI (Python package index) that currently has more than 150k packages available.
 
@@ -419,6 +428,8 @@ $ pip install --help
 ```
 
 #### Pip installation example: the funniest joke
+
+**TODO** *decide whether or not we keep this example - maybe switch to a simpler package?*
 
 Let's take a look at an example: We want to install a Python package called `funniest-joke`. This is a very light-weight package that contains the [funniest joke in the world](https://www.youtube.com/watch?v=ienp4J3pW7U).
 
@@ -525,7 +536,7 @@ $ pip list
 The module should now come up with its path next to it.
 
 
-## 2.2 What goes into a `setup.py` file?
+## 1.2.2 What goes into a `setup.py` file?
 
 Here is the content of the `setup.py` file in our `example_package`:
 
@@ -549,7 +560,7 @@ We import the `setup` function from Python's built-in `setuptools` package and c
 
 Let's have a look at a few more add-ons that you can put into a `setup.py` file to make life more exciting. For a full and comprehensive description, check out the [setuptools documentation](https://setuptools.readthedocs.io/en/latest/setuptools.html).
 
-### 2.2.1 Adding installation requirements to `setup.py`
+### 1.2.2.1 Adding installation requirements to `setup.py`
 
 Often you will find yourself using other modules in your Python package - for instance when you're writing a numerical package you will most likely use `numpy` or `scipy`. You can (and should!) add this information to your `setup.py` file:
 
@@ -571,7 +582,7 @@ install_requires=['numpy>=1.13', 'scipy>=1.1']
 
 Edit the `setup.py` file in this example and re-run the installation command to see how addind requirements changes the behavior.
 
-### 2.2.2 Command-line entry points
+### 1.2.2.2 Command-line entry points
 
 As a nifty little feature of your package installation, you can create a command-line entry point - that is a command that you run in the command line which executes a certain piece of Python code associated with your package.
 
@@ -625,8 +636,7 @@ $ call_my_module
 ```
 
 
-
-# 3. Python packages - documentation, unit testing and linting
+# 2. Documentation, unit testing and linting (1 hour)
 
     “Code is more often read than written.”
 
@@ -639,7 +649,7 @@ What we take from this is that it is immensly important *how* you write your cod
 For all of those reasons, there exist coding standards - these are a collection of good practices which - when taken to heart - make each and every one of us a better person. Here we want to give you an overview of the three main components of those standards: documentation, testing and linting. And because this is a Python workshop, we use the official [PEP8 Python style guide](https://www.python.org/dev/peps/pep-0008/).
 
 
-## 3.1 Let there be documentation
+## 2.1 Let there be documentation (15 minutes)
 
 We assume that we can skip the argument on whether or not one should write documentation for code, and instead start with an illustrative example. We have an intentionally (arguably) badly written, undocumented and uncommented piece of code below. Can you figure out what it does?
 
@@ -655,6 +665,8 @@ def M(rho, n=1):
         [i for i in range(m*2)], n, p=pr)
     return [np.eye(m*2)[r,:] for r in res]
 ```
+
+*(You can find this file under examples/doc_test_lint/)*
 
 The function `M` performs a measurement on a quantum state by projecting into the z-eigenbasis. The input state needs to be a density matrix. It's used in the following fashion:
 
@@ -673,7 +685,7 @@ Now let's improve the readability of this piece of code to make it easier to use
 - Add in-line comments
 - Add documentation
 
-### 3.1.1 Code should be readable on its own
+### 2.1.1 Code should be readable on its own
 
 Of course we are advocating for commenting and documentation here, but the first thing you should consider when writing code for yourself or others is that the code should be readable on its own. You can achieve this by e.g. using self-explanatory variable names, spaces and indents, as well as spreading long lines of code over multiple lines.
 
@@ -705,7 +717,7 @@ def measure_state(state, number_of_samples=1):
 
 This is the exact same code as the one above, but with more descriptive variable names and cleaner code formatting. The overall amount of code gets longer when you do this, but we believe the gain in readability is worth it. And because it's still the same code, there are no losses in terms of performance.
 
-### 3.1.2 Comments explain why, code explains how
+### 2.1.2 Comments explain why, code explains how
 
 Now that the code is more or less readable on its own, we continue with inserting comments to offer some additional explanations on what the code is doing. The general guide lines for in-line comments are that they should be consise (you can get more verbose in the documentation), at the appropriate position in the code, and describing what and why the code is doing what it's doing. The *how* should be self-explanatory if you made your code readable following the advise from the previous section.
 
@@ -741,11 +753,11 @@ def measure_state(state, number_of_samples=1):
     ]
 ```
 
-### 3.1.3 Write documentation
+### 2.1.3 Write documentation
 
 Many people, especially those new to programming, or those working mainly on their own, stop after adding in-line comments to their code. However, as soon as a project becomes bigger or has multiple people working on or using it, writing proper documentation is crucial.
 
-In Python (and other programming languages), it is common practice to write so-called *doc-strings*. A doc-string, as the name suggests, is a string that contains documentation. These are typically spread over multiple lines and every function, class and module in Python should have one - and in fact already *has* one, implicitly. This can be exposed using a special attribute called `__doc__`, that every Python object has.
+In Python (and other programming languages), it is common practice to write so-called *docstrings*. A docstring, as the name suggests, is a string that contains documentation. These are typically spread over multiple lines and every function, class and module in Python should have one - and in fact already *has* one, implicitly. This can be exposed using a special attribute called `__doc__`, that every Python object has.
 
 Let's have a look! Open a console and type:
 
@@ -755,7 +767,7 @@ Return the number of items in a container.
 
 ```
 
-This is the doc-string of the built-in `len` function in Python. When you write your own function, you can give it a doc-string by inserting a (optionally) multi-line string right below the `def` statement:
+This is the docstring of the built-in `len` function in Python. When you write your own function, you can give it a docstring by inserting a (optionally) multi-line string right below the `def` statement:
 
 ```python
 >>> def foo():
@@ -770,11 +782,11 @@ This is the doc-string of the built-in `len` function in Python. When you write 
 ```
 And we can do the same for classes and modules.
 
-#### 3.1.3.1 What goes into a doc-string?
+#### 2.1.3.1 What goes into a docstring?
 
-A doc-string should explain what the function/class/module is used for, and how it is used. In very simple cases, it is sufficient to provide a single line doc-string, like for example in the `len` function.
+A docstring should explain what the function/class/module is used for, and how it is used. In very simple cases, it is sufficient to provide a single line docstring, like for example in the `len` function.
 
-Broadly speaking, for more complex Python functions (or classes), doc-strings should contain the following:
+Broadly speaking, for more complex Python functions (or classes), docstrings should contain the following:
 
 -  Brief explanation of the object and its purpose
 -  Enumerated description of inputs and outputs
@@ -782,7 +794,7 @@ Broadly speaking, for more complex Python functions (or classes), doc-strings sh
 -  Examples
 -  Further notes and comments
 
-Under these considerations, this is how we would write a doc-string for our `measure_state` function:
+Under these considerations, this is how we would write a docstring for our `measure_state` function:
 
 ```python
 def measure_state(state, number_of_samples=1):
@@ -811,14 +823,14 @@ def measure_state(state, number_of_samples=1):
     # source code here
 ```
 
-There are several different style guides for doc-strings. Among the most commonly used styles are:
+There are several different style guides for docstrings. Among the most commonly used styles are:
 
-- [Google doc-strings](https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings)
-- [NumPy doc-strings](https://numpydoc.readthedocs.io/en/latest/format.html)
-- [reStructured Text doc-strings](http://docutils.sourceforge.net/rst.html)
+- [Google docstrings](https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings)
+- [NumPy docstrings](https://numpydoc.readthedocs.io/en/latest/format.html)
+- [reStructured Text docstrings](http://docutils.sourceforge.net/rst.html)
 
 
-#### 3.1.3.2 New feature in Python 3.5+: type hinting
+#### 2.1.3.2 New feature in Python 3.5+: type hinting
 
 In Python version 3.5, the [typing](https://docs.python.org/3/library/typing.html) module was introduced which provides syntactic means to display input and output types - as is common practice in many other (typed) languages.
 
@@ -832,25 +844,667 @@ def greeting(name: str) -> str:
 Here, the function expects a string as input, and returns a string. Note that this is merely an annotation, you can still call the function with a different input type or change the return type of the function without getting into trouble. However, it definitely is quite neat and useful for documentation purposes.
 
   
-## 3.2. Let there be tests
+## 2.2. Let there be tests (25 minutes)
 
-- When to write tests (create a `tests/` directory in module directory)
-- Python unit testing libraries
-- Introduction to `pytest`
+It goes without saying that every code that you plan to put to use needs to be tested. Chances are you are already doing this - even if perhaps not in an automated fashion. Here we take a look at how to write automated tests, structure them, and what modules we have got available in Python to run those tests.
 
-## 3.3. Let there be linters
+### 2.2.1 Testing basics: the `assert` statement
 
-- Why lint
-- PEP8
-- Overview of Python linters
-- Introduction to `pylint`
-- Editing the `.pylintrc` file
+The core idea behind writing tests is that we know what the expected output of the function (or more general, object) that we want to test is. So what we need to do is to *assert* that the actual output matches the expected one.
 
-# 6. Controlling revision history with git
+For problems like this, Python has got the built-in `assert` statement which takes to inputs: `True` or `False`. If provided with a condition that evaluates to `True`, nothing happens and the code execution continues. If provided with `False`, it raises an `AssertionError` exception and the execution flow is interrupted.
 
-# 7. Using GitHub to share code and collaborate
+Try it for yourself:
 
-# 8. Code project
+```python
+>>> assert True # This works
+>>> assert False # This will raise an error
+---------------------------------------------------------------------------
+AssertionError                            Traceback (most recent call last)
+<ipython-input-1-a871fdc9ebee> in <module>
+----> 1 assert False
+
+AssertionError: 
+```
+
+Now let's have a look at how to use this `assert` statement to write an actual test. Suppose we have the following function:
+
+```python
+def add_two(number: float) -> float:
+    """ Adds  the number 2 to a given input float. """
+    return number + 2
+```
+
+In order to test this function, we would use the assert statement as follows:
+
+```python
+>>> assert add_two(2) == 4
+>>> assert add_two(0) == 2
+```
+
+We know what the expected outcome is, so here we assert that that's the case. Now imagine someone meddled with that function, and changed its behavior such that it no longer adds 2 to a given input. Then the `assert` statements would catch that.
+
+This was a very simple example of how to use the `assert` statement. Now let's have a look at how we can build test cases from there.
+
+### 2.2.2 Building unit tests
+
+The general layout for tests within a package is to have a separate folder for tests within your project directory.
+
+For example:
+
+```shell
+top_level_direcory/
+    - my_package/
+        - __init__.py
+        - my_module_1.py
+        - my_module_2.py
+        - ...
+    - setup.py
+    - tests/
+        - test_my_module_1.py
+        - test_my_module_2.py
+        - ... # You can never have too many tests!
+```
+
+Within the `tests` folder, we have one or more Python scripts that contain tests for each aspect of the package. A common way to organise tests is to create separate test files for the separate modules in your package.
+
+
+### Example: bulding tests for `measure_state`
+
+As an example, let's build some tests for the `measure_state` function from the documentation section. Before writing a test, you should think about:
+
+- What is the simplest example for how my function should work?
+- What are the edge cases?
+
+In our example, perhaps the simplest case would be the measurement of a pure state in the z-basis - this should always return the input state because that's the basis we're measuring in. So a test for this could look like this:
+
+```python
+# test_measurement.py
+def test_pure_state_measurement():
+    """ Testing the measurement of a pure state in Z """
+    # Test 1: State |0>, one measurement
+    state = np.array([[1, 0], [0, 0]])
+    expected_result = np.array([1, 0])
+    actual_result = measure_state(state, number_of_samples=1)
+
+    # Numpy's version of the assert statement for arrays
+    assert np.allclose(expected_result, actual_result)
+
+    # Test 2: State |1>, one measurement
+    state = np.array([[0, 0], [0, 1]])
+    expected_result = np.array([0, 1])
+    actual_result = measure_state(state, number_of_samples=1)
+
+    assert np.allclose(expected_result, actual_result)
+```
+
+Where we have used the `np.allclose` function that takes two `numpy` arrays as input and returns `True` when all elements are equal (that is, up to numeric precision), and `False` if that's not the case.
+
+Now the next thing we might do is to test that this outcome is reliable under our random sampling. So let's write another test that tests the statistics of a pure state measurement in z:
+
+```python
+# test_measurement.py
+def test_pure_state_measurement_stats():
+    """ Testing the measurement of a pure state in Z """
+    # Test 1: State |0>, 100 measurements
+    state = np.array([[1, 0], [0, 0]])
+    expected_result = np.array([1, 0])
+    actual_results = measure_state(state, number_of_samples=100)
+
+    for actual_result in actual_results:
+        assert np.allclose(expected_result, actual_result)
+```
+
+Now let's think about edge cases. If we measure a maximally mixed state in the z-basis, then we should get either outcome 50% of the time. So let's write a test for that too:
+
+```python
+# test_measurement.py
+
+def test_mixed_state_measurement_stats():
+    """ Testing the statistics of a maximally mixed state
+        measurement in Z
+    """
+    # State (|0> + |1>)/sqrt(2), 5000 measurements
+    state = np.array([[0.5, 0.5], [0.5, 0.5]])
+    number_of_samples = 5000
+    actual_results = measure_state(
+        state, number_of_samples=number_of_samples
+    )
+    # Count how often the |0> and |1> state were measured
+    _, counts = np.unique(
+        actual_results, return_counts=True, axis=0
+    )
+    tolerance = 0.05
+    assert abs(counts[0] / number_of_samples - 0.5) < tolerance
+```
+
+Here we're applying a common trick to test whether two numbers are close: we specified an acceptable tolerance and check that our outcome is close to the target value (here 0.5).
+
+Now that we have written a bunch of tests, perhaps the most straight-forward thing to do is to call all those functions in a row and make sure they all run smoothly. But this is a bit cumbersome and we don't want to do this everytime we change our code. For exactly this purpose, there exist a series of Python modules which do exactly that for us - but automated and with lots of other nifty features.
+
+
+#### 2.2.3 Running your tests - Python test suites
+
+Among the most popular test runners for Python are:
+
+- [unittest](https://docs.python.org/3/library/unittest.html)
+- [nose or nose2](https://nose2.readthedocs.io/en/latest/getting_started.html)
+- [pytest](https://docs.pytest.org/en/latest/)
+
+
+`unittest` is part of Python's standard library, while the other two modules are add-ons that you can install via `pip`. Both `unittest` and `nose` require you to build classes for every test that inherit from `unittest` baseclasses and have their own implementation of the `assert` statement. `pytest` on the other hand can use the `assert` statement directly (while also being able to work with the `unittest` and `nose` syntax). This is why in this tutorial we concentrate on `pytest` only. You can check out this [comprehensive unit test tutorial](https://realpython.com/python-testing/) to learn more about the other two test runners.
+
+#### 2.2.4 Using `pytest` to test your code
+
+`pytest` ships with most Python distributions, but should you not already have it you can install it via
+
+```shell
+$ pip install pytest
+```
+
+Once installed, you can take a look at how it's used by typing:
+
+```shell
+$ pytest --help
+usage: pytest [options] [file_or_dir] [file_or_dir] [...]
+...
+```
+
+This will print out a comprehensive list of possible arguments and expressions for `pytest`. In the simplest case, you just need to navigate to the directory where the `tests/` folder lives and simply run
+
+```shell
+$ pytest
+```
+
+`pytest` will automatically enter `tests/` folders, look through every modules whose name matches the pattern `test*.py`, and execute every function whose name matches the pattern `def test_*()`.
+
+### Problem: Run `pytest` on `test_measurement.py` (5 minutes)
+
+## \*\*\*\* PROBLEM: Run `pytest` (5 minutes) \*\*\*\*
+
+Open a terminal, navigate to the `examples/doc_test_lint/` directory and run:
+
+```shell
+$ pytest
+============================= test session starts ==============================
+platform linux -- Python 3.7.1, pytest-4.0.2, py-1.7.0, pluggy-0.8.0
+rootdir: /home/virginia/Documents/python_workshop_19/general-content/day-1-python-modules-and-git/examples/doc_test_lint, inifile:
+collected 3 items                                                              
+
+test_measurement.py ...                                                  [100%]
+
+=========================== 3 passed in 0.10 seconds ===========================
+```
+
+The output should look something like the above. Now modify one or more tests such that they fail, and rerun `pytest` on that.
+
+
+## \*\*\*\*
+
+## 2.3. Let there be linters (15 minutes)
+
+The term linting refers to the process of analysing source code in any language to flag possible programming errors, bugs and undesired stylistic constructions. A linter is a program or tool that does exactly  that.
+
+You have probably already come across linters without even noticing it. They are built into many IDEs (Integrated Development Enviroment) and flag things like unequal numbers of brackets at the beginning or end of an instruction, or when you're trying to call a function with the wrong number of arguments. As such, they are incredibly useful in letting you know that your code won't run properly - even before you first tested it.
+
+In addition to syntax testing, a linter can also provide feedback on stylistic elements: it can, for instance, detect duplicated code and recommend that you do some refactoring there. Or it can help you enforce certain style guide lines across a project, to manage, for example, naming conventions of functions and variables, or how docstrings should be formatted. Therefore, *using a linter can help you enforce and maintain proper code quality.*
+
+### 2.3.1 Choice of linter: the `pylint` module
+
+Just as we had various choices for test runners, we also have several choices for linters in Python. Check out [this comprehensive tutorial]() for an overview and some background on linting in Python.
+
+Here, we concentrate on `pylint`, a light-weight yet powerful package that integrates easily with many Python IDEs and ships with many Python distributions. If you haven't got it already you can install it via:
+
+```shell
+$ pip install pylint
+```
+
+To get an overview of how it works, simply type `pylint` into a terminal:
+
+```shell
+$ pylint
+Usage:  pylint [options] modules_or_packages
+
+  Check that module(s) satisfy a coding standard (and more !).
+
+    pylint --help
+
+  Display this help message and exit.
+...
+```
+
+Let's have a look at an example. Consider our first example of the `quantum_measurement.py` function:
+
+```python
+import numpy as np
+
+def M(rho, n=1):
+    m = rho.shape[0]//2
+    prjs =[np.kron(s[:, np.newaxis],s[:, np.newaxis].T)
+        for s in np.eye(m * 2)]
+    pr =[np.abs(np.trace(prj.dot(rho))) for prj in prjs]
+    res= np.random.choice(
+        [i for i in range(m*2)], n, p=pr)
+    return [np.eye(m*2)[r,:] for r in res]
+```
+
+Here's how `pylint` rates our code:
+
+```shell
+$ pylint measurement_1.py
+************* Module measurement_1
+measurement_1.py:13:9: C0326: Exactly one space required after assignment
+    prjs =[np.kron(s[:, np.newaxis],s[:, np.newaxis].T)
+         ^ (bad-whitespace)
+measurement_1.py:13:35: C0326: Exactly one space required after comma
+    prjs =[np.kron(s[:, np.newaxis],s[:, np.newaxis].T)
+                                   ^ (bad-whitespace)
+measurement_1.py:14:0: C0330: Wrong continued indentation (add 3 spaces).
+        for s in np.eye(m * 2)]
+        ^  | (bad-continuation)
+measurement_1.py:15:7: C0326: Exactly one space required after assignment
+    pr =[np.abs(np.trace(prj.dot(rho))) for prj in prjs]
+       ^ (bad-whitespace)
+measurement_1.py:16:7: C0326: Exactly one space required before assignment
+    res= np.random.choice(
+       ^ (bad-whitespace)
+measurement_1.py:18:0: C0304: Final newline missing (missing-final-newline)
+measurement_1.py:18:25: C0326: Exactly one space required after comma
+    return [np.eye(m*2)[r,:] for r in res]
+                         ^ (bad-whitespace)
+measurement_1.py:11:0: C0103: Function name "M" doesn't conform to snake_case naming style (invalid-name)
+measurement_1.py:11:0: C0103: Argument name "n" doesn't conform to snake_case naming style (invalid-name)
+measurement_1.py:11:0: C0111: Missing function docstring (missing-docstring)
+measurement_1.py:12:4: C0103: Variable name "m" doesn't conform to snake_case naming style (invalid-name)
+measurement_1.py:15:4: C0103: Variable name "pr" doesn't conform to snake_case naming style (invalid-name)
+
+--------------------------------------------------------------------
+Your code has been rated at -7.14/10 (previous run: -5.71/10, -1.43)
+```
+
+So overall you can tell that `pylint` isn't very  happy with our code. It even gave us a negative overall score. Note that point ratings just get added up and we could in principle disable negative scores by capping it at zero. Let's leave it at that for now though, but note that the goal -unsurprisingly- is to reach 10/10.
+
+Let's have a look at what those messages mean. We can get some information on each category of `pylint` messages by using the `--help-message` argument in the terminal:
+
+**Missing docstring**
+
+```shell
+$ pylint --help-message=missing-docstring
+:missing-docstring (C0111): *Missing %s docstring*
+  Used when a module, function, class or method has no docstring.Some special
+  methods like __init__ doesn't necessary require a docstring. This message
+  belongs to the basic checker.
+```
+
+`pylint` requires you to add docstrings to modules, classes and functions, and flags an error if it can't find them.
+
+**Bad whitespace**
+
+```shell
+$ pylint --help-message=bad-whitespace
+:bad-whitespace (C0326): *%s space %s %s %s*
+  Used when a wrong number of spaces is used around an operator, bracket or
+  block opener. This message belongs to the format checker.
+```
+
+Whitespaces are a notorious issue of discussion in Python, in particular because the entire programming syntax relies on indentation. However, what `pylint` is telling us here is that it expects whitespaces after assignments and commas, which is in fact quite reasonable - in Latex or just normal written texts you also use spaces between words and punctuation to improve readability.
+
+**Invalid name**
+
+```shell
+$ pylint --help-message=invalid-name
+:invalid-name (C0103): *%s name "%s" doesn't conform to %s*
+  Used when the name doesn't conform to naming rules associated to its type
+  (constant, variable, class...). This message belongs to the basic checker.
+```
+
+Per default, `pylint` abides to fairly well defined naming conventions for constants, variable, function and class names. To figure out `pylint` is expecting exactly we can re-run the linter with the additional argument `--include-naming-hint=y`, to find that function and variable names are being matched to the following regular expression:
+
+`(([a-z_][a-z0-9_]{2,})|(_[a-z0-9_]*)|(__[a-z][a-z0-9_]+__))$'`
+
+If you haven't come across regular expressions before, all this means is that function and variable names should have only have lower case letters, numbers and underscores and consist of at least 2 letters. 
+
+**TODO:** *Alan can you check this.*
+
+
+### 2.3.2 Don't agree with `pylint`? Make your own rules
+
+If you find some of the stylistic requirements of the default `pylint` configuration unreasonable or too cumbersome, or you would like to enforce additional, custom style codes then you can do so by editing the `.pylintrc` file. This file contains the default configuration for the linter and it is generated automatically when installing `pylint`.
+
+At any point, you can ask `pylint` to generate a copy of this file for you that you can customise as desired.
+
+## \*\*\*\* PROBLEM: DIY linting (5-10 minutes) \*\*\*\*
+
+Create and edit a `.pylintrc` file. Open a terminal and type:
+
+```shell
+$ pylint --generate-rcfile > .pylintrc
+```
+
+This will create a file called `.pylintrc` in the current directory. Open the file in your favourite editor and take a look.
+
+Find the the list of disabled messages under the `[MESSAGES CONTROL]` section, and add `bad-whitespace` to this list. Then re-run the linter using this file as follows:
+
+```shell
+$ pylint quantum_measurement.py --rcfile=<path-to-your-.pylintrc>
+```
+
+**Optional:** Can you find the expression that `pylint` uses to calculate the score and cap it at zero?
+
+## \*\*\*\*
+
+
+# 2. Controlling revision history with git (30 minutes)
+
+When you develop a piece of code, be it in Python, Matlab, Latex, or whatever else, over time you will find yourself making changes to that code, to improve, expand or simply just change the behavior of it.
+
+How do you keep track of different versions of your code there?
+
+If you're a newbie to programming, chances are you might have used different files, e.g. `my_awesome_code_v0.py`, `my_awesome_code_v1.py` and so on. While this may work in a small capacity, it certainly doesn't scale well for larger projects or when multiple people are working on the same project together and you want to keep track of who did what and when.
+
+For this reason, there exist so-called version control managers. These are programs that keep track of revision history of text-based files, allow you to store comments alongside of every revision iteration,and enable you to easily compare or switch back to older versions if required.
+
+By far the most popular choice for this is Git, which is an incredibly powerful, well-maintained, open-source project originially started by Linus Torvalds (creator of the Linux operating kernel).
+
+Git is cross-platform compatible and can be used with or without GitHub, which is an online platform that integrates Git into an online host for code projects. In order to use GitHub, you need a GitHub account. To use Git, you merely need to provide Git with some user information (like name and email) for it to keep track of what changes were made by your identity.
+
+## 2.1 Using Git in the command line (15 minutes)
+
+For this tutorial, we have installed [Git for Windows](https://git-scm.com/download/win) on the lab computers, which ships with its own Bash console.
+
+Open the Git Bash console and type `git` to get an overview of how to use it:
+
+```bash
+$ git
+usage: git [--version] [--help] [-C <path>] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+
+These are common Git commands used in various situations:
+
+start a working area (see also: git help tutorial)
+   clone      Clone a repository into a new directory
+   init       Create an empty Git repository or reinitialize an existing one
+
+work on the current change (see also: git help everyday)
+   add        Add file contents to the index
+   mv         Move or rename a file, a directory, or a symlink
+   reset      Reset current HEAD to the specified state
+   rm         Remove files from the working tree and from the index
+```
+
+At any point in time, you can call `git --help` to get more information, and, in particular, you can also call `--help` on a specific command to see how it works.
+
+Let's walk through an example of how to initialise a Git project, or, to be more specific, a *repository* as Git-speak would have us call it.
+
+### Step 1: Create an empty repository
+
+Open a Git Bash console, create a new folder and initialise an empty repository:
+
+```bash
+$ mkdir my_git_repo
+$ cd my_git_repo
+$ git init
+```
+
+This should print something like `Initialized empty Git repository in ../../my_git_repo/.git/`. And if you have a look into the folder, you will find that Git created a new folder called `.git` (you might have to enable the viewing of hidden files in your explorer). In this folder, Git stores information about all the files in the repository.
+
+At any point in time, you can call `git status` in that repository to see what's going on in the repository.
+
+### Step 2: Add a new file for tracking
+
+Now that we have the repository set up, let's create a file and add it to the file tracking index.
+
+Create a simple file called `my_file.txt` or similar, and add a few lines of text to it:
+
+```shell
+# my_file.txt
+This is a text file.
+We will track its revision history with git.
+```
+Now go back to Git Bash and type:
+
+```bash
+$ git status
+On branch master
+
+Initial commit
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	my_file.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+
+You can see that Git recognised that a new file was added to the repository, but it's telling us that the file is currently "untracked". Let's add this file to tracking via:
+
+```bash
+$ git add my_file.txt
+```
+
+Now if we print out `git status` again we should see the following:
+
+```bash
+$ git status
+On branch master
+
+Initial commit
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+	new file:   my_file.txt
+```
+
+Git has now added the file to its tracking system and expects us to *commit* the file. Committing a file means that we are saving its current status as a checkpoint in the version history. To commit our file, we run:
+
+```bash
+$ git commit -m "My first version of my_file.txt"
+[master (root-commit) eb42456] My first version of my_file.txt
+ 1 file changed, 2 insertions(+)
+ create mode 100644 my_file.txt
+```
+
+If you haven't set up a Git identiy yet, Git will at this stage ask you who you are. Follow the command prompts to provide a name and email address, and then run the command above again.
+
+Now if we run `git status` again, we should see the following:
+
+```bash
+$ git status
+On branch master
+nothing to commit, working directory clean
+```
+
+
+### \*\*\*\* PROBLEM: Change the file, add and commit (5 minutes)\*\*\*\*
+
+Now let's make a change to our file, and then add and commit the new version. Check the output of `git status` between the different stages.
+
+Then have a look at the output of `git log`.
+
+### \*\*\*\*
+
+There are a variety of options to compare different versions of a file, the most convenient ones are when using code editors that integrate with Git, like VSCode for example. GitHub too allows for a user-friendly comparison. Git also allows us to go back in time to specific versions of the code, but we won't go into much more detail on this at this stage.
+
+
+## 2.2 Using GitHub to share code and collaborate (15 Minutes)
+
+GitHub allows us to host our repositories online, which is a great way of collaborating or publishing code projects. To get started on an online repository you can:
+
+- Upload an existing repository from your local machine
+- Download an existing repository from GitHub
+
+Here we will walk through an example of downloading an existing repository, making a change to it (add and commit that change), and then uploading this change to the online repository.
+
+For this demonstration, we will use the remote repository hosted here:
+
+[https://github.com/equs-python/two-qubit-simulator](https://github.com/equs-python/two-qubit-simulator)
+
+Note that this will also form our coding project for the afternoon.
+
+We begin by making a local copy of this repository. In Git-speak this is called *cloning*.
+
+```bash
+$ git clone https://github.com/equs-python/two-qubit-simulator
+Cloning into 'two-qubit-simulator'...
+remote: Enumerating objects: 7, done.
+remote: Counting objects: 100% (7/7), done.
+remote: Compressing objects: 100% (7/7), done.
+remote: Total 385 (delta 0), reused 5 (delta 0), pack-reused 378
+Receiving objects: 100% (385/385), 49.42 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (223/223), done.
+Checking connectivity... done.
+```
+
+This will create a local folder on our computer into which the entire repository content is copied. Now we navigate into the repository, and ask for a `git status`:
+
+```bash
+$ git status
+On branch master
+nothing to commit, working directory clean
+```
+
+Now we have the project code locally. Before we start developing any code, let's install the package using:
+
+```bash
+$ python setup.py develop
+```
+
+And this should install the package for us. To start making modifications, the first thing we do is to create a separate branch for our work, like so:
+
+```bash
+$ git checkout -b new_feature
+Switched to a new branch 'new_feature'
+```
+
+A branch in Git is like a separate code-base - at the time the branch is created it has the exact same files and code as the base branch (`master`) but when we make changes to those files they won't be reflected in `master`. This is very useful for when you'd like to incorporate a new feature into an existing project without compromising the working code base.
+
+Now let's make change to the code in our `new_feature` branch. We want to add a file called `utilities.py` in which we can store some useful functions for our project. The first function we want to add is a conjugate transpose method.
+
+```python
+"""
+# utilities.py
+Contains utility functions for the two_qubit_simulator module
+"""
+import numpy as np
+
+def conjugate_transpose(array):
+    """ Calculates the conjugate transpose of an array
+
+        Parameters
+        -------
+        array : numpy ndarray
+            The array to be transposed
+        
+        Returns
+        -------
+        numpy ndarray
+            The conjugate transpose of the input array
+    """
+    return np.conjugate(
+        np.transpose(array)
+    )
+```
+
+Now let's add and commit this file to our branch.
+
+```bash
+$ git add .
+$ git commit -m "Added utilities module with conjugate transpose"
+```
+
+At this point, let's quickly check back into the master branch to see that the change we made here has not taken place in master:
+
+```bash
+$ git checkout master
+```
+
+And then we switch back to our branch using the same command.
+
+```bash
+$ git checkout new_feature
+```
+
+Now before we are finished with our new feature, we need to make two more changes: 1. we need to add our function to the `__init__.py` file, and we need to write a test for it.
+
+```python
+"""
+# __init__.py
+Initialise the two_qubit_simulator module.
+Add import statements from auxilirary modules here.
+"""
+from .utilities import conjugate_transpose
+```
+
+And to add a test for our function, we create a new file called `test_utilities.py` in the `tests/` folder, into which we write a simple test:
+
+```python
+"""
+# test_utilities.py
+Test the functions in the utilities module
+"""
+from two_qubit_simulator import conjugate_transpose
+
+def test_conjugate_transpose():
+    # Test with real-valued array
+    test_array_1 = np.array([[1, 2], [3, 4]])
+    assert np.allclose(
+        conjugate_transpose(test_array_1),
+        np.array([[1, 3], [2, 4]])
+    )
+    # Test with complex-valued array
+    test_array_1 = np.array([[1j, 2], [1j, 4]])
+    assert np.allclose(
+        conjugate_transpose(test_array_1),
+        np.array([[-1j, -1j], [2, 4]])
+    )
+```
+
+Once that's done, let's run `pylint` and `pytest` and when those two things pass, we are ready to publish our changes!
+
+```bash
+$ pylint two_qubit_simulator --rcfile=.pylintrc
+-------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
+```
+
+If nothing went wrong, this is what we should see for the linting. And for the testing:
+
+```bash
+$ pytest
+============================= test session starts ==============================
+platform linux -- Python 3.7.1, pytest-4.0.2, py-1.7.0, pluggy-0.8.0
+rootdir: /home/virginia/Desktop/two-qubit-simulator, inifile:
+collected 4 items                                                              
+
+tests/test_circuits.py .                                                 [ 25%]
+tests/test_gates.py .                                                    [ 50%]
+tests/test_qubit_register.py .                                           [ 75%]
+tests/test_utilities.py .                                                [100%]
+
+=========================== 4 passed in 0.08 seconds ===========================
+```
+
+As soon as both tests and linting passed, we are ready to add our feature to the project. For this, we're first going to upload our changes to the remote repository. In Git-speak, this is called `pushing`.
+
+```bash
+$ git push --set-upstream-origin new_feature
+```
+
+Here we push our changes to a new branch online. We only need to do this once. For any further changes we want to upload we just use `git push`.
+
+Now let's have a look on the project page!
+
+[https://github.com/equs-python/two-qubit-simulator](https://github.com/equs-python/two-qubit-simulator)
+
+In order to merge our changes into the `master` branch, we open a *Pull Request*, or PR for short. This will run `pytest` and `pylint` for us, and only if those tests pass will we be allowed to merge the PR. Moreover, the `master` branch also requires PRs to be reviewd and accepted by one of the repository administrators. We will go through this procedure online.
+
+
+# 3. Code project (2+ hours)
 
 **Note: to participate in this project you will need a GitHub account.**
 
@@ -863,7 +1517,7 @@ The package is structured as followed:
 ```shell
 two_qubit_simulator/
     - __init__.py
-    - quantum_register.py
+    - qubit_register.py
     - quantum_circuit.py
     - quantum_gates/
         - __init__.py
@@ -872,7 +1526,7 @@ two_qubit_simulator/
         - cnot.py
         - ...
 tests/
-    - test_quantum_register.py
+    - test_qubit_register.py
     - test_quantum_circuit.py
     - test_quantum_gates.py
 setup.py
@@ -882,16 +1536,16 @@ README.md
 
 The project is hosted here:
 
-[link to github repo]
+[https://github.com/equs-python/two-qubit-simulator](https://github.com/equs-python/two-qubit-simulator)
 
 Start by making a local clone of the repository and create your own branch. Depending on what part of the project you decide to work on, give your branch a descripitve name.
 
 The plan is to divide the project into the following parts:
 
-- Write the `quantum_register.py` module + tests
+- Write the `qubit_register.py` module + tests
 - Write the `quantum_circuit.py` module + tests
 - Write the `quantum_gates` module + tests
 - Write documentation and usage examples
 
-The `README.md` file contains information of how the individual modules are expected to work. Once you finished writing (and testing!) a piece of your code, make a pull request to the `development` branch. Any PR made to this branch will have to pass the automated tests and linting before it can be merged. We encourage all of you to review each others PRs.
+The `README.md` file contains information of how the individual modules are expected to work. Once you finished writing (and testing!) a piece of your code, make a pull request to the `master` branch. Any PR made to this branch will have to pass the automated tests and linting before it can be merged. We encourage all of you to review each others PRs.
 
