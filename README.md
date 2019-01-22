@@ -21,9 +21,9 @@ Below is the preliminary workshop schedule. This schedule is not finalised yet -
 | Time | Tuesday | Wednesday | Thursday | Friday |
 | ------------- |:-------------:|:-------------:|:-------------:|:-------------:|
 | 8.30 - 9.00     | Coffee on arrival | Coffee on arrival | Coffee on arrival | Coffee on arrival |
-| 9.00 - 10.30 | **Welcome remarks** <br> Getting started with Python <br> *Virginia Frey*| Packaging Python code and documentation <br> *Virginia Frey* | Interfacing with experiment hardware <br> *Lachlan Rogers* | Introduction to [pyGSTi](http://www.pygsti.info/) <br> *Kenny Rudinger & Erik Nielsen*|
+| 9.00 - 10.30 | **Welcome remarks** <br> Getting started with Python <br> *Virginia Frey*| Packaging Python code <br> *Virginia Frey* | Interfacing with experiment hardware <br> *Lachlan Rogers* | Introduction to [pyGSTi](http://www.pygsti.info/) <br> *Kenny Rudinger & Erik Nielsen*|
 | 10.30 - 11.00 | Morning tea <br> *& debugging* | Morning tea <br> *& debugging* | Morning tea <br> *& debugging* | Morning tea <br> *& debugging* |
-| 11.00 - 12.00 | Basic Python programming <br> *Alan Robertson*| Unit testing and linting <br> *Virginia Frey*| Interfacing with experiment hardware <br> *Lachlan Rogers* | Introduction to [QCoDes](http://qcodes.github.io/Qcodes/) <br> *Jana Darulová* |
+| 11.00 - 12.00 | Basic Python programming <br> *Alan Robertson*| Documenting, testing and linting <br> *Virginia Frey*| Interfacing with experiment hardware <br> *Lachlan Rogers* | Introduction to [QCoDes](http://qcodes.github.io/Qcodes/) <br> *Jana Darulová* |
 | 12.00 - 13.00 | Lunch <br> *(on your own)* | Lunch <br> *(on your own)* | Lunch <br> *(on your own)* | Lunch <br> *(catered)* |
 | 13.00 - 14.00 | Lunch <br> *(on your own)* | Lunch <br> *(on your own)* | Lunch <br> *(on your own)* | Introduction to [Qiskit](https://qiskit.org/) <br> *Anna Phan*  |
 | 14.00 - 14.30 | Advanced Python programming <br> *Virginia Frey* | Version control with git and GitHub <br> *Alan Robertson* | TBA | Break <br> *& debugging* |

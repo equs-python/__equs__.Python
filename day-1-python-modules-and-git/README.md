@@ -102,7 +102,7 @@ It is up to us how we call our namespace for imported scripts. We have seen the 
 4
 ```
 
-Now we have made an alias for our script and called it `mf`. Introducing aliases that are shorter that the actual script name is often convenient because  it reduces the amount of text you have to write!
+Now we have made an alias for our script and called it `mf`. Introducing aliases that are shorter than the actual script name is often convenient because  it reduces the amount of text you have to write!
 
 #### 1.1.1.3 Importing only selected objects
 
@@ -155,7 +155,7 @@ In this case, you can put all executable code into an `if` block with the follow
 
 `if __name__ == "__main__":`
 
-Here, `__name__` is an implicit attribut of each Python script whose value gets assigned at runtime. When the script is executed as top-level script (this means we're executing the script directly), the `__name__` is set to `"__main__"` and the condition in the `if` block evaluates to `True`. On the other hand, when we *import* our script into a different session, the `__name__` attribute gets assigned the file name of the script (test this for yourself!), and hence the condition evaluates to `False` and any code within this `if` block will not be executed.
+Here, `__name__` is an implicit attribute of each Python script whose value gets assigned at runtime. When the script is executed as top-level script (this means we're executing the script directly), the `__name__` is set to `"__main__"` and the condition in the `if` block evaluates to `True`. On the other hand, when we *import* our script into a different session, the `__name__` attribute will be different, and hence the condition evaluates to `False` and any code within this `if` block will not be executed.
 
 Let's add that block to our example:
 
@@ -185,6 +185,18 @@ $ python my_file.py
 
 And here we would get the expected output, because the script was executed as top-level script.
 
+## \*\*\*\* PROBLEM: What's my `__name__`? (5 minutes) \*\*\*\*
+
+Find out what the value of the `__name__` attribute is if a file is not executed as top-level script.
+
+- Create two Python files, e.g. `foo.py` and `bar.py`. 
+- In `bar.py` import `foo`, and vice versa.
+- In both scripts, add an `if __name__ == "__main__"` block, and in that bloch print out the name of the imported script
+- Execute both files using the terminal
+
+
+## \*\*\*\*
+
 
 ### 1.1.3 Multiple Python files and folders
 
@@ -205,7 +217,7 @@ And suppose we have two very simple functions in our two new files:
 # another_file.py
 
 def another_function(argument):
-    print('Another function call with {}'.format(argument)
+    print('Another function call with {}'.format(argument))
 ```
 
 and equivalently:
@@ -214,7 +226,7 @@ and equivalently:
 # yet_another_file.py
 
 def yet_another_function(argument):
-    print('Yet another function call with {}'.format(argument)
+    print('Yet another function call with {}'.format(argument))
 ```
 
 Now let's import those functions into an interactive session. As before, we will use the dot-notation to navigate between Python objects. In fact, when you use the auto-completion function in an `ipython` session, you can see that Python recognises the directory structure.
@@ -316,7 +328,14 @@ from yet_another_file import yet_another_function
 ```
 And you can test for yourself that this works.
 
-The `sys.path` variable contains all directories in which Python will look for modules when you're trying to import something. Take a look at what's in there with `print(sys.path)`!
+## \*\*\*\* PROBLEM: What is `sys.path`? (5 minutes) \*\*\*\*
+
+- Open a Python session and print out `sys.path`
+- Add a new path to it, and print it out again
+- Close and reopen the session, and again print out `sys.path`
+- **Optional:** How can you make permanent changes to that variable?
+
+## \*\*\*\*
 
 ## 1.2 Python package installation
 
@@ -335,6 +354,12 @@ As a first example, let's find the location of an installed Python package. Open
 ```
 
 The `__file__` attribute is another special attribute (just like the `__name__` attribute that we encountered above). It contains the path to the top-level module that is imported. Now note that the actual path will look different on every computer/operating system.
+
+## \*\*\*\* PROBLEM: Find your `site-packages` directory (5 minutes) \*\*\*\*
+
+Where are all your modules coming from? Find the path to Python's `site-packages` directory.
+
+## \*\*\*\*
 
 So does that mean that if we want a package to be available everywhere that we just need to copy it into the `site-packages` folder? For simple Python packages that do not require additional compilation the answer is yes - and, more general, every package that can be found under any of the paths listed in `sys.path` can be imported from everywhere.
 
@@ -415,37 +440,50 @@ Where we replace `<package name>` with the actual name of the package. We can al
 $ pip uninstall <package_name>
 ```
 
-To view all the packages we have installed, type:
-
-```shell
-$ pip list
-```
-
 And if you need more information on how to use a specific command with `pip`, you can add `--help` at the end of each command. For example, take a look at the output from
 
 ```shell
 $ pip install --help
 ```
 
-#### Pip installation example: the funniest joke
+## \*\*\*\* PROBLEM: List all modules with `pip` (5 minutes) \*\*\*\*
 
-**TODO** *decide whether or not we keep this example - maybe switch to a simpler package?*
+To view all the packages we have installed, type:
 
-Let's take a look at an example: We want to install a Python package called `funniest-joke`. This is a very light-weight package that contains the [funniest joke in the world](https://www.youtube.com/watch?v=ienp4J3pW7U).
+```shell
+$ pip list
+```
+Who has got the most modules installed?
 
-To install it, open a terminal and type the following:
+## \*\*\*\*
 
+
+
+## \*\*\*\* PROBLEM: Install the `funniest-joke` (20 minutes) \*\*\*\*
+
+Your task is to to install a Python package called `funniest-joke` using `pip`. This is a very light-weight package that contains the [funniest joke in the world](https://www.youtube.com/watch?v=ienp4J3pW7U).
+
+This package has a problem though: it was written for Python 2, so you will have to make it Python 3 compatible. Python 2/3 compability is one of the everyday hurdles of Python programmers, so this is an illustrative example of the real struggle in the life of a Python developer.
+
+- **Optional:** Watch the [sketch on youtube](https://www.youtube.com/watch?v=ienp4J3pW7U)
+- Install the package via `pip`:
 ```shell
 $ pip install funniest-joke
 ```
-
-Now let's have a look at this joke! Open a Python terminal and type:
+- Execute the joke like this:
 
 ```python
 >>> import funniest_joke
 >>> funniest_joke.joke()
 ```
-Now if you are running this in Python 3 (which is what we're using on all workshop computers) this code won't execute and you will see an error message. The reason for this is that this project was developed for Python 2 only.
+
+- Find and fix the **three** bugs
+- **Optional:** fix the unicode display in the `print` function
+
+If you're a newbie to Python and this isn't obvious to you, scroll down and follow the instructions below.
+
+\*\*\*\*
+
 
 Installing a Python module and not being able to use it properly because of version incompabilities is something that will happen to you a lot, so we want to use this example to show you some basic techniques on how to deal with those errors. The errors in this example aren't obvious for Python newbies, so if they don't make any sense to you right now don't be discouraged but instead try to *focus on the process of finding* those errors.
 
@@ -482,7 +520,7 @@ from .text import joke
 
 The dot infront of `.text` indicates a relative import and that's a requirement for packages in Python 3. This module was written for Python 2 only. But since we know how to fix this problem, and we know where Python keeps its packages, let's fix it!
 
-After this, the import should work as expected. However, there are still two more problems to fix. The first one relates to how Python 2 and 3 handle strings - and without going into too much detail here - what you need to do to fix it is to remove the `.decode('utf-8')` in the `text.py` file.
+After this, the import should work as expected. However, there are still two more problems to fix. The first one relates to how Python 2 and 3 handle strings - and without going into too much detail here - what you need to do to fix it is to remove the `.decode('utf-8')` in the `text.py` file. Have a look at [how strings are different in Python 2 and 3](http://python3porting.com/problems.html).
 
 And the last error message that we expect relates to the syntax of the `print` function. In Python 2, `print` is a statement and you can call it without brackets. In Python 3, you need brackets around the arguments because `print` is now a function.
 
@@ -496,17 +534,21 @@ Once you've fixed all three errors, you should be able to print out the joke! It
 
 Those symbols that you see in the text are unicode symbols that are not rendered properly in the terminal.
 
-Once you're done with this, let's uninstall this package of - indeed very questionable - humor:
+
+## \*\*\*\* PROBLEM: Uninstall the `funniest-joke` (5 minutes) \*\*\*\*
+
+Once you're done with this, let's uninstall this package again:
 
 ```shell
 $ pip uninstall funniest-joke
 ```
-
 And check that the source files have disappeared!
+
+## \*\*\*\*
 
 #### Package development
 
-Once you've installed a package, in order to make any changes to it you need to edit the files in `site-packages`, as we've done in the example above. This is quite inconvenient for when you are still actively developing a package and would like to keep the code somehwere more accessible.
+Once you've installed a package, in order to make any changes to it you need to edit the files in `site-packages`, as we've done in the problem above. This is quite inconvenient for when you are still actively developing a package and would like to keep the code somehwere more accessible.
 
 In this case, you can ask Python to make an installation that *links* to your actual package directory. In order to do that, you should install it using the `develop` keyword instead of the `install` keyword like so:
 
@@ -550,7 +592,7 @@ setup(
     name='example_package',
     version='0.0',
     description='An example Python module',
-    author='Mr. X',
+    author='Mr. Neutron',
     author_email='python@equs.org',
     packages=['example_package']
 )
@@ -580,15 +622,24 @@ You can also specify versions for those modules, by using:
 install_requires=['numpy>=1.13', 'scipy>=1.1']
 ```
 
-Edit the `setup.py` file in this example and re-run the installation command to see how addind requirements changes the behavior.
+## \*\*\*\* PROBLEM: Add installation requirements (5-10 minutes) \*\*\*\*
+
+Edit the `setup.py` file from this example and re-run the installation command to see how adding requirements changes the behavior.
+
+- Add `numpy` and `scipy` to requirements
+- Add a module that you do not have installed (e.g. `funniest-joke`)
+
+## \*\*\*\*
 
 ### 1.2.2.2 Command-line entry points
 
 As a nifty little feature of your package installation, you can create a command-line entry point - that is a command that you run in the command line which executes a certain piece of Python code associated with your package.
 
-For example, let's suppose we want to add a command line entry for a command that we call `call_my_module`, and which executes the `my_module_function` function in the `example_package` from above.
+## \*\*\*\* PROBLEM: Create a command-line entry point (20 minutes) \*\*\*\*
 
-Do do that, we add a module called `command_line.py` to our example_package:
+We want to add a command line entry for a command that we call `call_my_module`, and which executes the `my_module_function` function in the `example_package` from above.
+
+- First add a module called `command_line.py` to our example_package:
 
 ```
 example_package/
@@ -598,7 +649,7 @@ example_package/
 setup.py
 ```
 
-We let this script import our function from `example_module.py` and define a new function called `main` which executes that function:
+- Import our function from `example_module.py` and define a new function called `main` which executes that function:
 
 ```python
 # command_line.py
@@ -608,7 +659,7 @@ def main():
     my_module_function()
 ```
 
-Now, to our `setup.py` script we add:
+- Now, to the `setup.py` script you need to add:
 
 ```python
 from setuptools import setup
@@ -623,13 +674,13 @@ setup(
 
 Here we are assigning the desired function call to the command `call_my_module`.
 
-Try it out! Rerun
+- Run the installation again:
 
 ```shell
 $ python setup.py develop
 ```
 
-And then:
+- Open a terminal and type:
 
 ```shell
 $ call_my_module
@@ -1018,7 +1069,7 @@ $ pytest
 
 `pytest` will automatically enter `tests/` folders, look through every modules whose name matches the pattern `test*.py`, and execute every function whose name matches the pattern `def test_*()`.
 
-### Problem: Run `pytest` on `test_measurement.py` (5 minutes)
+
 
 ## \*\*\*\* PROBLEM: Run `pytest` (5 minutes) \*\*\*\*
 
@@ -1163,8 +1214,6 @@ Per default, `pylint` abides to fairly well defined naming conventions for const
 `(([a-z_][a-z0-9_]{2,})|(_[a-z0-9_]*)|(__[a-z][a-z0-9_]+__))$'`
 
 If you haven't come across regular expressions before, all this means is that function and variable names should have only have lower case letters, numbers and underscores and consist of at least 2 letters. 
-
-**TODO:** *Alan can you check this.*
 
 
 ### 2.3.2 Don't agree with `pylint`? Make your own rules
@@ -1503,6 +1552,8 @@ Now let's have a look on the project page!
 
 In order to merge our changes into the `master` branch, we open a *Pull Request*, or PR for short. This will run `pytest` and `pylint` for us, and only if those tests pass will we be allowed to merge the PR. Moreover, the `master` branch also requires PRs to be reviewd and accepted by one of the repository administrators. We will go through this procedure online.
 
+**TODO:** *With Alan set up SSH git*
+
 
 # 3. Code project (2+ hours)
 
@@ -1546,6 +1597,7 @@ The plan is to divide the project into the following parts:
 - Write the `quantum_circuit.py` module + tests
 - Write the `quantum_gates` module + tests
 - Write documentation and usage examples
+- Optional: write applications
 
 The `README.md` file contains information of how the individual modules are expected to work. Once you finished writing (and testing!) a piece of your code, make a pull request to the `master` branch. Any PR made to this branch will have to pass the automated tests and linting before it can be merged. We encourage all of you to review each others PRs.
 
