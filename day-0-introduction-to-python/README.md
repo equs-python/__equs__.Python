@@ -74,7 +74,9 @@ As ever, if you are stuck or unsure about what to do, ask sooner rather than lat
 
 Python is a high-level scripting language. It's quite flexible and has a well supported package library that allows it to do everything from scientific computing to running a twitter bot. The ease of use of Python does come at something of a tradeoff in performance, however in most cases the faster code development will more than offset the extra time required to run the code.
 
-For historical reasons currently Python 2 and 3 exist as slightly different languages, Python 2 support will end later this year and so it's not particularly worth going into the differences between the two except to suggest using Python 3.
+For historical reasons currently Python 2 and 3 exist as slightly different languages, Python 2 support will end later this year and so it's not particularly worth going into the differences between the two except to suggest using Python 3. 
+
+Another key point is that Python is named after 'Monty Python', hence it is somewhat obligatory that any tutorial in the language include slightly too many references to 1970s British comedy. It is noted in advance that including jokes is a generally poor design choice for any real code.
 
 ## 2.1 Command line Interpreter
 Open up the python command line interpreter (CLI) with the `python` command from your terminal emulator. As Python is an interpreted language, each line is read and executed in order. Thanks to this feature, we can use a Python terminal and simply give it Python code to execute 
@@ -130,14 +132,15 @@ Some very basic Python:
 ... What is the type of the type function?
 
 
-```
-For those who've used Matlab, Matlab is also an interpreted language and has its own Matlab terminal that is analagous to the Python terminal. This is as opposed to compiled languages that perform a series of contextual optimisations to blocks of code that may re-order or even just remove chunks of code that the compiler can optimise out. C as a compiled language may even optimise entire functions out of your code if it thinks there's a faster way to do it than creating a new stack frame.
-```
 
+# 3. Control flow
 
-# 3. Control statements
+It would be useful for Python to be more than a glorified if somewhat introspective calculator, so we need something to control the program flow. Typically these are switches (if statements) and loops (for and while). Unlike other languages blocks of code within these control statements are de-marked by indentation. Perhaps the biggest hurdle of learning to use Python is inconsistent use of tabs and spaces. To save time and effort, the correct approach according to Python is four spaces for an indent. 
 
-` `
+The start of an indented block is also indicated by a colon on the preceding line.
+
+`if spanish_inquisition is True:
+    print("") `
 
 ` `
 
@@ -153,6 +156,9 @@ Getting used to Loops and Switches:
 ... Again, if you have spare time, try to improve the performance of your code
 
 
+# 4. Collections
+
+
 ## 4 Python files
 
 It's a bit hard to reproduce code if it's always in the CLI, so we can instead put the code in a file and get the Python interpreter to read the file line by line and execute the code. These Python files normally have the `.py` extension, and can be run from the command line using 
@@ -164,7 +170,7 @@ python my_file.py
 
 ## 4.1 Command Line Input
 
-Occasionally it's useful for programs to take 
+Occasionally it's useful for a program to not just be a hard coded blob that needs to be opened and modified before 
 
 
 ## 4.2 [Problem (10 minutes)]
@@ -186,8 +192,6 @@ Just as you can read and write to files, you can read and write to processes. Th
 Modify your hailstone problem file to read from standard input instead of taking a command line argument.
 
 
-# 5. Iterators and Generators
-
 
 # 6. Functions
 At this point some of the code you have written will begin to seem somewhat unwieldy; large and long chunks of code, some repetition of code, and the start of the long descent into the general mess of spaghetti code.
@@ -201,6 +205,7 @@ def function_name(arguments):
     arguments = arguments + 1
     return arguments
 ```    
+
 
 
 ## 6.1 [Problem (5 minutes)]
@@ -238,6 +243,7 @@ arged_function(1,2, keyword='holy hand grenade', print='True')
 
 ## 6.4 [Problem (10 minutes)]
 
+# Iterators and Generators
 
 # 7. Object-oriented programming
 
@@ -288,25 +294,38 @@ Notice that the abs function takes an argument 'self'. Now try running the follo
 
 The third one fails. As you may have seen from the previous help statements, the self argument is required and hence throws an error. This `self` argument is what ties our dictionary of functions together into an object or a `class`. It allows an object to reference elements of itself and hence modify or call functions that it is associated with.
 
-## 7.1
+## 7.1 Classes
 
 Classes in python require an initialiser. This is a function that is called when a new instance of the object is created, for instance 
 
 ```
->>> int
+>>> my_int = int(5)
 ```
 
+Calls the initialiser method `__init__` and returns a new instance of the integer class with the value 5.
 
 
-## 7.2
 
-## 7.3
+
+
+## 7.2 Problem
+
+
+
+
+## 7.3 Inheritance
+
+
+
+## 7.4 Problem
 
 
 
 # 8. Python libraries
 
 Here are a few useful (non-scientific) general libraries. 
+
+... ipython - A better python CLI, strict upgrade from the regular one, no reason not to use it really.
 
 ... sys - A few good system level Python features, such as command line arguments, Python versions and other utilities
 
@@ -320,6 +339,39 @@ Here are a few useful (non-scientific) general libraries.
 
 ... pickle - Good for compacting Python object data to reload it later
 
+... matplotlib - Basic plotting library, basically the same as the matlab one there are others out there but most are just fancy wrappers for this 
+
+These libraries can be included using the `import` keyword, as you've probably seen further up. You can also import libraries as a separate keyword in case you're too lazy to type out the full library name each time. For instance the numpy library is regularly imported as np.
+
+```
+import numpy as np
+``` 
+
+Each library also contains multiple Python files and functions, you can explicitly import one of those if you need, without including the entire library in your namespace. This is helpful when different libraries share keywords. 
+
+``` 
+import rand.random
+```
+or
+```
+from rand import random 
+```
+
+You can also be incredibly lazy and just import everything to the global namespace:
+
+```
+from rand import *
+```
+This may result in fiddly behaviour when two elements of the global namespace have the same name. Remembering that globals() is a dictionary, one of them will be overwritten, hence it's often much better to be more verbose. To be honest we're only really showing you this last one as an example of what not to do.
+
+
+##8.1 Problem [Over the Break]
+Run and try to debug the following code:
+
+```
+
+
+```
 
 
 ## 7.1 NumPy
