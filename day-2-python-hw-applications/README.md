@@ -98,6 +98,15 @@ The command is pretty cryptic, and was not in the documentation that I could ini
 
 Even after getting the communication to work, there was still some effort to interpret the returned information (`'032.3 24.02 00.10 00.00 00.10 0045 +023'`).
 
+More digging, and I found a PDF copy of the "MPPT-3000 Standard RS232 communication Protocol", which explains things a bit further.
+
+![image of table from MPPT comm protocol](images/pcm60x_pigs_ref.png)
+
+Aha, that crazy text string is actually listing the ascii hex codes for "QPIGS" with some end-of-line carriage return characters! I think things are making sense, but what the heck is that table showing two definitions of "F" in the notes column? And what about "M is an integer..."? Where is "M" anyway?
+
+These docs are probably buggy.
+
+Sadly, the docs are mostly buggy.
 
 The really important detail is that the code is simple but the documentation was terrible.
 
