@@ -103,7 +103,7 @@ The really important detail is that the code is simple but the documentation was
 
 ## 1.3 Text-based communication (Coherent Obis laser)
 
-The basic set_power method looks fairly straight-forward:
+Here is a list of code that sets the output power of this laser:
 
 ```python
 import serial
@@ -153,19 +153,26 @@ Of course, there are plenty more commands available in this communication vocabu
 
 ![Sample content from the OBIS Command quick reference](images/obis_manual_command_list_eg.png)
 
+We want to use many of these commands, but do not want to have to write out the communication structure every time.
+
+**Note:** *Code duplication is EVIL.*
+
+**Exercise:** Can you think of some reasons why?
+
+So let's write some methods that we can reuse multiple times.
+
 ```python
-def set_power(self, power):
-    """ Set laser power
-    @param float power: desired laser power in watts
+def _send(self, message):
+    """ Send a message to to laser
+    @param string message: message to be delivered to the laser
     """
-    self._communicate('SOUR:POW:LEV:IMM:AMPL {}'.format(power))
+    new_message = message + self.eol
+    self.obis.write(new_message.encode())
 ```
 
-What tricks are hiding in `self._communicate` I wonder?
+That will be enough for some commands, but often we want to know how the device responds to a query. This new method takes `_send` and builds on it to process the response.
 
 ```python
-
-
 def _communicate(self, message):
     """ Send a receive messages with the laser
     @param string message: message to be delivered to the laser
@@ -194,23 +201,20 @@ def _communicate(self, message):
     return full_response
 ```
 
-And here there seem to be some tricks in `self._send`
+We don't want to remember all those cryptic commands. Let's make a method to set power in a more user-friendly way.
 
 ```python
-def _send(self, message):
-    """ Send a message to to laser
-    @param string message: message to be delivered to the laser
+def set_power(self, power):
+    """ Set laser power
+    @param float power: desired laser power in watts
     """
-    new_message = message + self.eol
-    self.obis.write(new_message.encode())
+    self._communicate('SOUR:POW:LEV:IMM:AMPL {}'.format(power))
 ```
-
-**TODO:** Re-write this out as a simple example, then show how it was wrapped up into general functions.
-
-
 
 
 ## 1.3 Thorlabs APT-motor rotational stage (Windows DLL and ctypes)
+
+
 
 ## 1.4 Deeper levels of hell 
 
