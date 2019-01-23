@@ -19,7 +19,7 @@ Here are the specific topics of the day:
 3. Tips, Tricks, and Teasers
 4. Installfest / Hackathon
 
-*Caveat*: I make no claim to be "the best" at this stuff. Many of my code examples are taken from real lab software I have worked on, and it may not be optimal.
+*Caveat*: I make no claim to be "the best" at this stuff. Many of my code examples are taken from real lab software I have worked on; it works, but it may not be optimal.
 
 
 
@@ -41,15 +41,48 @@ In this section we present a variety of case studies to highlight how useful Pyt
 
 ## 1.1 Automated experiment
 
-Show plot of data (recently presented at AIP in Perth).
+### Topical example
 
-This measurement consists of:
-- Go through a set of points-of-interest.
-- For each one, we want fluorescence spectra to be recorded at a variety of laser powers *and* a range of temperatures (heater currents).
+Consider the following dataset, which was presented at the AIP Congress in Perth. The distance between two peaks in a photoluminescence spectrum ("Stokes shift") is shown versus both heater current and laser power.
+
+![Colour plot of automated data](images/20181119_stokes_shift_matrix.png)
+
+
+This measurement consists recording spectra at two wavelengths, at every combination of laser power and heater current (both divided into a range of 20 values). That's 400 measurement points, and each spectrum can take as long as 20 minutes for the low laser powers!
+
+Far too laborious even for a Masters student...
+
+### Structuring the problem
+
+We can think of this experiment as:
+- For each heater current:
+  - For each laser power:
+    - Record the spectra.
+    - Find the peak positions.
+    - Calculate the distance between them ("shift").
+
+This looks quite a lot like nested `for` loops!
+
+And the image is for just one nanodiamond; in the lab this measurement was repeated for numerous nanodiamonds. We could achieve this with another layer of `for` loop.
+
+*(Yes, the dataset shown above really did take days to measure even with round-the-clock autonomous operation)*
+
+### Gluing multiple devices together
+
+Doing this experiment autonomously requires Python to:
+- adjust the heater current (control a power supply),
+- set the laser power,
+- acquire spectra,
+- re-align on the fluorescent ND to counteract physical drift of optical alignment.
+
+Clearly we need to think a bit about Python and hardware.
 
 ## 1.2 Text-based querying for logging (PCM60x charge controller)
 
-Excellent simple example as a warm-up. The charge controller for my home-built solar-charged home battery.
+Excellent simple example as a warm-up. The charge controller for my home-built solar-charged home battery. I wanted to produce a live online plot of the charging current and battery voltage so that I could monitor progress while not at home.
+
+I went searching online for what might be possbile in Python, and after some time (measured in days) I found https://github.com/solarsnoop/PCM60X-Monitor/blob/master/emoncms.py
+which gave me the basic idea to follow. Querying the device to log charge current is only a few lines of code:
 
 ```python
 import serial
