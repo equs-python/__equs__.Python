@@ -60,6 +60,36 @@ The really important detail is that the code is simple but the documentation was
 The basic set_power method looks fairly straight-forward:
 
 ```python
+import serial
+
+eol = '\r'
+com_port = 'COM1'
+
+obis = serial.Serial(com_port, timeout=1)
+
+new_power = 10e-3
+message = 'SOUR:POW:LEV:IMM:AMPL {}'.format(new_power) + eol
+obis.write(message.encode())
+
+time.sleep(0.1)
+
+response_len = obis.inWaiting()
+response = []
+
+while response_len > 0:
+    this_response_line = obis.readline().decode().strip()
+    response.append(this_response_line)
+    response_len = self.obis.inWaiting()
+
+# Potentially multi-line responses - need to be joined into string
+full_response = ''.join(response)
+```
+
+Most of this is quite readable Python code. The message to send to the OBIS laser is a bit cryptic. It can be read as `SOURce:POWer:LEVel:IMMediate:AMPLitude <value>` and is described in the Operators Manual (Appendix C):
+
+![Snippet of Obis operators manual](images/obis_manual_set_power.png)
+
+```python
 def set_power(self, power):
     """ Set laser power
     @param float power: desired laser power in watts
