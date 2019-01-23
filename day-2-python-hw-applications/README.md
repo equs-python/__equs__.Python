@@ -19,6 +19,8 @@ Here are the specific topics of the day:
 3. Tips, Tricks, and Teasers
 4. Installfest / Hackathon
 
+*Caveat*: I make no claim to be "the best" at this stuff. Many of my code examples are taken from real lab software I have worked on, and it may not be optimal.
+
 
 
 ## Getting started
@@ -50,14 +52,6 @@ This measurement consists of:
 Excellent simple example as a warm-up. The charge controller for my home-built solar-charged home battery.
 
 ```python
-# Copy code here
-```
-
-The really important detail is that the code is simple but the documentation was terrible.
-
-## 1.2 Text-based communication (PCM60x solar charge controller)
-
-```python
 import serial
 # Connect serial
 ser = serial.Serial(port='/dev/ttyACM0', baudrate=2400, timeout=2)
@@ -67,7 +61,14 @@ ser.read()
 ser.read()
 ```
 
-## 1.2 Text-based communication (Coherent Obis laser)
+The command is pretty cryptic, and was not in the documentation that I could initially find.
+
+Even after getting the communication to work, there was still some effort to interpret the returned information (`'032.3 24.02 00.10 00.00 00.10 0045 +023'`).
+
+
+The really important detail is that the code is simple but the documentation was terrible.
+
+## 1.3 Text-based communication (Coherent Obis laser)
 
 The basic set_power method looks fairly straight-forward:
 
