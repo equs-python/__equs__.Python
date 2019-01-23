@@ -223,7 +223,13 @@ def set_power(self, power):
 
 ## 1.3 Thorlabs APT-motor rotational stage (Windows DLL and ctypes)
 
+Sometimes there will be a DLL file givng us access to the device driver.
 
+```python
+from ctypes import c_long, c_buffer, c_float, windll, pointer
+
+path_dll = 'thirdparty/thorlabs/win64/APT.dll'
+aptdll = windll.LoadLibrary(path_dll)
 
 ## 1.4 Deeper levels of hell 
 
