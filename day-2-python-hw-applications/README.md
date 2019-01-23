@@ -55,6 +55,18 @@ Excellent simple example as a warm-up. The charge controller for my home-built s
 
 The really important detail is that the code is simple but the documentation was terrible.
 
+## 1.2 Text-based communication (PCM60x solar charge controller)
+
+```python
+import serial
+# Connect serial
+ser = serial.Serial(port='/dev/ttyACM0', baudrate=2400, timeout=2)
+ser.write(b"\x51\x50\x49\x47\x53\xB7\xA9\x0D")
+result = ser.read(70)
+ser.read()
+ser.read()
+```
+
 ## 1.2 Text-based communication (Coherent Obis laser)
 
 The basic set_power method looks fairly straight-forward:
@@ -87,7 +99,25 @@ full_response = ''.join(response)
 
 Most of this is quite readable Python code. The message to send to the OBIS laser is a bit cryptic. It can be read as `SOURce:POWer:LEVel:IMMediate:AMPLitude <value>` and is described in the Operators Manual (Appendix C):
 
+> Set/Query Laser Power Level
+> 
+> Sets present laser power level in watts. Setting power level does not turn the laser on.
+> 
+> Command: SOURce:POWer:LEVel:IMMediate:AMPLitude \<value\>
+>
+> Query: SOURce:POWer:LEVel:IMMediate:AMPLitude?
+>
+> Reply: \<x.xxxxx\>
+>
+> The reply string represents the present laser power level setting as an NRf value in watts.
+
+**TODO:** Decide whether quote (above) or screenshot (below) is better.
+
 ![Snippet of Obis operators manual](images/obis_manual_set_power.png)
+
+Of course, there are plenty more commands available in this communication vocabulary. Appendix C lists more than 3 pages in its opening Quck Reference table:
+
+![Sample content from the OBIS Command quick reference](images/obis_manual_command_list_eg.png)
 
 ```python
 def set_power(self, power):
