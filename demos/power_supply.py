@@ -22,6 +22,15 @@ class PowerSupplyGui(QtWidgets.QMainWindow):
         self.ui.ch1_activate_pushButton.clicked.connect(self.gui_activate_ch1)
         self.ui.ch2_activate_pushButton.clicked.connect(self.gui_activate_ch2)
 
+
+        # Connect signals from Logic
+        self.ps_logic.outputs_updated_signal.connect(self.test)
+        self.ps_logic.outputs_updated_signal2.connect(self.test2)
+
+        # Style for GUI elements that act as LED notifications
+        self.led_on_style = "QLabel { background-color: rgba(255, 75, 0, 255); color:rgba(0, 200, 0, 255); }"
+
+
     def gui_set_ch1_volt(self):
         new_v = self._get_qdial_value(self.ui.ch1_volt_dial)
         self.ui.ch1_volt_lcdNumber.display(new_v)
@@ -65,10 +74,22 @@ class PowerSupplyGui(QtWidgets.QMainWindow):
         """
         return qdial_obj.value() / 10
 
+    def test(self):
+        self.ui.ch1_v_limited_led_label.setStyleSheet(self.led_on_style)
 
-class PowerSupplyLogic():
+    def test2(self):
+        self.ui.ch1_v_limited_led_label.setStyleSheet("")
+
+
+class PowerSupplyLogic(QtCore.QObject):
+
+    # Signals for the GUI to listen to for changes to power supply settings.
+    outputs_updated_signal = QtCore.pyqtSignal()
+    outputs_updated_signal2 = QtCore.pyqtSignal()
 
     def __init__(self):
+        super(PowerSupplyLogic, self).__init__()
+
         self.loads = [0, 10]
 
         self._v_set = [0, 0]
@@ -89,14 +110,14 @@ class PowerSupplyLogic():
                                              self._i_set[channel],
                                              self.loads[channel]
                                              )
+            self.outputs_updated_signal.emit()
 
         else:
             out_v, out_i = self._v_set[channel], self._i_set[channel]
+            self.outputs_updated_signal2.emit()
 
         self._v_act[channel] = out_v
         self._i_act[channel] = out_i
-
-        print('Channel {} output at {}V and {}A'.format(channel, out_v, out_i))
 
     def _calc_output(self, v_set, i_set, load):
         """ Use Ohm's law to determine whether we are limited by V or I setting.
