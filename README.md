@@ -2,8 +2,9 @@
 
 [https://equs.org/events/python-19](https://equs.org/events/python-19)
 
-This workshop introduces Python programming for people working in quantum science and quantum computing, and is run by the [ARC Centre of Excellence for Engineered Quantum Systems](https://equs.org) (EQUS). The workshop runs from Tuesday, 29/01 to Friday, 01/02/2019 at the University of Sydney, Australia. Please visit the link above for registration.
+This workshop introduces Python programming for people working in quantum science and quantum computing, and is run by the [ARC Centre of Excellence for Engineered Quantum Systems](https://equs.org) (EQUS). The workshop runs from Tuesday, 29/01 to Friday, 01/02/2019 at the [Codrington Computer Lab 5, University of Sydney, Australia](https://goo.gl/maps/1DZbCsiLMSk).
 
+Registration is now closed. Please email <python@equs.org> for late registration.
 
 This will be a hands-on workshop. We provide computers for every attendee and all the presentations will be held in tutorial style so that people can code along.
 
