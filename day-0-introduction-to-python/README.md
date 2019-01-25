@@ -1,18 +1,32 @@
-# FIRST THINGS FIRST
+# GOOD MORNING EVERYONE!
 
-Open Git Bash
+To prepare your workstation for this workshop, please install a code editor of your choice. We recommend using either
+
+- [Visual Studio Code](https://code.visualstudio.com/docs/?dv=win), or
+- [Atom](https://atom.io/)
+
+You can find the installation instructions on your Desktop.
+
+Then, download the workshop tutorials from GitHub: Open Git Bash, and type the following:
 
 ```bash
 $ git clone https://github.com/equs-python/__equs__.Python
 $ cd __equs__.Python
-$ git checkout -b my_branch
-$ code .
 ```
 
-# -1. Setup your system
-If windows, sit back and relax
-If Linux/Mac virtualbox or hyper-v
-Should be pretty straight-forward
+
+
+
+# OPENING REMARKS
+
+
+- a
+- b
+- c
+
+
+
+
 
 # Day 0 - Basic introduction to Python
 
