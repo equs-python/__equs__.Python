@@ -47,6 +47,15 @@
              <height>50</height>
             </size>
            </property>
+           <property name="maximum">
+            <number>300</number>
+           </property>
+           <property name="singleStep">
+            <number>1</number>
+           </property>
+           <property name="notchesVisible">
+            <bool>false</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -69,8 +78,11 @@
             <string>V limited</string>
            </property>
            <property name="checkable">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
+           <attribute name="buttonGroup">
+            <string notr="true">buttonGroup</string>
+           </attribute>
           </widget>
          </item>
         </layout>
@@ -84,6 +96,9 @@
              <width>0</width>
              <height>50</height>
             </size>
+           </property>
+           <property name="maximum">
+            <number>100</number>
            </property>
           </widget>
          </item>
@@ -107,8 +122,11 @@
             <string>I &amp;limited</string>
            </property>
            <property name="checkable">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
+           <attribute name="buttonGroup">
+            <string notr="true">buttonGroup</string>
+           </attribute>
           </widget>
          </item>
         </layout>
@@ -117,6 +135,9 @@
         <widget class="QPushButton" name="ch1_activate_pushButton">
          <property name="text">
           <string>Activate Output</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -155,6 +176,9 @@
              <height>50</height>
             </size>
            </property>
+           <property name="maximum">
+            <number>300</number>
+           </property>
           </widget>
          </item>
          <item>
@@ -177,8 +201,11 @@
             <string>V &amp;limited</string>
            </property>
            <property name="checkable">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
+           <attribute name="buttonGroup">
+            <string notr="true">buttonGroup_2</string>
+           </attribute>
           </widget>
          </item>
         </layout>
@@ -198,6 +225,9 @@
              <width>0</width>
              <height>50</height>
             </size>
+           </property>
+           <property name="maximum">
+            <number>100</number>
            </property>
           </widget>
          </item>
@@ -221,8 +251,11 @@
             <string>I &amp;limited</string>
            </property>
            <property name="checkable">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
+           <attribute name="buttonGroup">
+            <string notr="true">buttonGroup_2</string>
+           </attribute>
           </widget>
          </item>
         </layout>
@@ -231,6 +264,9 @@
         <widget class="QPushButton" name="ch2_activate_pushButton">
          <property name="text">
           <string>Activate Output</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -253,4 +289,8 @@
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
+ </buttongroups>
 </ui>
