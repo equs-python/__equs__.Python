@@ -1,18 +1,21 @@
 # GOOD MORNING EVERYONE!
 
+Grab a coffee, find yourself a computer and log in with user name **equsp** and password **3QU5P**.
+
 To prepare your workstation for this workshop, please install a code editor of your choice. We recommend using either
 
-- [Visual Studio Code](https://code.visualstudio.com/docs/?dv=win), or
+- [Visual Studio Code](https://code.visualstudio.com/docs/?dv=win) (this is what we are using), or
 - [Atom](https://atom.io/)
 
-You can find the installation instructions on your Desktop.
-
-Then, download the workshop tutorials from GitHub: Open Git Bash, and type the following:
+Installation instructions are provided as print-outs on the desks. Then, download the workshop tutorials from GitHub: Open Git Bash, and type the following:
 
 ```bash
 $ git clone https://github.com/equs-python/__equs__.Python
 $ cd __equs__.Python
+$ code .
 ```
+
+Type the last line only if you are using Visual Studio Code. If not, open the tutorial content in your browser: [https://github.com/equs-python/__equs__.Python](https://github.com/equs-python/__equs__.Python)
 
 
 
@@ -34,10 +37,9 @@ Here we introduce you to the basic usage of the Python language. We start with b
 
 Here's the detailed plan for the day:
 
-0. **Clone this repository onto your local machine**
 
-1. (Basic command line usage (if required))
-2. First contact with Python (optional: installation)
+1. Basic command line usage
+2. First contact with Python
 3. Using Python in the command line and in files
 4. Simple variables and control statements
 5. Functions in Python
@@ -72,7 +74,7 @@ These terminals take commands in the form of text and return responses in the fo
 | Shutdown | `shutdown now` | `poweroff -s -t 0` |
 | Restart | `restart now` | `poweroff -r -t 0` |
 | Execute a file | `<command to run file> <path to file>` | `{I've forgotten the windows one}` |
-| Executing a Python file | `python <path to file>` | `python ./<path to file>` |
+| Executing a Python file | `python <path to file>` | `python <path to file>` |
 
 It's worth noting that the tab key will auto complete paths (and some commands), making this quite a bit faster than typing everything out manually. Depending on your terminal, pressing tab twice may also list possible completions if you aren't sure what you were looking for.
 
@@ -240,8 +242,8 @@ Both of these loops have their uses, try to use one of each in the next problem.
 Getting used to Loops and Switches:
 - Write a loop to print each number from 2 to 100
 - Modify your previous code to print each even number from 2 to 100
-- Modify your previous code to print each prime number from 2 to 100
-- If you have time left over increase this to primes up to 10000 and `import time` to use the time.time() function to test the speed of your code. If you don't know what this function does, don't forget to use `help()`.
+- (Extension) Modify your previous code to print each prime number from 2 to 100
+- (Extension) If you have time left over increase this to primes up to 10000 and `import time` to use the time.time() function to test the speed of your code. If you don't know what this function does, don't forget to use `help()`.
 - Again, if you have spare time, try to improve the performance of your code
 
 
