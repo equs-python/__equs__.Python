@@ -20,37 +20,45 @@ class PowerSupplyGui(QtWidgets.QMainWindow):
         self.ui.ch2_amps_dial.valueChanged.connect(self.gui_set_ch2_amps)
 
         self.ui.ch1_activate_pushButton.clicked.connect(self.gui_activate_ch1)
+        self.ui.ch2_activate_pushButton.clicked.connect(self.gui_activate_ch2)
 
     def gui_set_ch1_volt(self):
         new_v = self._get_qdial_value(self.ui.ch1_volt_dial)
         self.ui.ch1_volt_lcdNumber.display(new_v)
 
-        self.ps_logic.set_ch1_v(new_v)
+        self.ps_logic.set_voltage(0, new_v)
 
     def gui_set_ch1_amps(self):
         new_amps = self._get_qdial_value(self.ui.ch1_amps_dial)
         self.ui.ch1_amps_lcdNumber.display(new_amps)
 
-        self.ps_logic.set_ch1_i(new_amps)
+        self.ps_logic.set_current(0, new_amps)
 
     def gui_set_ch2_volt(self):
         new_v = self._get_qdial_value(self.ui.ch2_volt_dial)
         self.ui.ch2_volt_lcdNumber.display(new_v)
 
-        self.ps_logic.set_ch2_v(new_v)
+        self.ps_logic.set_voltage(1, new_v)
 
     def gui_set_ch2_amps(self):
         new_amps = self._get_qdial_value(self.ui.ch2_amps_dial)
         self.ui.ch2_amps_lcdNumber.display(new_amps)
 
-        self.ps_logic.set_ch2_i(new_amps)
+        self.ps_logic.set_current(1, new_amps)
 
     def gui_activate_ch1(self):
         if self.ui.ch1_activate_pushButton.isChecked():
-            self.ps_logic.set_ch1_active(True)
+            self.ps_logic.activate_output(0, True)
 
         else:
-            self.ps_logic.set_ch1_active(False)
+            self.ps_logic.activate_output(0, False)
+
+    def gui_activate_ch2(self):
+        if self.ui.ch2_activate_pushButton.isChecked():
+            self.ps_logic.activate_output(1, True)
+
+        else:
+            self.ps_logic.activate_output(1, False)
 
     def _get_qdial_value(self, qdial_obj):
         """ Return QDial value divided by 10 give decimal place precision.
@@ -61,37 +69,36 @@ class PowerSupplyGui(QtWidgets.QMainWindow):
 class PowerSupplyLogic():
 
     def __init__(self):
-        self.load_1 = 0
-        self.load_2 = 10
+        self.loads = [0, 10]
 
-        self.v_1 = 0
-        self.i_1 = 0
+        self._v_set = [0, 0]
+        self._i_set = [0, 0]
 
-        self.v_2 = 0
-        self.i_2 = 0
+        self._v_act = [0, 0]
+        self._i_act = [0, 0]
 
-    def set_ch1_v(self, new_v):
-        self.v_1 = new_v
+    def set_voltage(self, channel, new_v):
+        self._v_set[channel] = new_v
 
-    def set_ch1_i(self, new_i):
-        self.i_1 = new_i
+    def set_current(self, channel, new_i):
+        self._i_set[channel] = new_i
 
-    def set_ch2_v(self, new_v):
-        self.v_2 = new_v
-
-    def set_ch2_i(self, new_i):
-        self.i_2 = new_i
-
-    def set_ch1_active(self, state):
+    def activate_output(self, channel, state):
         if state is True:
-            out_v, out_i = self._get_output(self.v_1, self.i_1, self.load_1)
+            out_v, out_i = self._calc_output(self._v_set[channel],
+                                             self._i_set[channel],
+                                             self.loads[channel]
+                                             )
 
         else:
-            out_v, out_i = self.v_1, self.i_1
+            out_v, out_i = self._v_set[channel], self._i_set[channel]
 
-        print(out_v, out_i)
+        self._v_act[channel] = out_v
+        self._i_act[channel] = out_i
 
-    def _get_output(self, v_set, i_set, load):
+        print('Channel {} output at {}V and {}A'.format(channel, out_v, out_i))
+
+    def _calc_output(self, v_set, i_set, load):
         """ Use Ohm's law to determine whether we are limited by V or I setting.
         """
         # If no load, then no current regardless of V setting
