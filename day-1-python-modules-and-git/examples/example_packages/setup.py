@@ -1,5 +1,9 @@
 """
-Setup file for the example_module
+Example file for the __equs__.Python workshop 2019
+
+https://github.com/equs-python/__equs__.Python
+
+Setup file for the example_package module.
 """
 from setuptools import setup
 

@@ -13,9 +13,9 @@ def measure_state(state, number_of_samples=1):
 
     Parameters
     ----------
-    state : numpy ndarray
+     state : numpy ndarray
         The state in density matrix representation
-    number_of_samples : int, optional
+     number_of_samples : int, optional
         How often to perform a measurement. Defaults to 1.
 
     Returns
