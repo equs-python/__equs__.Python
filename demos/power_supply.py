@@ -77,15 +77,23 @@ class PowerSupplyGui(QtWidgets.QMainWindow):
         v_limit_led = [self.ui.ch1_v_limited_led_label, self.ui.ch2_v_limited_led_label]
         amps_limit_led = [self.ui.ch1_amps_limited_led_label, self.ui.ch2_amps_limited_led_label]
 
-        volt_lcd[channel].display(self.ps_logic.get_v_act(channel))
-        amps_lcd[channel].display(self.ps_logic.get_i_act(channel))
+        if self.ps_logic.get_active_state(channel):
+            volt_lcd[channel].display(self.ps_logic.get_v_act(channel))
+            amps_lcd[channel].display(self.ps_logic.get_i_act(channel))
 
-        if self.ps_logic.get_v_act(channel) == self.ps_logic.get_v_set(channel):
-            v_limit_led[channel].setStyleSheet(self.led_on_style)
-            amps_limit_led[channel].setStyleSheet("")
-        elif self.ps_logic.get_i_act(channel) == self.ps_logic.get_i_set(channel):
-            amps_limit_led[channel].setStyleSheet(self.led_on_style)
+            if self.ps_logic.get_v_act(channel) == self.ps_logic.get_v_set(channel):
+                v_limit_led[channel].setStyleSheet(self.led_on_style)
+                amps_limit_led[channel].setStyleSheet("")
+            elif self.ps_logic.get_i_act(channel) == self.ps_logic.get_i_set(channel):
+                amps_limit_led[channel].setStyleSheet(self.led_on_style)
+                v_limit_led[channel].setStyleSheet("")
+
+        # Otherwise channel is not active, so display set values.
+        else:
+            volt_lcd[channel].display(self.ps_logic.get_v_set(channel))
+            amps_lcd[channel].display(self.ps_logic.get_i_set(channel))
             v_limit_led[channel].setStyleSheet("")
+            amps_limit_led[channel].setStyleSheet("")
 
 
 class PowerSupplyLogic(QtCore.QObject):
@@ -108,9 +116,11 @@ class PowerSupplyLogic(QtCore.QObject):
 
     def set_voltage(self, channel, new_v):
         self._v_set[channel] = new_v
+        self._update_output(channel)
 
     def set_current(self, channel, new_i):
         self._i_set[channel] = new_i
+        self._update_output(channel)
 
     def get_v_act(self, channel):
         return self._v_act[channel]
@@ -123,6 +133,9 @@ class PowerSupplyLogic(QtCore.QObject):
 
     def get_i_set(self, channel):
         return self._i_set[channel]
+
+    def get_active_state(self, channel):
+        return self._active[channel]
 
     def activate_output(self, channel, state):
         if state is not self._active[channel]:
