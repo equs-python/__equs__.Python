@@ -28,12 +28,30 @@ Once installed, you can launch it from your terminal with the `atom` command.
 ## Installation
 
 ### Windows
+An installer can be found (here)[https://atom.io/]. 
+Alternatively you can install atom using chocolatey.
+
+```
+choco install atom
+```
+
+For more details on using chocolatey, see the end of the page.
 
 ### Mac
+A .rpm file can be found (here)[https://atom.io/].
+Alternatively, you can install atom using brew.
+
+```
+brew cask install atom
+```
+
+For more details on using brew, see the end of the page.
 
 ### Linux
+A .deb file can be found (here)[https://atom.io/] or if you're more comfortable building from source (or you aren't running a debian derived distro) you can build from source from (here)[https://github.com/atom/atom/blob/master/docs/build-instructions/linux.md].
 
 ## Git Integration
+
 
 ## Linting
 
