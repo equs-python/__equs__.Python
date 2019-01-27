@@ -191,6 +191,10 @@ class PowerSupplyLogic(QtCore.QObject):
             return v_set, out_i
 
     def handle_remote_command(self, command):
+        """Parse the remote command and perform the desired action.
+
+        @param command: bytes-encoded command received over socket.
+        """
         cmd = command.decode()
 
         if cmd == 'activate 1':
@@ -208,6 +212,8 @@ class SocketCommunicator(QtCore.QObject):
         self.PORT = 65431
 
     def loop(self):
+        """Loop in the background waiting for remote commands."""
+
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             print('we got here')
             s.bind((self.HOST, self.PORT))
@@ -224,6 +230,8 @@ class SocketCommunicator(QtCore.QObject):
                     conn.sendall(data)
 
     def send(self, message):
+        """Send a response back to the client."""
+        # I do not know how to do this yet.
         pass
 
 
