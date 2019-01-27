@@ -49,8 +49,6 @@ Type the last line only if you are using Visual Studio Code. If not, open the tu
   - You are welcome to use your own computer and/or your preferred software, but we cannot promise to be able to troubleshoot any issues you encounter.
   - If you finish an exercise before others, please help others.
   - Ask sooner, not later.
-  
-**TO DO:** discuss differences betweeen Python 2 and Python 3.
 
 # Day 0 - Basic introduction to Python
 
@@ -94,10 +92,23 @@ These terminals take commands in the form of text and return responses in the fo
 | Killing a process| `kill <pid>` | `taskkill /F /PID <pid>` |
 | Shutdown | `shutdown now` | `poweroff -s -t 0` |
 | Restart | `restart now` | `poweroff -r -t 0` |
-| Execute a file | `<command to run file> <path to file>` | `{I've forgotten the windows one}` |
+| Execute a file | `<command to run file> <path to file>` | `<command to run file> <path to file>` |
 | Executing a Python file | `python <path to file>` | `python <path to file>` |
 
-It's worth noting that the tab key will auto complete paths (and some commands), making this quite a bit faster than typing everything out manually. Depending on your terminal, pressing tab twice may also list possible completions if you aren't sure what you were looking for.
+When you need to specify a path as an argument this is a relative path from the current directory. Unix paths must use the forward-slash key (as backslash is reserved to escape certain characters) while windows originally used backslashed paths and now uses both (resolving paths in Windows now requires a )
+
+There are a few useful shortcuts that are almost essential 
+
+| Command        |  Character | Example
+| ------------- |:-------------:| -----:|
+| Auto complete | tab | Just about anything really |
+| Previous command | Up arrow key | |
+| Absolute Path |  `/` or `C:/` | `cd /home/` or `cd C:/` |
+| Up a directory   |  `..` | `cd ..` |
+| Home Directory | `~` | `cd ~/Documents` |
+| Previous command | `!!`| `sudo !!` |
+
+It's worth noting that the tab key will auto complete paths (and some commands), making this quite a bit faster than typing everything out manually. Depending on how your shell is configured, pressing tab twice may also list possible completions if you aren't sure what you were looking for.
 
 The terminal is an incredibly useful tool that we will be using throughout the workshop.
 
@@ -263,7 +274,7 @@ Both of these loops have their uses, try to use one of each in the next problem.
 Getting used to Loops and Switches:
 - Write a loop to print each number from 2 to 100
 - Modify your previous code to print each even number from 2 to 100
-- (Extension) Modify your previous code to print each prime number from 2 to 100
+- Modify your previous code to print each prime number from 2 to 100
 - (Extension) If you have time left over increase this to primes up to 10000 and `import time` to use the time.time() function to test the speed of your code. If you don't know what this function does, don't forget to use `help()`.
 - Again, if you have spare time, try to improve the performance of your code
 
@@ -349,6 +360,12 @@ And lastly, negative numbers in the index of a list indicate counting backwards.
 5
 ```
 
+Lists have an addition method defined such that adding two lists returns a new list formed by concatenation:
+```
+>>> [1,2,3] + [4,5,6]
+[1,2,3,4,5,6]
+```
+ 
 There are a few other properties of lists, such as sorting, removing elements and reversing them, that you can see by checking the help function for the `list`.
 
 It's also quite easy to loop over the elements of a list in Python:
@@ -413,7 +430,44 @@ Tuples can also be declared by just a set of objects followed by commas. However
 (1, 2, 3)
 ```
 
-It's worth noting that in Python strings are tuples of characters, not lists of characters. Hence all strings are immutable. 
+It's worth noting that in Python strings are tuples of characters, not lists of characters. Hence all strings are immutable. This poses a bit of a problem as we generally want to be able to modify what we're printing. Luckily there are a few work arounds.
+
+The first is the addition method we saw with lists. Simply add two strings to concatenate them
+
+```
+>>> print("Hello" + "World")
+HelloWorld
+```
+A neater solution is the old C-style string syntax followed by the % operator and then a tuple containing the values to be inserted into the string. 
+
+```
+>>> x = 42
+>>> print("A pair of numbers: %d %s" % (42, "42"))
+A pair of numbers: 42 42
+```
+
+The downside to this method is that the type of the object must be included in the string, it's not a particularly general solution. The format method for a string solves this problem, and comes with a few different syntaxtic approaches.
+
+Format searches for and replaces instances of `{}` within strings with the arguments in the format function. It will automatically convert other types to strings if possible.
+
+```
+>>> print("The number of the counting shall be {}".format("three")")
+```
+
+Multiple inputs can be specified by considering the ordering of the arguments to the format function as if it were a tuple itself. So `{0}` refers to the first argument passed to the format method, `{1}` to the second and so on. 
+```
+>>> print("{0} shalt thou not count, nor either shall though count {1}".format('four', 2))
+```
+
+However this isn't particularly descriptive, so instead we can allocate names to the positional arguments, and specify this by name in the argument to the format function.
+```
+>>> print("Excepting that thou then proceed to {number}".format(number=3))
+```
+
+There's quite a bit more to Python strings such as bytes formatting, the format strings of 3.6 and unicode, but these are more specialist topics so we'll leave it there for now.
+
+## 4.4 Problem [5 Minutes]
+Modify the print statement in your prime finder code to use the format method when printing which numbers are prime. 
 
 
 ## 4.5 Dictionaries
@@ -428,13 +482,13 @@ In keeping with the different brackets convention, dictionaries use the curly br
 12
 ``` 
 
-Dictionaries are mutable, so you can add, remove or change elements without any issues. 
+Dictionaries are mutable, so you can add or change elements without any issues. 
 
 ```
 >>> a_dictionary['key_c'] = 15
 >>> a_dictionary['key_b'] = a_dictionary['key_c'] / 3
 ```
-Looping over a dictionary loops over the keys, not the values:
+Looping over a dictionary loops over the keys, not the values, the values can be accessed using the key as the index for the dictionary. 
 
 ```
 >>> for i in a_dictionary:
@@ -442,8 +496,11 @@ Looping over a dictionary loops over the keys, not the values:
 >>>    print('value: {}'.format(a_dictionary[i]))
 ```
 
+Removal is somewhat fiddlier and is best left alone unless there is a particularly good reason.
+
 ## 4.6 Problem
 
+[TODO]
 
 
 ## 4.7 Where are the arrays?
@@ -493,8 +550,11 @@ It's a bit hard to reproduce code if it's always in the CLI, so we can instead p
 python my_file.py
 ```
 
+## 5.1 Problem [5 Minutes]
 
-## 5.1 Command Line Input
+Try moving your Prime finder code to a file and run it from the command line.
+
+## 5.2 Command Line Input
 
 Occasionally it's useful for a program to not just be a hard coded blob that needs to be opened and modified before. One way this can be achieved is by passing command line arguments. 
 
@@ -540,16 +600,17 @@ This input will always be in string format, so you'll need to convert it to what
 | Ascii Character | Int | `ord` | 
 
 
-## 5.2 [Problem (10 minutes)]
+## 5.3 [Problem (10 minutes)]
+The (Collatz conjecture)[https://en.wikipedia.org/wiki/Collatz_conjecture] has a reasonably straight forward implementation as the 'hailstone problem'. 
 
-Implement the hailstone problem in a Python file, your program will take a single integer as a command line argument as a starting value, you should print each intermediary value.  
+Implement the hailstone problem in a Python file, your program will take a single integer as a command line argument for a starting value, you should print each intermediary value.  
 - If the number is negative or zero then the program stops
 - If the number is 1 then the program stops
 - If the number is even divide it by 2
 - If the number is odd multiply is by 3 and add one
 
 
-## 5.3 Standard Input
+## 5.4 Standard Input
 Just as you can read and write to files, you can read and write to processes. This includes your running Python program. You should be used to reading things out using the print command, but writing requires all of one more command; `input`. (Note that in Python 2 it was called `raw_input` and this code won't be backwards compatible).
 
 ```
@@ -560,7 +621,7 @@ Just as you can read and write to files, you can read and write to processes. Th
 ```
 As with the command line arguments, the input is in the form of a string. Unlike the command line arguments, the string is not delimited by whitespace, but by a new line character (the enter button, or `\n`).
 
-## 4.4 [Problem (5 minutes)]
+## 5.4 [Problem (5 minutes)]
 
 Modify your hailstone problem file to read from standard input instead of taking a command line argument.
 
@@ -581,6 +642,16 @@ def function_name(arguments):
 
 ## 6.1 [Problem (5 minutes)]
 
+Write a modulus power function. The function takes three arguments in order, the base, the exponent and the modulus and calculates: 
+
+```
+base ** exponent % modulus
+```
+
+Your function definition should something look like
+```
+def modpow(base, exponent, modulus):
+```
 
 ## 6.2 Keyword Arguments
 
@@ -616,6 +687,8 @@ def arged_function(some_argument, some_other_argument, *args, keyword='killer ra
 
 arged_function(1,2, keyword='holy hand grenade', print='True')
 ```
+
+This is of course how the format method works.
 
 ## 6.4 [Problem (10 minutes)]
 
