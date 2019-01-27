@@ -18,8 +18,6 @@ $ code .
 Type the last line only if you are using Visual Studio Code. If not, open the tutorial content in your browser: [https://github.com/equs-python/__equs__.Python](https://github.com/equs-python/__equs__.Python)
 
 
-
-
 # OPENING REMARKS
 
 
@@ -64,7 +62,6 @@ Here's the detailed plan for the day:
 5. Functions in Python
 6. Object-oriented aspects: classes and inheritance
 7. Common scientific libraries for Python
-8. If time permits: Advanced topics such as exceptions
 
 # 1. Basic command line usage
 
@@ -88,6 +85,7 @@ These terminals take commands in the form of text and return responses in the fo
 | Change Directory   |  `cd <path>` | `cd <path>` |
 | Copy a file | `cp <source> <destination>` | `cp <source> <destination>` |
 | Move a file | `mv <source> <destination>` | `mv <source> <destination>` |
+| Make a directory | `mkdir <path to new directory>` | `mkdir <path to new directory>` | 
 | List processes and pids| `ps au` (or `top` or `htop`)| `tasklist` |
 | Killing a process| `kill <pid>` | `taskkill /F /PID <pid>` |
 | Shutdown | `shutdown now` | `poweroff -s -t 0` |
@@ -115,11 +113,12 @@ It's worth noting that the tab key will auto complete paths (and some commands),
 The terminal is an incredibly useful tool that we will be using throughout the workshop.
 
 
-## 1.1 [Problem (5-10 minutes)]
+## 1.1 **** Problem (5-10 minutes) ****
 
 Get used to the command line:
 - Open up a terminal and try to navigate from your current position to the topmost (root) directory and then back to your own Documents folder.
 - Once you've managed this, try to find the process ID of your terminal emulator and get it to terminate its own process. 
+- Re-open your terminal and navigate to `__equs__.python`, in here make a new directory titled 'problems'. Keep your code from today in here.
 - If you don't have a keybinding to open your terminal, set one up.
 
 As ever, if you are stuck or unsure about what to do, ask sooner rather than later. 
@@ -128,14 +127,14 @@ As ever, if you are stuck or unsure about what to do, ask sooner rather than lat
 
 Python is a high-level scripting language. It's quite flexible and has a well supported package library that allows it to do everything from scientific computing to running a twitter bot. The ease of use of Python does come at something of a tradeoff in performance, however in most cases the faster code development will more than offset the extra time required to run the code
 
-For historical reasons currently Python 2 and 3 exist as slightly different languages, Python 2 support will end later this year and so it's not particularly worth going into the differences between the two except to suggest using Python 3. 
+For historical reasons currently Python 2 and 3 exist as slightly different languages, Python 2 support will end in less than a year and so it's not particularly worth going into the differences between the two except to suggest using Python 3. 
 
 Another key point is that Python is named after 'Monty Python', hence it is somewhat obligatory that any tutorial in the language include slightly too many references to 1970s British comedy. It is noted in advance that including jokes is a generally poor design choice for any real code.
 
 
 ## 2.1 Command line Interpreter
 
-Open up the python command line interpreter (CLI) with the `python` command from your terminal emulator. As Python is an interpreted language, each line is read and executed in order. Thanks to this feature, we can use a Python terminal and simply give it Python code to execute 
+Open up the python command line interpreter (CLI) with the `python` command from your terminal emulator. As Python is an interpreted language, each line is read and executed in order. Thanks to this feature, we can use a Python terminal and simply give it Python code to execute.
 
 Obviously, the first thing we do in any language is print the string "Hello World", I have it on good authority that the exclamation mark at the end of this string is strictly optional.
 
@@ -156,7 +155,7 @@ The regular maths operations are present (`+-/*`), as are powers: `**` and modul
 
 The up arrow key will iterate through previous commands, which is faster than typing them out.
 
-We can also assign values to variables. Unlike some other languages, Python is untyped, it decides what the best type for the variable based on the data provided.
+We can also assign values to variables. Unlike some other languages, variables in Python are untyped, the interpreter decides what the best type for the variable based on the data provided.
 
 ```python
 an_int = 2
@@ -182,7 +181,7 @@ If you don't know what a function does you can use the `help()` function to read
 help(type)
 ```
 
-## 2.3 [Problem (5 minutes)]
+## 2.3 **** Problem (5 minutes) ****
 
 Some very basic Python:
 - Initialise a variable to some negative or complex number.
@@ -206,7 +205,7 @@ A switch is a common programming language feature where if a certain condition i
 ```python
 if spanish_inquisition is True:
     print("Unexpected")
-elif spanish_inquisition is None: #elif is short for else if
+elif spanish_inquisition is None:  # elif is short for else if
     print("Probably also unexpected")
 else:
     print("No spanish inquisition here")
@@ -260,7 +259,6 @@ if (x > 5) and (x < 7):
 ## 3.2 Problem - 5 minutes   
 Write a simple chunk of Python code that determines if a number is a multiple of 13 and a multiple of 3 but not a multiple of 9. 
 
-
 ## 3.3 Loops
 
 Loops are a construct that repeat some section of code until a condition is fulfilled. If the condition cannot be fulfilled in a timely manner, they will persevere despite your efforts and you will probably need to intervene.
@@ -285,7 +283,7 @@ for i in range(10):
 
 Both of these loops have their uses, try to use one of each in the next problem.
 
-## 3.4 Problem (10 minutes)
+## 3.4 **** Problem (10 minutes) ****
 
 Getting used to Loops and Switches:
 - Write a loop to print each number from 2 to 100
@@ -412,7 +410,7 @@ True
 ```
 
 
-## 4.2 Problem
+## 4.2 **** Problem - 10 minutes ****
 
 Modify your Prime finder code such that given a list, it checks each element of the list to see if it's prime.
 
@@ -500,7 +498,7 @@ However this isn't particularly descriptive, so instead we can allocate names to
 
 There's quite a bit more to Python strings such as bytes formatting, the format strings of 3.6 and unicode, but these are more specialist topics so we'll leave it there for now.
 
-## 4.4 Problem [5 Minutes]
+## 4.4 **** Problem - 5 Minutes ****
 Modify the print statement in your prime finder code to use the format method when printing which numbers are prime. 
 
 
@@ -534,7 +532,18 @@ Removal is somewhat fiddlier and is best left alone unless there is a particular
 
 
 ## 4.7 Where are the arrays?
-In numpy, we'll get there later.
+
+While we're here, I'll briefly emphasise that lists are **not** vectors.
+
+For example, scalar multiplication is not element-wise.
+```
+>>> [1, 2, 3] * 2
+>>> [1, 2, 3, 1, 2, 3]
+``` 
+
+You could do it yourself with a simple loop, or we can wait until we get the proper objects with these properties already included.
+
+Arrays and other mathematically minded objects are in numpy, we'll get there later.
 
 
 ## 4.8 Getting into the weeds
@@ -566,7 +575,7 @@ As we can see, the 'b_list' is a list of lists, each is a copy of 'a_list'. So i
 >>> b_list[0][0] = 2
 ```
 
-## 4.9 Problem
+## 4.9 **** Problem [5 Minutes] ****
 Try running the above code and satisfy for yourself that what is happening is both perfectly logical given what a list is, and is also very silly.
 
 There is a solution to this problem, but we'll get to it later.
@@ -580,7 +589,7 @@ It's a bit hard to reproduce code if it's always in the CLI, so we can instead p
 python my_file.py
 ```
 
-## 5.1 Problem [5 Minutes]
+## 5.1 **** Problem [5 Minutes] ****
 
 Try moving your Prime finder code to a file and run it from the command line.
 
@@ -630,7 +639,7 @@ This input will always be in string format, so you'll need to convert it to what
 | Ascii Character | Int | `ord` | 
 
 
-## 5.3 [Problem (10 minutes)]
+## 5.3 **** Problem [10 minutes] ****
 The (Collatz conjecture)[https://en.wikipedia.org/wiki/Collatz_conjecture] has a reasonably straight forward implementation as the 'hailstone problem'. 
 
 Implement the hailstone problem in a Python file, your program will take a single integer as a command line argument for a starting value, you should print each intermediary value.  
@@ -651,7 +660,7 @@ Just as you can read and write to files, you can read and write to processes. Th
 ```
 As with the command line arguments, the input is in the form of a string. Unlike the command line arguments, the string is not delimited by whitespace, but by a new line character (the enter button, or `\n`).
 
-## 5.4 [Problem (5 minutes)]
+## 5.4 **** Problem [5 minutes] ****
 
 Modify your hailstone problem file to read from standard input instead of taking a command line argument.
 
@@ -684,7 +693,7 @@ a, b = some_function()
 ```
 
 
-## 6.1 [Problem (5 minutes)]
+## 6.1 **** Problem [5 minutes] ****
 
 Write a modulus power function. The function takes three arguments in order, the base, the exponent and the modulus and calculates: 
 
@@ -709,7 +718,7 @@ def function_name(arguments, keyword_arguments=default_value):
 ```
 
 
-## 6.3 [Problem (5 minutes)]
+## 6.3 **** Problem [5 minutes] ****
 
 Modify your modpow function such that it has a default modulus of `None`. If no modulus is specified it should act like a regular power function.
 
@@ -748,7 +757,7 @@ This is of course how the format method was working earlier, the position argume
 IndexError: tuple index out of range
 ``` 
 
-## 6.4 [Problem (10-15 Minutes)]
+## 6.4 **** Problem [10-15 Minutes] ****
 
 Implement a very basic version of the format function. Your function should take a string to format along with the args and kwargs. You should try to replicate the format method as closely as possible.
 
@@ -801,7 +810,7 @@ We won't cover how to build generators from functions (using the `yield` keyword
 
 Another point or two of interest that we don't have time to cover here is the `map` function and the `lambda` keyword. 
 
-## 6.6 Problem 
+## 6.6 **** Problem [10 Minutes] ****
 Using whatever approach you want, use list comprehension to construct a list of the first 50 Fibonnacci numbers.
 
 If you're stuck, you might want to write a function that calculates the nth Fibbonacci number first.
@@ -908,7 +917,7 @@ These sorts of trivial methods that just return an element of a class is commonl
         self.is_alive = is_alive
 ```
 
-## 7.2 Problem
+## 7.2 **** Problem [10 Minutes] ****
 Extend the Parrot class 
 - Write a setter to set a new 'squawk' for the parrot
 - Write a `__call__` function that makes the parrot squawk
@@ -949,7 +958,7 @@ class Parrot(Bird):
 There also exists multiple inheritance, polymorphism and several books and philosophies on the matter of Object Orientation and class hierarchies, but the general rule of thumb is do what works best for whatever it is that you're doing. 
 
 
-## 7.4 Problem
+## 7.4 **** Problem [10 Minutes] ****
 Finish off the bird class
 - Write getters and setters for air_speed_velocity
 - Check that your Parrots can now call the air speed velocity getters and setters 
@@ -1014,7 +1023,8 @@ A final Python library of incredible importance is the `this` library.
 
 
 # 9
-Python for Physics
+
+Here we'll give a brief introduction to a few libraries that are useful for scientific computing. If in doubt when using a new package, don't forget to `dir()` the package, and `help()` on anything within the package.
 
 ## 9.1 NumPy
 
@@ -1030,7 +1040,7 @@ np.sqrt
 np.array
 ```
 
-At last, arrays, vectors and matricies. Numpy can convert a list to an array. The lists must be regular and all elements must be of the same type.
+And at last, arrays, vectors and matricies. Numpy can convert a list to an array. The lists must be regular and all elements must be of the same type.
 
 ```python
 x = np.array([
