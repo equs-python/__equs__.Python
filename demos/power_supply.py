@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, QtCore
 from ui_power_supply import Ui_MainWindow
 import sys
+import socket
 
 
 class PowerSupplyGui(QtWidgets.QMainWindow):
@@ -101,6 +102,8 @@ class PowerSupplyLogic(QtCore.QObject):
     # Signals for the GUI to listen to for changes to power supply settings.
     outputs_updated_signal = QtCore.pyqtSignal(int)
 
+    start_tcp_server_signal = QtCore.pyqtSignal()
+
     def __init__(self):
         super(PowerSupplyLogic, self).__init__()
 
@@ -113,6 +116,14 @@ class PowerSupplyLogic(QtCore.QObject):
         self._i_act = [0, 0]
 
         self._active = [False, False]
+
+        # Start TCP server to listen for remote commands
+        self.socket_thread = QtCore.QThread()
+        self.socket_communicator = SocketCommunicator()
+        self.socket_communicator.moveToThread(self.socket_thread)
+        self.socket_thread.started.connect(self.socket_communicator.loop)
+        self.socket_communicator.new_command.connect(self.handle_remote_command)
+        self.socket_thread.start()
 
     def set_voltage(self, channel, new_v):
         self._v_set[channel] = new_v
@@ -178,6 +189,42 @@ class PowerSupplyLogic(QtCore.QObject):
         else:
             out_i = v_set / load
             return v_set, out_i
+
+    def handle_remote_command(self, command):
+        cmd = command.decode()
+
+        if cmd == 'activate 1':
+            self.activate_output(0, True)
+
+
+class SocketCommunicator(QtCore.QObject):
+
+    new_command = QtCore.pyqtSignal(str if sys.version_info.major <= 2 else bytes)
+
+    def __init__(self):
+        super(SocketCommunicator, self).__init__()
+
+        self.HOST = '127.0.0.1'
+        self.PORT = 65431
+
+    def loop(self):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            print('we got here')
+            s.bind((self.HOST, self.PORT))
+            s.listen()
+            conn, addr = s.accept()
+            with conn:
+                print('Connected by', addr)
+                while True:
+                    data = conn.recv(1024)
+                    self.new_command.emit(data)
+                    if not data:
+                        break
+
+                    conn.sendall(data)
+
+    def send(self, message):
+        pass
 
 
 def main():
