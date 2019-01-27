@@ -110,6 +110,8 @@ There are a few useful shortcuts that are almost essential
 
 It's worth noting that the tab key will auto complete paths (and some commands), making this quite a bit faster than typing everything out manually. Depending on how your shell is configured, pressing tab twice may also list possible completions if you aren't sure what you were looking for.
 
+It's worth noting that the tab key will auto complete paths (and some commands), making this quite a bit faster than typing everything out manually. Depending on your terminal, pressing tab twice may also list possible completions if you aren't sure what you were looking for.
+
 The terminal is an incredibly useful tool that we will be using throughout the workshop.
 
 
@@ -124,13 +126,15 @@ As ever, if you are stuck or unsure about what to do, ask sooner rather than lat
 
 # 2. Hello Python!
 
-Python is a high-level scripting language. It's quite flexible and has a well supported package library that allows it to do everything from scientific computing to running a twitter bot. The ease of use of Python does come at something of a tradeoff in performance, however in most cases the faster code development will more than offset the extra time required to run the code.
+Python is a high-level scripting language. It's quite flexible and has a well supported package library that allows it to do everything from scientific computing to running a twitter bot. The ease of use of Python does come at something of a tradeoff in performance, however in most cases the faster code development will more than offset the extra time required to run the code
 
 For historical reasons currently Python 2 and 3 exist as slightly different languages, Python 2 support will end later this year and so it's not particularly worth going into the differences between the two except to suggest using Python 3. 
 
 Another key point is that Python is named after 'Monty Python', hence it is somewhat obligatory that any tutorial in the language include slightly too many references to 1970s British comedy. It is noted in advance that including jokes is a generally poor design choice for any real code.
 
+
 ## 2.1 Command line Interpreter
+
 Open up the python command line interpreter (CLI) with the `python` command from your terminal emulator. As Python is an interpreted language, each line is read and executed in order. Thanks to this feature, we can use a Python terminal and simply give it Python code to execute 
 
 Obviously, the first thing we do in any language is print the string "Hello World", I have it on good authority that the exclamation mark at the end of this string is strictly optional.
@@ -139,12 +143,14 @@ Obviously, the first thing we do in any language is print the string "Hello Worl
 >>> print("Hello World")
 ```
 
-We can also treat it as a basic calculator:
+We can also treat it as a basic calculator
 
 ```
 >>> 1 + 2
 3
 ```
+
+The up arrow key will iterate through previous commands, which is faster than typing them out.
 
 The regular maths operations are present (`+-/*`), as are powers: `**` and modulus `%`.
 
@@ -176,7 +182,7 @@ If you don't know what a function does you can use the `help()` function to read
 help(type)
 ```
 
-## 2.2 [Problem (5 minutes)]
+## 2.3 [Problem (5 minutes)]
 
 Some very basic Python:
 - Initialise a variable to some negative or complex number.
@@ -209,7 +215,7 @@ At this point it's probably a good idea to introduce some more Python syntax. Un
 
 ```
 if True or False:
-	print("This will always return True!")
+    print("This will always return True!")
 
 if True and False:
     print("This will never execute!")
@@ -238,7 +244,7 @@ Logical statements can also be nested or grouped using brackets
 
 ```
 if (x > 5) and (x < 7):
- 	print("x might be 6")
+    print("x might be 6")
 ```
 
 ## 3.2 Problem - 5 minutes   
@@ -324,6 +330,40 @@ You can check the length of a list with the `len` method.
 >>> len(a_list)
 4
 ```
+=======
+` `
+
+` `
+
+` `
+
+## 5 Python files
+
+### Standard Input
+
+
+# 5. Iterators and Generators
+
+# 6. Functions
+
+# 7. Under the Hood
+At this point you may begin to wonder what Python is really up to and how it distinguishes between and manages all these objects. 
+
+
+```
+type()
+dir()
+```
+
+Now that we've noticed that everything is really a dictionary object, it stands to reason that we can insert, modify or remove elements from these dictionaries (assuming we have write permissions). Given that the first time we open something up, it's somewhat obligatory that we break it trying to put it back together,  
+
+# 7. Object-oriented programming
+
+# 8. Python libraries
+
+
+
+>>>>>>> Stashed changes
 
 And you can take slices of lists using colons to indicate the range of the slice
 
@@ -364,6 +404,13 @@ Lists have an addition method defined such that adding two lists returns a new l
 ```
 >>> [1,2,3] + [4,5,6]
 [1,2,3,4,5,6]
+```
+
+And by the same logic, multiplication duplicates a list.
+
+```
+>>> [1,2,3] * 2
+[1,2,3,1,2,3]
 ```
  
 There are a few other properties of lists, such as sorting, removing elements and reversing them, that you can see by checking the help function for the `list`.
@@ -429,6 +476,17 @@ Tuples can also be declared by just a set of objects followed by commas. However
 >>> print(a_tuple)
 (1, 2, 3)
 ```
+
+As we can build tuples using these separated commas, we can also unpack tuples in the same way. 
+
+```
+>>> a, b = 1, 2
+>>> print(a)
+1
+>>> print(b)
+2
+```
+This is a handy trick that will come up again later.
 
 It's worth noting that in Python strings are tuples of characters, not lists of characters. Hence all strings are immutable. This poses a bit of a problem as we generally want to be able to modify what we're printing. Luckily there are a few work arounds.
 
@@ -497,10 +555,6 @@ Looping over a dictionary loops over the keys, not the values, the values can be
 ```
 
 Removal is somewhat fiddlier and is best left alone unless there is a particularly good reason.
-
-## 4.6 Problem
-
-[TODO]
 
 
 ## 4.7 Where are the arrays?
@@ -639,6 +693,20 @@ def function_name(arguments):
     return arguments
 ```    
 
+We can also return multiple values using the tuple packing syntax we saw earlier
+
+```
+def some_function():
+    ''' Things happen '''
+    return value_a, value_b
+```
+
+This will return a tuple of the values, which can be unpacked in the manner described earlier.
+
+```
+a, b = some_function()
+```
+
 
 ## 6.1 [Problem (5 minutes)]
 
@@ -655,15 +723,24 @@ def modpow(base, exponent, modulus):
 
 ## 6.2 Keyword Arguments
 
-Sometimes you want a function to have a 'default' argument, that is assumed to always the case until specified otherwise. 
+Sometimes you want a function to have a 'default' argument, that is assumed to always the case until specified otherwise. This generally makes for neater function arguments when the function in question may have a large number of potential arguments that you don't want to explicitly specify each time.
+
+Keyword arguments should always be placed after regular arguments.
 
 ```
-
+def function_name(arguments, keyword_arguments=default_value):
+    '''Something happens'''
 ```
 
-TODO: FINISH THIS SECTION
 
 ## 6.3 [Problem (5 minutes)]
+
+Modify your modpow function such that it has a default modulus of `None`. If no modulus is specified it should act like a regular power function.
+
+```
+def modpow(base, exponent, modulus=None):
+```
+
 
 ## 6.4 Arbitrary arguments
 You may wonder at this point, that if you can simply pass a list to a function, then what's the point of ever having more than one argument? Just group all your arguments into a single list and throw that in. 
@@ -674,7 +751,7 @@ Args takes any number of positional (i.e. non keyword arguments) that aren't spe
 
 ```
 def arged_function(some_argument, some_other_argument, *args, keyword='killer rabbit'):
-	""" Something """
+    """ Something """
 
 arged_function(1,2,3,4,5,6,6,7,8,9, keyword='holy hand grenade')
 ```
@@ -683,29 +760,75 @@ And of course continuing this, what's to stop you from handing key word argument
 
 ```
 def arged_function(some_argument, some_other_argument, *args, keyword='killer rabbit', **kwargs):
-	""" Something """
+    """ Something """
 
 arged_function(1,2, keyword='holy hand grenade', print='True')
 ```
 
-This is of course how the format method works.
+This is of course how the format method was working earlier, the position argumes were passed using `*args` and became a tuple while `**kwargs` was used for the keywords. You will notice that if you attempt to access a position that doesn't exist or a keyword that doesn't exist then the format function will throw an error.
 
-## 6.4 [Problem (10 minutes)]
+```
+>>> "{1}".format('5')
+IndexError: tuple index out of range
+``` 
 
-# Iterators and Generators
+## 6.4 [Problem (10-15 Minutes)]
 
-This section covers some more advanced looping techniques. And we will only briefly cover these 
+Implement a very basic version of the format function. Your function should take a string to format along with the args and kwargs. You should try to replicate the format method as closely as possible.
+
+```
+def format(format_string, *args, **kwargs):
+    ''' Things happen '''
+    return formatted_string
+```
+
+## 6.5 Iterators and Generators
+
+This section covers some more advanced looping techniques. 
 
 An iterator in Python is any object with the `__iter__` and `__next__` methods. All the collections we saw before have associated iterators that we used when looping over them. 
 
-A generator object creates iterators.  
+A generator object creates iterators which we can then loop over. The zip function can be considered a generator; it takes a set of iterables and builds an iterator that aggregates these into an iterator of tuples:
 
+```
+a = [1,2,3]
+b = [4,5,6]
 
-If you want to cheat your list building, you can use a technique called list comprehension. 
+for i in zip(a,b):
+    print(i)
+```
 
-We won't cover how to build generators from functions (using the `yield` keyword), but this is something you may want to look into at some point.
+We can of course unpack the tuple and have a loop over multiple collections.
 
-TODO: FINISH THIS SECTION
+```
+for a_element, b_element in zip(a,b):
+   print(a_element)
+   print(b_element)
+```
+
+Another useful generator is the `enumerate` function. This one returns both the element of an iterable and the index as a tuple.
+
+```
+for index, value in enumerate(a):
+    print(index)
+```
+
+We can also use the iterators for list comprehension as a bit of a cheat to build lists. Simply wrap a for loop in square braces and it becomes a list.
+
+```
+>>> squares = [i ** 2 for i in range(10)]
+>>> print(squares)
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+``` 
+
+We won't cover how to build generators from functions (using the `yield` keyword), but this is something you may want to look into at some point. 
+
+Another point or two of interest that we don't have time to cover here is the `map` function and the `lambda` keyword. 
+
+## 6.6 Problem 
+Using whatever approach you want, use list comprehension to construct a list of the first 50 Fibonnacci numbers.
+
+If you're stuck, you might want to write a function that calculates the nth Fibbonacci number first.
 
 # 7. Object-oriented programming
 
@@ -775,9 +898,9 @@ We can use the self property to store things within a particular instantiation o
 ```
 class Parrot():
 
-	def __init__(self, squawk, is_alive=True):
-		self.squawk = squawk
-		self.is_alive = is_alive
+    def __init__(self, squawk, is_alive=True):
+        self.squawk = squawk
+        self.is_alive = is_alive
 ```
 I can now make new parrots.
 
@@ -793,7 +916,7 @@ Having an initialiser is good, but what does this parrot do? Let's give it a `sq
         if self.is_alive:
             return self.squawk
         else:
-        	return None
+            return None
 ```
 
 We should now be able to call this function.
@@ -806,7 +929,7 @@ These sorts of trivial methods that just return an element of a class is commonl
 
 ```
     def set_alive(self, is_alive):
-    	self.is_alive = is_alive
+        self.is_alive = is_alive
 ```
 
 ## 7.2 Problem
@@ -830,8 +953,8 @@ This is all very high level, so let's go back to dealing with parrots. We're goi
 ```
 class Bird():
     def __init__(self, is_alive, air_speed_velocity):
-    	self.air_speed_velocity
-    	self.is_alive = is_alive
+        self.air_speed_velocity
+        self.is_alive = is_alive
 ```
 
 An in Parrot we now inherit from Bird and call the bird constructor.
@@ -843,7 +966,6 @@ class Parrot(Bird):
         super(self).__init__(is_alive) # Calls the constructor of the super class
 
 ```
-[TODO CHECK SYNTAX]
 
 There also exists multiple inheritance, polymorphism and several books and philosophies on the matter of Object Orientation and class hierarchies, but the general rule of thumb is do what works best for whatever it is that you're doing. 
 
@@ -880,6 +1002,12 @@ Here are a few useful (non-scientific) general libraries.
 
 - matplotlib - Basic plotting library, basically the same as the matlab one there are others out there but most are just fancy wrappers for this 
 
+- numpy - Numerical Python, more to follow
+
+- scipy - Scientific Python, more to follow
+
+- itertools - A bunch of very useful tools for more advanced iteration
+
 These libraries can be included using the `import` keyword, as you've probably seen further up. You can also import libraries as a separate keyword in case you're too lazy to type out the full library name each time. For instance the numpy library is regularly imported as np.
 
 ```
@@ -906,16 +1034,178 @@ This may result in fiddly behaviour when two elements of the global namespace ha
 A final Python library of incredible importance is the `this` library. 
 
 
-## 8.1 Problem [Over the Break]
-Run and try to debug the following code:
-
-```
-
-```
+# 9
+Python for Physics
 
 ## 9.1 NumPy
-	# Arrays
+
+```
+import numpy as np
+```
+
+Numpy is a numerical python library and contains a few functions that come in handy.
+
+```
+np.log
+np.sqrt
+np.array
+```
+
+At last, arrays, vectors and matricies. Numpy can convert a list to an array. The lists must be regular and all elements must be of the same type.
+
+```
+x = np.array([
+    [0, 1],
+    [1, 0]
+])
+```
+
+These arrays can be treated as tensors. Rather than lists where addition was concatination and multiplication was duplication, these will now follow the appropriate mathematical operations.
+
+```
+x + x
+x * 5
+-x
+x ** 2
+```
+
+We can still slice these arrays in the same manner as a list:
+
+```
+>>> x[:,1]
+array([1,0])
+```
+
+If we want to see the dimensions of these slices we can use the `.shape` property.
+
+```
+>>> x[:,1].shape
+(2,)
+```
+
+Of course as arrays have a shape, we can also reshape them
+
+```
+>>> x.reshape((4, 1))
+array([[0],
+       [1],
+       [1],
+       [0]])
+>>> x.reshape((1,4))
+array([[0, 1, 1, 0]])
+```
+
+As arrays must contain a single type, this type is defined by the dtype property, and can be set as a keyword argument when the array is created.
+
+```
+>>> x.dtype
+dtype('int64')
+```
+
+Numpy also offers the `dot` and `tensordot` functions for more general matrix and tensor multiplication, along with the `kron` operation for the kronecker product.
 
 ## 9.2 Matplotlib
 
-## 9.3 SciPy
+Matplotlib is a matlab like interface for plotting in Python. 
+
+We'll take advantage of the jupyter notebook interface here, so start up jupyter from your terminal with: 
+
+```
+jupyter notebook
+``` 
+Your browser should open to display your current directory tree. Once here, create a new notebook and import matplotlib. 
+
+```
+import matplotlib.pyplot as plt
+```
+
+As we'll be displaying the plots within the notebook, we need to specify that we're using matplotlib inline.
+
+```
+%matplotlib inline
+```
+
+And now we can start plotting.  
+
+```
+y_vals = [i**2 for i in range(10)]
+plt.plot(y_vals)
+```
+
+We can also specify the x coordinate positions
+
+```
+x_vals = [i**3 for i in range(10)]
+plt.plot(x_vals, y_vals)
+```
+
+Of course all good plots need a title and axis labels. 
+
+```
+plt.title('Quadratic vs Cubic')
+plt.xlabel('X')
+plt.ylabel('Y')
+```
+
+You can use latex inline equations within these strings and matplotlib will render them appropriately. For the moment, let's wrap this up as a function.
+
+```
+def quad_plot(title="Obligatory Title"):
+    plt.plot([i**2 for i in range(10)])
+    plt.xlabel('$x$')
+    plt.ylabel('$y$')
+    plt.title(title)
+```
+
+And then we can dive into styling and other tweaks. Matplotlib comes with some default styles, which we can see here:
+
+```
+for style in plt.style.available:
+    plt.figure()
+    with plt.style.context(style):
+        quad_plot(title=style)
+```
+
+Have a look through these and see if you can't find something that looks presentable.
+These styles are all fully customisable and there is a near endless amount of aesthetic tweaking you can get up to here. If you're not happy with the options on offer, the `seaborn` package has more.
+
+Matplotlib also does bar plots with `plt.bar` and can do images and two dimensional plots with `imshow`. There are a range of other plots that cover most applications.
+
+3D plots require the mplot3d package from `mpl_toolkits`.
+
+```
+from mpl_toolkits import mplot3d
+```
+
+And while we're here, let's get numpy involved
+
+```
+import numpy as np
+```
+
+The numpy linspace and meshgrid functions are quite useful for setting coordinates. The first argument is the lower bound, the second the upper and the third the number of points sampled in that range.
+
+```
+x_vals = np.linspace(-5, 5, 50)
+y_vals = np.linspace(-5, 5, 50)
+
+def quad_3d(x, y):
+    return x ** 2 + y ** 2
+
+X_coords, Y_coords = np.meshgrid(x_vals, y_vals)
+
+z_coords = quad_3d(X_coords, Y_coords)
+```
+
+We'll also save the plot object to play around with as we need to.
+
+```
+plot = plt.axes(projection='3d')
+plot.plot_surface(X_coords, y_coords, z_coords)
+```
+
+
+## 9.3 Problem
+- Use your hailstone function to plot the length of each sequence for all numbers in some range.
+- Format your plot nicely enough that somebody else approves of it
+- Nitpick someone else's plot and see if they can find a way to implement your changes
