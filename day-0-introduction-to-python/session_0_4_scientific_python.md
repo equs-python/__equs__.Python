@@ -31,11 +31,33 @@ x = np.array([
 These arrays can be treated as tensors. Rather than lists where addition was concatination and multiplication was duplication, these will now follow the appropriate mathematical operations.
 
 ```python
-x + x
-x * 5
--x
-x ** 2
+>>> x + x
+array([[0, 2],
+       [2, 0]])
+
+>>> x * 5
+
+array([[0, 5],
+       [5, 0]])
+
+>>> -x
+array([[ 0, -1],
+       [-1,  0]])
+
+>>> x ** 2
+array([[0, 1],
+       [1, 0]])
 ```
+
+We also have the special `@` operator that works for matrix multiplication. 
+
+```python
+>>> x @ x
+array([[1, 0],
+       [0, 1]])
+```
+
+There are some subtleties between this, `matmul` `dot` and `tensordot` that come down to implementation details. 
 
 We can still slice these arrays in the same manner as a list:
 
@@ -72,6 +94,13 @@ dtype('int64')
 
 Numpy also offers the `dot` and `tensordot` functions for more general matrix and tensor multiplication, along with the `kron` operation for the kronecker product.
 
+## **** Problem [10 Minutes] ****
+
+- Create the Pauli matrices using numpy. 
+- Verify that the matrices are unitary and check their commutation relations
+- You might want to write a function that calculates the commutation relations between two numpy arrays
+- [Extension] do the same for the Clifford generators + T
+
 ## 4.2 Matplotlib - Visualising data in Python
 
 Matplotlib is a matlab like interface for plotting in Python. 
@@ -81,7 +110,14 @@ We'll take advantage of the jupyter notebook interface here, so start up jupyter
 ```python
 jupyter notebook
 ``` 
-Your browser should open to display your current directory tree. Once here, create a new notebook and import matplotlib. 
+Your browser should open to display your current directory tree. Once here, create a new notebook using the button on the top right.
+
+Jupyter notebooks provide a series of 'cells' each of which can contain and execute Python code. The cells share the same global namespace and as a result variables and functions are shared between cells. This is a reasonably neat way to organise Python code and test and execute chunks of code separately. Sort of a halfway house between the CLI and code in a file.
+
+Cells can be executed using `shift + enter`
+New cells can be created using `ctrl + m` followed by `a` for above or `b` for below the current cell.
+
+With that out of the way, import matplotlib. 
 
 ```python
 import matplotlib.pyplot as plt

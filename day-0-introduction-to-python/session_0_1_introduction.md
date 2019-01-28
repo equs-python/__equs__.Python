@@ -32,13 +32,13 @@ An operating system is a series of excuses and abstractions that allow us to use
 | ------------- |-------------:|
 | Windows      | Window + r gives you a "run" window. Into this enter either cmd.exe or powershell.exe |
 | Linux      | Depends on your choice of window manager, common short cuts (mostly found in Gnome derived WMs) are Ctrl + Alt + T, but it could be just about anything. If you don't have one set, bind one. |
-| Mac | Alt + Spacebar and type in "terminal" |
+| Mac | Ctrl + Spacebar and type in "terminal" |
 
 You can replace the windows terminal emulator with Bash if you want, this can either be done by installing Git Bash, or by running Windows Subsystem for Linux (WSL). Whatever you do, it's highly recommended to set a key binding to open your terminal emulator.
 
 These terminals take commands in the form of text and return responses in the form of text (generally ASCII encoded). This common format allows us to pass text not only to commands, but take the output of one command as the input to another. 
 
-| Command        | Unix | Windows |
+| Command        | Unix (Linux or Mac) | Windows |
 | ------------- |:-------------:| -----:|
 | List Directory Contents |  `ls` | `dir` (ls will work on powershell) |
 | Change Directory   |  `cd <path>` | `cd <path>` |
@@ -64,6 +64,8 @@ There are a few useful short-cuts that are almost essential
 | Up a directory   |  `..` | `cd ..` |
 | Home Directory | `~` | `cd ~/Documents` |
 | Previous command | `!!`| `sudo !!` |
+| Interrupt a process | Ctrl + C| |
+| EOF | Ctrl + D | |
 
 It's worth noting that the tab key will auto complete paths (and some commands), making this quite a bit faster than typing everything out manually. Depending on how your shell is configured, pressing tab twice may also list possible completions if you aren't sure what you were looking for.
 
