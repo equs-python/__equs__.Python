@@ -356,7 +356,7 @@ Implement the hailstone problem in a Python file, your program will take a singl
 - If the number is odd multiply is by 3 and add one
 
 
-## 2.1.2 Standard Input
+## 2.2.2 Standard Input
 Just as you can read and write to files, you can read and write to processes. This includes your running Python program. You should be used to reading things out using the print command, but writing requires all of one more command; `input`. (Note that in Python 2 it was called `raw_input` and this code won't be backwards compatible).
 
 ```python
@@ -370,3 +370,45 @@ As with the command line arguments, the input is in the form of a string. Unlike
 ## **** Problem [5 minutes] ****
 
 Modify your hailstone problem file to read from standard input instead of taking a command line argument.
+
+## 2.3 File I/O
+
+
+Files can be read from or written to with the `'r'` and `'w'` arguments respectively. You can't do both at once. All files you open must be closed to avoid dirty edits.
+
+```python
+file_read = open('filename', 'r')
+file_read.close()
+
+file_write = open('filename', 'w')
+file_write.close()
+```
+
+Reading comes with the `read` and `readlines` commands, read takes the file buffer while readlines splits the input by the newline character. 
+
+```
+file_read.readlines()
+```
+Similarly we have the `write` and `writelines` commands that  take strings or lists of strings respectively and write them to the file.
+
+```
+file_write.write('Lumberjack')
+file.write.write_lines(['abc', '123'])
+```
+
+When writing, you will need to insert your own newline characters for line breaks. This character is `\n`.
+
+We can also control the scope of the file object, and automatically close it using the `with` keyword. When the indented block ends the associated file is automatically closed. 
+
+```python
+with open('filename', 'r') as f:
+	''' do things '''
+```
+
+Generally this is a good idea to avoid forgetting to close the file. 
+
+## **** Problem [5 Minutes] ****
+- Write `hello world` to a text file.
+- Use Python to open the file, and read the contents
+- Close the file, open it again in write mode and change the contents
+- Confirm that this has happened in your text editor
