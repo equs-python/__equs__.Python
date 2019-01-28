@@ -96,10 +96,19 @@ If the version is 3.6 or above then you're all set. If nothing comes up then you
 
 ### Option 1: Brew Python
 
+Open a terminal (Cmd+Space, type 'terminal', hit Return) and then run:
+
+```
+brew install python
+```
+
 ### Option 2: Anaconda
+
+Go to the [Anaconda download page](https://www.anaconda.com/download/#macos) and download the installer for Python 3.7. Run the installer.
 
 ### Option 3: Python
 
+Go to the [Python.org download page](https://www.python.org/downloads/) and download the latest installer. Run the installer.
 
 ## Git Setup
 
