@@ -88,9 +88,11 @@ choco install git
 Obviously Python is important for a Python workshop, you can check if you already have Python by opening a terminal using 'spotlight' (Command + Spacebar and type in `terminal`) and entering the command:
 
 ```
-python --version
+python3 --version
 ``` 
 If the version is 3.6 or above then you're all set. If nothing comes up then you need to install Python. If you've already installed Python and nothing is coming up then you likely need to add it to your system path.
+
+**NB:** Do not run ```python``` in MacOS unless you have a special reason to do so. This usually runs Python 2, not Python 3. Always run ```python3``` instead.
 
 ### Option 1: Brew Python
 
