@@ -32,7 +32,7 @@ An operating system is a series of excuses and abstractions that allow us to use
 | ------------- |-------------:|
 | Windows      | Window + r gives you a "run" window. Into this enter either cmd.exe or powershell.exe |
 | Linux      | Depends on your choice of window manager, common short cuts (mostly found in Gnome derived WMs) are Ctrl + Alt + T, but it could be just about anything. If you don't have one set, bind one. |
-| Mac | Ctrl + Spacebar and type in "terminal" |
+| Mac | Command + Spacebar and type in "terminal" |
 
 You can replace the windows terminal emulator with Bash if you want, this can either be done by installing Git Bash, or by running Windows Subsystem for Linux (WSL). Whatever you do, it's highly recommended to set a key binding to open your terminal emulator.
 
