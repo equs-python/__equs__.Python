@@ -150,6 +150,11 @@ Some very basic Python:
 - What is the type of the help function?
 - What is the type of the type function?
 
+### IPython
+
+At this point we're going to swap to an extended python CLI: `ipython`. Exit your python CLI using the `exit()` command and start up `ipython` instead. 
+
+If the ipython command throws an error, you may not have it installed, give a shout and someone will try to help you with the setup.
 
 
 ## 1.3 Control flow in Python

@@ -26,7 +26,13 @@ choco install python
 ```
 
 Once the installation has finished, close and re-open your terminal and see if Python is working.
-If it's not then you might need to add it to your system path.
+If it's not then you might need to add it to your system path. This can be done using the `SETX` command.
+
+```
+SETX PATH "%PATH%;C:\<path to Anaconda>\scripts;C:\<path to anaconda>"
+```
+
+You will need to close and re-open your terminal for the changes to be loaded.
 
 ### Python Option 2: Chocolatey Anaconda / Miniconda
 
@@ -42,40 +48,84 @@ choco install miniconda3
 ```
 
 Once the installation has finished, close and re-open your terminal and see if Python is working.
-If it's not then you might need to add it to your system path.
+If it's not then you might need to add it to your system path. This can be done using the `SETX` command.
+
+```
+SETX PATH "%PATH%;C:\<path to Anaconda>\scripts;C:\<path to anaconda>"
+```
+
+You will need to close and re-open your terminal for the changes to be loaded.
+
+You may want to later set up some proper conda environments, but for now we will simplify matters by using the default environment.
 
 ### Python Option 3: Direct install 
+If you're not going down the Chocolatey route, you can instead pick install Python directly from (here)[https://www.python.org/downloads/]. When prompted, make sure that you add anaconda to your PATH environment variable.
+This can be done using the `SETX` command.
 
-(here)[https://www.python.org/downloads/]
+```
+SETX PATH "%PATH%;C:\<path to python>\scripts;C:\<path to python>"
+```
+
+You will need to close and re-open your terminal for the changes to be loaded.
 
 
 ### Python Option 4: Anaconda / Miniconda
-(here)[https://www.anaconda.com/download/]
+And if you prefer the direct download of anaconda or miniconda you can get it from (here)[https://www.anaconda.com/download/]. You may need to manually add this to your PATH environment variable. 
+
+This can be done using the `SETX` command.
+
+```
+SETX PATH "%PATH%;C:\<path to Anaconda>\scripts;C:\<path to anaconda>"
+```
+You will need to close and re-open your terminal for the changes to be loaded.
+
+You may want to later set up some proper conda environments, but for now we will simplify matters by using the default environment.
 
 ## Python package setup
 
+We're going to need a few Python packages for today, they are:
+
+```
+ipython
+numpy
+matplotlib
+jupyter
+```
+
 ### Option 1: pip
-pip is the default Python package manager 
+pip is the default Python package manager. We'll be installing to the local user's Python environment in order to avoid any permissions issues.
+
+```
+pip install --user ipython matplotlib numpy jupyter
+```
+
+This is generally a good idea to avoid conflicts with any other package managers you might have.
 
 ### Option 2: conda
 If you've used an anaconda or miniconda install you can also use the conda package manager. This shouldn't conflict with pip but sometimes has more recent releases (which may include essential bugfixes).
 
+```
+conda install ipython matplotlib numpy jupyter
+```
+
 ### Option 3: Build from source
-If you've having a particularly bad day you may need to build from source. This will almost never happen 
+If you've having a particularly bad day you may need to build from source. This will almost never happen and is merely mentionned for completeness. 
 
 ## Git setup
 
 We're going to need a git client, the easiest way to do this is git bash for windows. 
 
 ### Git Option 1: Chocolatey
+As before we can use chocolatey to install git for windows. 
 
 ```
 choco install git 
 ```
 
 ### Git Option 2: Direct installation
+Alternatively, you can manually install it from (here)[https://gitforwindows.org/].
 
-(here)[https://gitforwindows.org/]
+## Python packages setup
 
 
 # Mac
@@ -114,10 +164,96 @@ Go to the [Python.org download page](https://www.python.org/downloads/) and down
 
 You should already have git installed. If not, please ask for help!
 
+## Python Packages
+We're going to need a few Python packages for today, they are:
+
+```
+ipython
+numpy
+matplotlib
+jupyter
+```
+
+### Option 1: pip
+pip is the default Python package manager. We'll be installing to the local user's Python environment in order to avoid any permissions issues.
+
+```
+pip install --user ipython matplotlib numpy jupyter
+```
+
+This is generally a good idea to avoid conflicts with any other package managers you might have.
+
+### Option 2: conda
+If you've used an anaconda or miniconda install you can also use the conda package manager. This shouldn't conflict with pip but sometimes has more recent releases (which may include essential bugfixes).
+
+```
+conda install ipython matplotlib numpy jupyter
+```
+
+
 # Linux
 
-##
+## Python Setup
 
-##
+### Option 1: Default Python
+For python on debian derived distros:
 
-##
+```
+sudo apt-get install python
+```
+
+And to get pip:
+
+```
+sudo apt-get install python-pip
+```
+
+This may fail to get the correct Python version on some older distro releases. In this case using a python environment manager like anaconda or pyenv is suggested.
+
+### Option 2: Anaconda/Miniconda
+You can download an installation script for either anaconda or the lighter weight miniconda from (here)[https://www.anaconda.com/download/]. When prompted at the end of your installation, let anaconda modify your .bashrc file.
+
+Re-load your bashrc file using 
+
+```
+source ~/.bashrc
+```
+
+And you should be up and running.
+
+## Git setup
+
+For debian based distros:
+
+```
+sudo apt-get install git
+```
+Other distros should have a similar package in their package manager.
+
+
+## Python Packages
+
+We're going to need a few Python packages for today, they are:
+
+```
+ipython
+numpy
+matplotlib
+jupyter
+```
+
+### Option 1: pip
+pip is the default Python package manager. We'll be installing to the local user's Python environment in order to avoid any permissions issues.
+
+```
+pip install --user ipython matplotlib numpy jupyter
+```
+
+This is generally a good idea to avoid conflicts with any other package managers you might have.
+
+### Option 2: conda
+If you've used an anaconda or miniconda install you can also use the conda package manager. This shouldn't conflict with pip but sometimes has more recent releases (which may include essential bugfixes).
+
+```
+conda install ipython matplotlib numpy jupyter
+```
