@@ -1,7 +1,7 @@
 
 # 4. Python for scientific computing
 
-While Python is a very popular programming language due to its simplicitly and expressiveness, it is also receiving increasingly more attention in the context of scientific computing. Today there is a vast amount of scientific libraries out there which help you to perform almost any numeric task you can think of - from Fourier transforms to differential equation solvers, or machine learning and clever data visualisation tools. In this section we take a look at three of the most commonly used libraries: [NumPy](https://numpy.org), [Scipy](https://scipy.org) and [Matplotlib](https://matplotlib.org).
+While Python is a very popular programming language due to its simplicitly and expressiveness, it is also receiving increasingly more attention in the context of scientific computing. Today there is a vast amount of scientific libraries out there which help you to perform almost any numeric task you can think of - from Fourier transforms to differential equation solvers, or machine learning and clever data visualisation tools. In this section we take a look at two of the most commonly used libraries: [NumPy](https://numpy.org) and [Matplotlib](https://matplotlib.org). For completeness, we also mention [Scipy](https://scipy.org) here, which essentially implements a variety of extra functionality to extend NumPy, but in the interest of time we will skip this library here.
 
 If in doubt when using a new package, don't forget to `dir()` the package, and `help()` on anything within the package.
 
@@ -11,9 +11,12 @@ If in doubt when using a new package, don't forget to `dir()` the package, and `
 import numpy as np
 ```
 
-Numpy is a numerical Python library and contains huge amount of mathematical functions that come in handy for day-to-day scientism.
+Numpy is a numerical Python library that contains huge amount of mathematical functions which come in handy for day-to-day scientism.
 
-Most notably, Numpy defines *arrays*, which are treated like matrices and can be used in the context of linear algebra or whenever else array operations are desired. To create an array, we can use the  `array` class in Numpy to convert a Python list to an array. The lists must be regular and all elements must be of the same type. For example:
+Most notably, Numpy defines *arrays*, which are treated like matrices and can be used in the context of linear 
+algebra or whenever else array operations are desired. This is not the same as nested Python lists, as we have seen in earlier tutorials today.
+
+To create an array, we can use the  `array`  class in Numpy to convert a Python list to an array. The lists must be regular and all elements must be of the same type. For example:
 
 ```python
 x = np.array([
@@ -60,11 +63,37 @@ This operation is selecting all rows from the second column.
 If we want to see the dimensions of these slices we can use the `.shape` property.
 
 ```python
->>> x[:,1].shape
+>>> x.shape # Original array
+(2, 2)
+>>> x[:, 1].shape # Sliced array (second column only)
 (2,)
 ```
 
-Of course as arrays have a shape, we can also reshape them
+The `shape` attribute is a tuple that contains the number of elements in each direction.
+
+## **** Problem: Array slicing [5 Minutes] ****
+
+For the array `x` as specified below,
+
+```python
+x = np.array([
+       [1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]
+])
+```
+
+What are the outputs of the following slicing operations? Try and have a guess first before you test it.
+
+- `x[:, 0]`
+- `x[:2, 1]`
+- `x[0, 1:]`
+- `x[:1]`
+- `x[1::2]`
+
+## ****
+
+We can also modify the shape of an array by calling the `reshape` method:
 
 ```python
 >>> x.reshape((4, 1))
@@ -76,37 +105,50 @@ array([[0],
 array([[0, 1, 1, 0]])
 ```
 
-As arrays must contain a single type, this type is defined by the dtype property, and can be set as a keyword argument when the array is created.
+Note that this operation needs to preserve all elements in the array, so the product of the individual dimensions along each axes needs to remain constant. Here we went from `2*2` to `4*1` and `1*4` respectively.
+
+Arrays in Numpy can only contain a single type. This type is defined by the `dtype` property, and can be set as a keyword argument when the array is created.
 
 ```python
 >>> x.dtype
 dtype('int64')
 ```
 
-Numpy also offers the `dot` and `tensordot` functions for more general matrix and tensor multiplication, along with the `kron` operation for the kronecker product.
+When we created this array, this type was chosen as default. If we had created an array with floating point numbers, Numpy would have defaulted to `'float64'`, which stands for 64-bit floating point numbers.
+
+```python
+>>> y = np.array([0.5]).dtype
+dtype('float64')
+```
+
+Note that this is not a built-in Python type, but instead a type that Numpy defines. This is because Numpy is largely written in C and the `dtype` of an array resembles the equivalent type in C.
+
 
 ## **** Problem [10 Minutes] ****
 
-- Create the Pauli matrices using numpy. 
-- Verify that the matrices are unitary and check their commutation relations
-- You might want to write a function that calculates the commutation relations between two numpy arrays
+- Create the Pauli matrices using Numpy
+- Verify that the matrices are unitary
+- Write a function that calculates the commutation relations between two numpy arrays
 - [Extension] do the same for the Clifford generators + T
+
+**Hint:** Take a look at the `dot`, `tensordot` and/or `kron` operation in Numpy.
 
 ## 4.2 Matplotlib - Visualising data in Python
 
-Matplotlib is a matlab like interface for plotting in Python. 
+Matplotlib is a matlab-like interface for plotting in Python. 
 
-We'll take advantage of the jupyter notebook interface here, so start up jupyter from your terminal with: 
+For this part of the tutorial, we'll take advantage of the `jupyter notebook` interface here, so start up jupyter from your terminal with: 
 
 ```python
 jupyter notebook
 ``` 
+
 Your browser should open to display your current directory tree. Once here, create a new notebook using the button on the top right.
 
-Jupyter notebooks provide a series of 'cells' each of which can contain and execute Python code. The cells share the same global namespace and as a result variables and functions are shared between cells. This is a reasonably neat way to organise Python code and test and execute chunks of code separately. Sort of a halfway house between the CLI and code in a file.
+Jupyter notebooks provide a series of 'cells' each of which can contain and execute Python code. The cells share the same global namespace and as a result variables and functions are shared between cells. This is a reasonably neat way to organise Python code and test and execute chunks of code separately. Sort of a halfway house between the CLI and code in a file, with the added benefit that the cell output is displayed directly and can be kept visible during the working session, which is particularly handy for graphical output like plots.
 
-Cells can be executed using `shift + enter`
-New cells can be created using `ctrl + m` followed by `a` for above or `b` for below the current cell.
+Cells can be executed using `shift + enter`.
+New cells can be created by pressing `ctrl` followed by `a` for above or `b` for below the current cell.
 
 With that out of the way, import matplotlib. 
 
@@ -114,27 +156,23 @@ With that out of the way, import matplotlib.
 import matplotlib.pyplot as plt
 ```
 
-As we'll be displaying the plots within the notebook, we need to specify that we're using matplotlib inline.
+It is a widely accepted standard to import the `matplotlib.pyplot` module under the `plt` alias.
 
-```python
-%matplotlib inline
-```
-
-And now we can start plotting.  
+And now we can start plotting. Let's create a simple list of numbers and plot them:
 
 ```python
 y_vals = [i**2 for i in range(10)]
 plt.plot(y_vals)
 ```
 
-We can also specify the x coordinate positions
+This is the minimal amount of information we need to provide the `plot` function with, but when we take a look at the documentation you can see that it is very customisable. For example, we can also specify the x coordinate positions:
 
 ```python
 x_vals = [i**3 for i in range(10)]
 plt.plot(x_vals, y_vals)
 ```
 
-Of course all good plots need a title and axis labels. 
+Of course all good plots need a title and axis labels.
 
 ```python
 plt.title('Quadratic vs Cubic')
@@ -200,7 +238,7 @@ plot.plot_surface(x_coords, y_coords, z_coords)
 ```
 
 
-## **** Problem **** 
+## **** Problem: Make a pretty plot ($\infty$ minutes) **** 
 - Use your hailstone function to plot the length of each sequence for all numbers in some range.
 - Format your plot nicely enough that somebody else approves of it
 - Nitpick someone else's plot and see if they can find a way to implement your changes
