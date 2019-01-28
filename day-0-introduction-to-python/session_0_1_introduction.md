@@ -80,7 +80,6 @@ Get used to the command line:
 - Open up a terminal and try to navigate from your current position to the topmost (root) directory and then back to your own Documents folder.
 - Once you've managed this, try to find the process ID of your terminal emulator and get it to terminate its own process. 
 - Re-open your terminal and navigate to `__equs__.python`, in here make a new directory titled 'problems'. Keep your code from today in here.
-- If you don't have a key-binding to open your terminal, set one up.
 
 As ever, if you are stuck or unsure about what to do, ask sooner rather than later. 
 
