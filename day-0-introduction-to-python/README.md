@@ -15,7 +15,7 @@ $ cd __equs__.Python
 $ code .
 ```
 
-Type the last line only if you are using Visual Studio Code. If not, open the tutorial content in your browser: [https://github.com/equs-python/__equs__.Python](https://github.com/equs-python/__equs__.Python)
+Type the last line only if you are using Visual Studio Code. If not, open the tutorial content in your browser: [https://github.com/equs-python/\_\_equs\_\_.Python](https://github.com/equs-python/__equs__.Python)
 
 Before we begin, let us discuss a few points.
 
