@@ -81,7 +81,7 @@ choco install git
 # Mac
 
 ## Brew Setup (Optional)
-Homebrew is a package manager for Mac, using this will likely make the installation process much easier, but you can still do it manually if you want. 
+[Homebrew](https://brew.sh) is a package manager for Mac. Using this will likely make the installation process much easier, but you can still do it manually if you want. 
 
 ## Python Setup
 
