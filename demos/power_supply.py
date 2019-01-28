@@ -119,10 +119,10 @@ class PowerSupplyLogic(QtCore.QObject):
 
         # Start TCP server to listen for remote commands
         self.socket_thread = QtCore.QThread()
-        self.socket_communicator = SocketCommunicator()
-        self.socket_communicator.moveToThread(self.socket_thread)
-        self.socket_thread.started.connect(self.socket_communicator.loop)
-        self.socket_communicator.new_command.connect(self.handle_remote_command)
+        self.rc_server = RemoteControlServer()
+        self.rc_server.moveToThread(self.socket_thread)
+        self.socket_thread.started.connect(self.rc_server.startup)
+        self.rc_server.new_command.connect(self.handle_remote_command)
         self.socket_thread.start()
 
     def set_voltage(self, channel, new_v):
@@ -152,6 +152,7 @@ class PowerSupplyLogic(QtCore.QObject):
         if state is not self._active[channel]:
             self._active[channel] = state
             self._update_output(channel)
+            self.rc_server.send(b'active')
 
     def _update_output(self, channel):
         """ Update the output of specified channel.
@@ -201,38 +202,78 @@ class PowerSupplyLogic(QtCore.QObject):
             self.activate_output(0, True)
 
 
-class SocketCommunicator(QtCore.QObject):
+class RemoteControlServer(QtCore.QObject):
 
     new_command = QtCore.pyqtSignal(str if sys.version_info.major <= 2 else bytes)
 
     def __init__(self):
-        super(SocketCommunicator, self).__init__()
+        super(RemoteControlServer, self).__init__()
 
         self.HOST = '127.0.0.1'
         self.PORT = 65431
 
-    def loop(self):
-        """Loop in the background waiting for remote commands."""
+        self.active = True
 
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            print('we got here')
-            s.bind((self.HOST, self.PORT))
-            s.listen()
-            conn, addr = s.accept()
-            with conn:
-                print('Connected by', addr)
-                while True:
-                    data = conn.recv(1024)
-                    self.new_command.emit(data)
-                    if not data:
-                        break
+        self.connection = None
 
-                    conn.sendall(data)
+        self.recv_buffer = bytes()
+        self.send_buffer = bytes()
 
-    def send(self, message):
-        """Send a response back to the client."""
-        # I do not know how to do this yet.
-        pass
+    def startup(self):
+        """Start the socket and wait for connection."""
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.s.settimeout(1.0)
+        self.s.bind((self.HOST, self.PORT))
+        self.s.listen(0)
+
+        # Cycle through and wait for a connection
+        try:
+            sys.stdout.flush()
+        except:
+            pass
+
+        while True:
+            try:
+                connection, address = self.s.accept()
+                break
+            except socket.timeout as ex:
+                print(".", end='')
+                try:
+                    sys.stdout.flush()
+                except:
+                    pass
+
+        print('Connected by', address)
+
+        self.loop(connection)
+
+    def loop(self, connection):
+        """Message handling loop"""
+        while self.active:
+            try:
+                self.recv_buffer += connection.recv(1024)
+            except self.s.timeout:
+                print('to')
+                pass
+            except self.s.error as ex:
+                print(ex)
+
+            print('a')
+
+            if self.recv_buffer:
+                cmd = self.recv_buffer
+                print(cmd)
+                self.recv_buffer = bytes()
+                self.new_command.emit(cmd)
+
+            if self.send_buffer:
+                connection.sendall(self.send_buffer)
+                self.send_buffer = bytes()
+
+    def send(self, data):
+        """Fill send buffer with data to send back to the client."""
+        self.send_buffer += data
+        print(self.send_buffer)
 
 
 def main():
