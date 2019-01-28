@@ -11,15 +11,9 @@ If in doubt when using a new package, don't forget to `dir()` the package, and `
 import numpy as np
 ```
 
-Numpy is a numerical python library and contains a few functions that come in handy.
+Numpy is a numerical Python library and contains huge amount of mathematical functions that come in handy for day-to-day scientism.
 
-```python
-np.log
-np.sqrt
-np.array
-```
-
-And at last, arrays, vectors and matrices. Numpy can convert a list to an array. The lists must be regular and all elements must be of the same type.
+Most notably, Numpy defines *arrays*, which are treated like matrices and can be used in the context of linear algebra or whenever else array operations are desired. To create an array, we can use the  `array` class in Numpy to convert a Python list to an array. The lists must be regular and all elements must be of the same type. For example:
 
 ```python
 x = np.array([
@@ -28,43 +22,40 @@ x = np.array([
 ])
 ```
 
-These arrays can be treated as tensors. Rather than lists where addition was concatination and multiplication was duplication, these will now follow the appropriate mathematical operations.
+These arrays can be treated as tensors. Rather than lists where addition was concatenation and multiplication was duplication, these will now follow the appropriate (element-wise) mathematical operations.
 
 ```python
->>> x + x
-array([[0, 2],
-       [2, 0]])
-
->>> x * 5
-
-array([[0, 5],
-       [5, 0]])
-
+>>> x + x # Element-wise sum
+array([
+    [0, 2],
+    [2, 0]
+])
+>>> x * 5 # Scalar product
+array([
+    [0, 5],
+    [5, 0]
+])
 >>> -x
-array([[ 0, -1],
-       [-1,  0]])
-
+array([
+    [0, -1],
+    [-1, 0]
+])
 >>> x ** 2
-array([[0, 1],
-       [1, 0]])
+array([
+    [0, 1],
+    [1, 0]
+])
+
 ```
-
-We also have the special `@` operator that works for matrix multiplication. 
-
-```python
->>> x @ x
-array([[1, 0],
-       [0, 1]])
-```
-
-There are some subtleties between this, `matmul` `dot` and `tensordot` that come down to implementation details. 
 
 We can still slice these arrays in the same manner as a list:
 
 ```python
->>> x[:,1]
+>>> x[:, 1]
 array([1,0])
 ```
+
+This operation is selecting all rows from the second column.
 
 If we want to see the dimensions of these slices we can use the `.shape` property.
 
