@@ -1,7 +1,9 @@
-from PyQt5 import QtWidgets, QtCore
-from ui_power_supply import Ui_MainWindow
 import sys
 import socket
+import traceback
+
+from PyQt5 import QtWidgets, QtCore
+from ui_power_supply import Ui_MainWindow
 
 
 class PowerSupplyGui(QtWidgets.QMainWindow):
@@ -210,24 +212,45 @@ class SocketCommunicator(QtCore.QObject):
 
         self.HOST = '127.0.0.1'
         self.PORT = 65431
+        self.is_running = False
+
+        # Create the socket object
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.socket.bind((self.HOST, self.PORT))
 
     def loop(self):
-        """Loop in the background waiting for remote commands."""
+        """ Start an infinite loop in the background waiting for remote commands."""
 
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            print('we got here')
-            s.bind((self.HOST, self.PORT))
-            s.listen()
-            conn, addr = s.accept()
-            with conn:
-                print('Connected by', addr)
-                while True:
-                    data = conn.recv(1024)
-                    self.new_command.emit(data)
-                    if not data:
+        self.is_running = True
+        self.socket.settimeout(1)
+        self.socket.listen(1)
+
+        while self.is_running:
+            try:
+                # Use a listen timeout to keep the thread "breathing"
+                # (Otherwise socket.listen() is blocking)
+                connection, client_address = self.socket.accept()
+            except socket.timeout:
+                    pass
+            else:
+                try:
+                    print('Connected by', client_address)
+                    request = connection.recv(1024)
+                    if not request:
                         break
+                    self.handle_request(request)
+                    connection.close()
+                except Exception:
+                    # If something goes wrong, we don't wan't to interrupt the server
+                    sys.stderr.write(traceback.format_exc())
+                    connection.close()
 
-                    conn.sendall(data)
+    def handle_request(self, request):
+        """ Handles a request received via a remote command. """
+        # Emit the pyqtsignal to forward the request to the GUI
+        self.new_command.emit(request)
+        # Do every other part of handling the request here
 
     def send(self, message):
         """Send a response back to the client."""
