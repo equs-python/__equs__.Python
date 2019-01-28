@@ -67,7 +67,7 @@ Here's the detailed plan for the day:
 
 Opening a terminal. Navigating through directories. Basic actions: executing files, creating and deleting files and directories, copying and moving.
 
-An operating system is a series of excuses and abstractions that allow us to use text fields to control hardware operations. These text fields can be directly entered using a terminal emulator. (the real terminal is likely being used by your operating system to render the graphical environment that you're using and provies all the modern nicities of mouse support, windowed environments and anything that isn't strictly text based).
+An operating system is a series of excuses and abstractions that allow us to use text fields to control hardware operations. These text fields can be directly entered using a terminal emulator. (the real terminal is likely being used by your operating system to render the graphical environment that you're using and provides all the modern niceties of mouse support, windowed environments and anything that isn't strictly text based).
 
 | Operating System        | Getting to your terminal emulator  |
 | ------------- |-------------:|
@@ -75,7 +75,7 @@ An operating system is a series of excuses and abstractions that allow us to use
 | Linux      | Depends on your choice of window manager, common short cuts (mostly found in Gnome derived WMs) are Ctrl + Alt + T, but it could be just about anything. If you don't have one set, bind one. |
 | Mac | Alt + Spacebar and type in "terminal" |
 
-You can replace the windows terminal emulator with Bash if you want, this can either be done by installing Git Bash, or by running Windows Subsystem for Linux (WSL). Whatever you do, it's highly reccommended to set a key binding to open your terminal emulator.
+You can replace the windows terminal emulator with Bash if you want, this can either be done by installing Git Bash, or by running Windows Subsystem for Linux (WSL). Whatever you do, it's highly recommended to set a key binding to open your terminal emulator.
 
 These terminals take commands in the form of text and return responses in the form of text (generally ASCII encoded). This common format allows us to pass text not only to commands, but take the output of one command as the input to another. 
 
@@ -95,7 +95,7 @@ These terminals take commands in the form of text and return responses in the fo
 
 When you need to specify a path as an argument this is a relative path from the current directory. Unix paths must use the forward-slash key (as backslash is reserved to escape certain characters) while windows originally used backslashed paths and now uses both (resolving paths in Windows now requires a )
 
-There are a few useful shortcuts that are almost essential 
+There are a few useful short-cuts that are almost essential 
 
 | Command        |  Character | Example
 | ------------- |:-------------:| -----:|
@@ -119,13 +119,13 @@ Get used to the command line:
 - Open up a terminal and try to navigate from your current position to the topmost (root) directory and then back to your own Documents folder.
 - Once you've managed this, try to find the process ID of your terminal emulator and get it to terminate its own process. 
 - Re-open your terminal and navigate to `__equs__.python`, in here make a new directory titled 'problems'. Keep your code from today in here.
-- If you don't have a keybinding to open your terminal, set one up.
+- If you don't have a key-binding to open your terminal, set one up.
 
 As ever, if you are stuck or unsure about what to do, ask sooner rather than later. 
 
 # 2. Hello Python!
 
-Python is a high-level scripting language. It's quite flexible and has a well supported package library that allows it to do everything from scientific computing to running a twitter bot. The ease of use of Python does come at something of a tradeoff in performance, however in most cases the faster code development will more than offset the extra time required to run the code
+Python is a high-level scripting language. It's quite flexible and has a well supported package library that allows it to do everything from scientific computing to running a twitter bot. The ease of use of Python does come at something of a trade-off in performance, however in most cases the faster code development will more than offset the extra time required to run the code
 
 For historical reasons currently Python 2 and 3 exist as slightly different languages, Python 2 support will end in less than a year and so it's not particularly worth going into the differences between the two except to suggest using Python 3. 
 
@@ -462,7 +462,7 @@ As we can build tuples using these separated commas, we can also unpack tuples i
 ```
 This is a handy trick that will come up again later.
 
-It's worth noting that in Python strings are tuples of characters, not lists of characters. Hence all strings are immutable. This poses a bit of a problem as we generally want to be able to modify what we're printing. Luckily there are a few work arounds.
+It's worth noting that in Python strings are tuples of characters, not lists of characters. Hence all strings are immutable. This poses a bit of a problem as we generally want to be able to modify what we're printing. Luckily there are a few workarounds.
 
 The first is the addition method we saw with lists. Simply add two strings to concatenate them
 
@@ -478,7 +478,7 @@ A neater solution is the old C-style string syntax followed by the % operator an
 A pair of numbers: 42 42
 ```
 
-The downside to this method is that the type of the object must be included in the string, it's not a particularly general solution. The format method for a string solves this problem, and comes with a few different syntaxtic approaches.
+The downside to this method is that the type of the object must be included in the string, it's not a particularly general solution. The format method for a string solves this problem, and comes with a few different syntactic approaches.
 
 Format searches for and replaces instances of `{}` within strings with the arguments in the format function. It will automatically convert other types to strings if possible.
 
@@ -616,7 +616,7 @@ Should print
 abc
 ```
 
-As you may have noticed, the list is separated by whitespace, with each space demarking a different element of the list.
+As you may have noticed, the list is separated by white space, with each space demarking a different element of the list.
 
 There's a potential for error here as the argument may not have been passed, and so you're attempting to access an element of the list that does not exist. To get around this you can simply check the length of the list before accessing the elements.
 
@@ -658,7 +658,7 @@ Just as you can read and write to files, you can read and write to processes. Th
 >>> print(x)
 5
 ```
-As with the command line arguments, the input is in the form of a string. Unlike the command line arguments, the string is not delimited by whitespace, but by a new line character (the enter button, or `\n`).
+As with the command line arguments, the input is in the form of a string. Unlike the command line arguments, the string is not delimited by white-space, but by a new line character (the enter button, or `\n`).
 
 ## 5.4 **** Problem [5 minutes] ****
 
@@ -750,7 +750,7 @@ def arged_function(some_argument, some_other_argument, *args, keyword='killer ra
 arged_function(1,2, keyword='holy hand grenade', print='True')
 ```
 
-This is of course how the format method was working earlier, the position argumes were passed using `*args` and became a tuple while `**kwargs` was used for the keywords. You will notice that if you attempt to access a position that doesn't exist or a keyword that doesn't exist then the format function will throw an error.
+This is of course how the format method was working earlier, the position arguments were passed using `*args` and became a tuple while `**kwargs` was used for the keywords. You will notice that if you attempt to access a position that doesn't exist or a keyword that doesn't exist then the format function will throw an error.
 
 ```python
 >>> "{1}".format('5')
@@ -811,9 +811,9 @@ We won't cover how to build generators from functions (using the `yield` keyword
 Another point or two of interest that we don't have time to cover here is the `map` function and the `lambda` keyword. 
 
 ## 6.6 **** Problem [10 Minutes] ****
-Using whatever approach you want, use list comprehension to construct a list of the first 50 Fibonnacci numbers.
+Using whatever approach you want, use list comprehension to construct a list of the first 50 Fibonacci numbers.
 
-If you're stuck, you might want to write a function that calculates the nth Fibbonacci number first.
+If you're stuck, you might want to write a function that calculates the nth Fibonacci number first.
 
 # 7. Object-oriented programming
 
@@ -825,7 +825,7 @@ Again, you would be right, and we can see this quite clearly using the `dir()` f
 dir()
 ```
 
-It also should be of note that I can save all my current variables as a dictionary with the names of the variables as the key, and the value as whatever the value is. And we can see these dictionaries as `globals()` and `locals()` depending on the namespace.
+It also should be of note that I can save all my current variables as a dictionary with the names of the variables as the key, and the value as whatever the value is. And we can see these dictionaries as `globals()` and `locals()` depending on the name-space.
 
 ```python
 globals()
@@ -986,7 +986,7 @@ Here are a few useful (non-scientific) general libraries.
 
 - pickle - Good for compacting Python object data to reload it later.
 
-- copy - Contains the deepcopy function that gets around problems like list copying.
+- copy - Contains the `deepcopy` function that gets around problems like list copying.
 
 - matplotlib - Basic plotting library, basically the same as the matlab one there are others out there but most are just fancy wrappers for this 
 
@@ -1002,7 +1002,7 @@ These libraries can be included using the `import` keyword, as you've probably s
 import numpy as np
 ``` 
 
-Each library also contains multiple Python files and functions, you can explicitly import one of those if you need, without including the entire library in your namespace. This is helpful when different libraries share keywords. 
+Each library also contains multiple Python files and functions, you can explicitly import one of those if you need, without including the entire library in your name-space. This is helpful when different libraries share keywords. 
 
 ```python
 import rand.random
@@ -1012,12 +1012,12 @@ or
 from rand import random 
 ```
 
-You can also be incredibly lazy and just import everything to the global namespace:
+You can also be incredibly lazy and just import everything to the global name-space:
 
 ```python
 from rand import *
 ```
-This may result in fiddly behaviour when two elements of the global namespace have the same name. Remembering that globals() is a dictionary, one of them will be overwritten, hence it's often much better to be more verbose. To be honest we're only really showing you this last one as an example of what not to do.
+This may result in fiddly behaviour when two elements of the global name-space have the same name. Remembering that `globals()` is a dictionary, one of them will be overwritten, hence it's often much better to be more verbose. To be honest we're only really showing you this last one as an example of what not to do.
 
 A final Python library of incredible importance is the `this` library. 
 
@@ -1181,7 +1181,7 @@ y_vals = np.linspace(-5, 5, 50)
 def quad_3d(x, y):
     return x ** 2 + y ** 2
 
-X_coords, Y_coords = np.meshgrid(x_vals, y_vals)
+x_coords, y_coords = np.meshgrid(x_vals, y_vals)
 
 z_coords = quad_3d(X_coords, Y_coords)
 ```
@@ -1190,7 +1190,7 @@ We'll also save the plot object to play around with as we need to.
 
 ```python
 plot = plt.axes(projection='3d')
-plot.plot_surface(X_coords, y_coords, z_coords)
+plot.plot_surface(x_coords, y_coords, z_coords)
 ```
 
 

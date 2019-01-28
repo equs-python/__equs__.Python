@@ -75,7 +75,7 @@ choco install sublimetext3
 ```
 
 ### Mac
-You have the choice of installing sublime either using brew, or downloading the dmg file found (here)[https://www.sublimetext.com/3].
+You have the choice of installing sublime either using brew, or downloading the .dmg file found (here)[https://www.sublimetext.com/3].
 The instructions for the brew installation are given below, if you want to know more about brew, see the bottom of this page. 
 
 ```
