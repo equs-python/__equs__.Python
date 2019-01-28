@@ -113,7 +113,7 @@ It's worth noting that the tab key will auto complete paths (and some commands),
 The terminal is an incredibly useful tool that we will be using throughout the workshop.
 
 
-## 1.1 **** Problem (5-10 minutes) ****
+## 1.1 **** Problem [5-10 minutes] ****
 
 Get used to the command line:
 - Open up a terminal and try to navigate from your current position to the topmost (root) directory and then back to your own Documents folder.
@@ -181,7 +181,7 @@ If you don't know what a function does you can use the `help()` function to read
 help(type)
 ```
 
-## 2.3 **** Problem (5 minutes) ****
+## 2.3 **** Problem [5 minutes] ****
 
 Some very basic Python:
 - Initialise a variable to some negative or complex number.
@@ -256,7 +256,7 @@ if (x > 5) and (x < 7):
     print("x might be 6")
 ```
 
-## 3.2 Problem - 5 minutes   
+## 3.2 **** Problem [5 minutes] ****   
 Write a simple chunk of Python code that determines if a number is a multiple of 13 and a multiple of 3 but not a multiple of 9. 
 
 ## 3.3 Loops
@@ -283,7 +283,7 @@ for i in range(10):
 
 Both of these loops have their uses, try to use one of each in the next problem.
 
-## 3.4 **** Problem (10 minutes) ****
+## 3.4 **** Problem [10 minutes] ****
 
 Getting used to Loops and Switches:
 - Write a loop to print each number from 2 to 100
@@ -410,7 +410,7 @@ True
 ```
 
 
-## 4.2 **** Problem - 10 minutes ****
+## 4.2 **** Problem [10 minutes] ****
 
 Modify your Prime finder code such that given a list, it checks each element of the list to see if it's prime.
 
@@ -498,7 +498,7 @@ However this isn't particularly descriptive, so instead we can allocate names to
 
 There's quite a bit more to Python strings such as bytes formatting, the format strings of 3.6 and unicode, but these are more specialist topics so we'll leave it there for now.
 
-## 4.4 **** Problem - 5 Minutes ****
+## 4.4 **** Problem [5 Minutes] ****
 Modify the print statement in your prime finder code to use the format method when printing which numbers are prime. 
 
 
@@ -1194,7 +1194,7 @@ plot.plot_surface(x_coords, y_coords, z_coords)
 ```
 
 
-## 9.3 Problem
+## 9.3 **** Problem **** 
 - Use your hailstone function to plot the length of each sequence for all numbers in some range.
 - Format your plot nicely enough that somebody else approves of it
 - Nitpick someone else's plot and see if they can find a way to implement your changes
