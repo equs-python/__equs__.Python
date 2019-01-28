@@ -16,19 +16,6 @@ Here are the specific topics of the day:
 3. Code project
 
 
-
-## Getting started
-
-To get started, download the tutorial content to your local machine (if you haven't already done so yesterday). Open the Git Bash and type:
-
-```bash
-$ git clone https://github.com/equs-python/__equs__.Python
-$ cd __equs__.Python
-$ code .
-```
-
-And with that, let's go!
-
 # 1. Python packaging (1 1/2 hours)
 
 In this tutorial we cover the process of building packages in Python. We start from the very basics of what a Python package is and how to install it, and make our way up from there to build an installable Python package ourselves at the end of this session.
@@ -51,7 +38,17 @@ Previously, when we wanted to execute code in a Python file, we used the command
 $ python my_file.py
 ```
 
-This executes the entire code within the file `my_file.py`. However, we can also *import* certain parts of our Python script, and use them in e.g. the interactive terminal. Let's suppose our `my_file.py` script contains the following code:
+This executes the entire code within the file `my_file.py`. However, we can also *import* certain parts of our Python script, and use them in e.g. the interactive terminal.
+
+## \*\*\*\* PROBLEM: Make a file (5 minutes) \*\*\*\*
+
+Create a file that contains
+
+- a variable declaration
+- a function definition
+- a `print` statement
+
+It could for example look like this:
 
 ```python
 # my_file.py
@@ -61,12 +58,16 @@ def add_two(number):
 print(add_two(foo))
 ```
 
-So this file contains a variable and a function declaration, as well as a function call whose result is printed to the standard output. When we execute this file in the command line, we get the following output:
+Then, execute this file in the command line and look at the output:
 
 ```
 $ python my_file.py
 5
 ```
+
+We will use this file for all our examples below.
+
+## \*\*\*\*
 
 #### 1.1.1.1 Importing a Python script
 
@@ -153,7 +154,9 @@ Often when you find yourself working across multiple files, you have some execut
 
 In this case, you can put all executable code into an `if` block with the following syntax:
 
-`if __name__ == "__main__":`
+```python
+if __name__ == "__main__":
+```
 
 Here, `__name__` is an implicit attribute of each Python script whose value gets assigned at runtime. When the script is executed as top-level script (this means we're executing the script directly), the `__name__` is set to `"__main__"` and the condition in the `if` block evaluates to `True`. On the other hand, when we *import* our script into a different session, the `__name__` attribute will be different, and hence the condition evaluates to `False` and any code within this `if` block will not be executed.
 
@@ -185,7 +188,7 @@ $ python my_file.py
 
 And here we would get the expected output, because the script was executed as top-level script.
 
-## \*\*\*\* PROBLEM: What's my `__name__`? (5 minutes) \*\*\*\*
+## \*\*\*\* PROBLEM: What's my `__name__`? (5-10 minutes) \*\*\*\*
 
 Find out what the value of the `__name__` attribute is if a file is not executed as top-level script.
 
@@ -215,7 +218,6 @@ And suppose we have two very simple functions in our two new files:
 
 ```python
 # another_file.py
-
 def another_function(argument):
     print('Another function call with {}'.format(argument))
 ```
@@ -224,7 +226,6 @@ and equivalently:
 
 ```python
 # yet_another_file.py
-
 def yet_another_function(argument):
     print('Yet another function call with {}'.format(argument))
 ```
@@ -465,7 +466,7 @@ Your task is to to install a Python package called `funniest-joke` using `pip`. 
 
 This package has a problem though: it was written for Python 2, so you will have to make it Python 3 compatible. Python 2/3 compability is one of the everyday hurdles of Python programmers, so this is an illustrative example of the real struggle in the life of a Python developer.
 
-- **Optional:** Watch the [sketch on youtube](https://www.youtube.com/watch?v=ienp4J3pW7U)
+- Watch the [sketch on youtube](https://www.youtube.com/watch?v=ienp4J3pW7U)
 - Install the package via `pip`:
 ```shell
 $ pip install funniest-joke
@@ -627,7 +628,7 @@ install_requires=['numpy>=1.13', 'scipy>=1.1']
 Edit the `setup.py` file from this example and re-run the installation command to see how adding requirements changes the behavior.
 
 - Add `numpy` and `scipy` to requirements
-- Add a module that you do not have installed (e.g. `funniest-joke`)
+- Add a module that you do not have installed (e.g. `qinfer`)
 
 ## \*\*\*\*
 
@@ -1170,7 +1171,7 @@ measurement_1.py:12:4: C0103: Variable name "m" doesn't conform to snake_case na
 measurement_1.py:15:4: C0103: Variable name "pr" doesn't conform to snake_case naming style (invalid-name)
 
 --------------------------------------------------------------------
-Your code has been rated at -7.14/10 (previous run: -5.71/10, -1.43)
+Your code has been rated at -7.14/10
 ```
 
 So overall you can tell that `pylint` isn't very  happy with our code. It even gave us a negative overall score. Note that point ratings just get added up and we could in principle disable negative scores by capping it at zero. Let's leave it at that for now though, but note that the goal -unsurprisingly- is to reach 10/10.

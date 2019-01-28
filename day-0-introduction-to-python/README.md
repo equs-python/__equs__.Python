@@ -54,16 +54,25 @@ Here we introduce you to the basic usage of the Python language. We start with b
 
 Here's the detailed plan for the day:
 
+1. Getting started
+   1. Basic command line usage
+   2. Hello Python!
+   3. Control flow in Python
+2. Basic Python programming
+   1. Collections
+   2. Python files
+3. Advanced Python progamming
+   1. Functions in Python
+   2. Iterators and generators
+   3. Classes and inheritance
+   4. Python libraries
+4. Python for scientific computing
+   1. Numerical computing in Python using  `numpy`
+   2. Data visualisation and plotting using `matplotlib`
 
-1. Basic command line usage
-2. First contact with Python
-3. Using Python in the command line and in files
-4. Simple variables and control statements
-5. Functions in Python
-6. Object-oriented aspects: classes and inheritance
-7. Common scientific libraries for Python
+# 1. Getting started
 
-# 1. Basic command line usage
+## 1.1 Basic command line usage
 
 Opening a terminal. Navigating through directories. Basic actions: executing files, creating and deleting files and directories, copying and moving.
 
@@ -113,7 +122,7 @@ It's worth noting that the tab key will auto complete paths (and some commands),
 The terminal is an incredibly useful tool that we will be using throughout the workshop.
 
 
-## 1.1 **** Problem [5-10 minutes] ****
+## **** Problem [5-10 minutes] ****
 
 Get used to the command line:
 - Open up a terminal and try to navigate from your current position to the topmost (root) directory and then back to your own Documents folder.
@@ -123,7 +132,7 @@ Get used to the command line:
 
 As ever, if you are stuck or unsure about what to do, ask sooner rather than later. 
 
-# 2. Hello Python!
+## 1.3 Hello Python!
 
 Python is a high-level scripting language. It's quite flexible and has a well supported package library that allows it to do everything from scientific computing to running a twitter bot. The ease of use of Python does come at something of a trade-off in performance, however in most cases the faster code development will more than offset the extra time required to run the code
 
@@ -132,7 +141,7 @@ For historical reasons currently Python 2 and 3 exist as slightly different lang
 Another key point is that Python is named after 'Monty Python', hence it is somewhat obligatory that any tutorial in the language include slightly too many references to 1970s British comedy. It is noted in advance that including jokes is a generally poor design choice for any real code.
 
 
-## 2.1 Command line Interpreter
+## 1.3.1 Command line Interpreter
 
 Open up the python command line interpreter (CLI) with the `python` command from your terminal emulator. As Python is an interpreted language, each line is read and executed in order. Thanks to this feature, we can use a Python terminal and simply give it Python code to execute.
 
@@ -181,7 +190,7 @@ If you don't know what a function does you can use the `help()` function to read
 help(type)
 ```
 
-## 2.3 **** Problem [5 minutes] ****
+## **** Problem [5 minutes] ****
 
 Some very basic Python:
 - Initialise a variable to some negative or complex number.
@@ -191,14 +200,14 @@ Some very basic Python:
 
 
 
-# 3. Control flow
+## 1.3 Control flow in Python
 
 It would be useful for Python to be more than a glorified if somewhat introspective calculator, so we need something to control the program flow. Typically these are switches (if statements) and loops (for and while). Unlike other languages blocks of code within these control statements are de-marked by indentation. Perhaps the biggest hurdle of learning to use Python is inconsistent use of tabs and spaces. To save time and effort, the correct approach according to Python is four spaces for an indent. 
 
 The start of an indented block is also indicated by a colon on the preceding line.
 
 
-## 3.1 Switches
+### 1.3.1 Switches
 A switch is a common programming language feature where if a certain condition is met then the following code of block is executed. It consists of an `if` statement followed by the condition and the block to execute and then some number of optional `elif` statements with their own conditions before an optional `else` statement with its own block to be executed if none of the other conditions were met. 
 
 
@@ -256,10 +265,10 @@ if (x > 5) and (x < 7):
     print("x might be 6")
 ```
 
-## 3.2 **** Problem [5 minutes] ****   
+## **** Problem [5 minutes] ****   
 Write a simple chunk of Python code that determines if a number is a multiple of 13 and a multiple of 3 but not a multiple of 9. 
 
-## 3.3 Loops
+## 1.3.2 Loops
 
 Loops are a construct that repeat some section of code until a condition is fulfilled. If the condition cannot be fulfilled in a timely manner, they will persevere despite your efforts and you will probably need to intervene.
 
@@ -283,7 +292,7 @@ for i in range(10):
 
 Both of these loops have their uses, try to use one of each in the next problem.
 
-## 3.4 **** Problem [10 minutes] ****
+## **** Problem [10 minutes] ****
 
 Getting used to Loops and Switches:
 - Write a loop to print each number from 2 to 100
@@ -293,7 +302,9 @@ Getting used to Loops and Switches:
 - Again, if you have spare time, try to improve the performance of your code
 
 
-# 4. Collections
+# 2. Basic Python programming
+
+# 2.1 Collections
 
 So far we've dealt with single variables. However say we're particularly greedy and want to store a thousand numbers without assigning each to its own individual variable. 
 
@@ -302,7 +313,7 @@ The solutions to this tedium are collections; data structures that have some log
 As collections can be collections of any object, you can also have collections of collections; dictionaries of lists of complex numbers are perfectly acceptable. 
 
 
-## 4.1 Lists
+### 2.1.1 Lists
 Lists can be thought of to some extent as 'vectors'. They're a collection of objects of any type with a particular numerical ordering. Lists are created by grouping a set of objects separated by commas in square brackets.
 
 ```python
@@ -410,7 +421,7 @@ True
 ```
 
 
-## 4.2 **** Problem [10 minutes] ****
+## **** Problem [10 minutes] ****
 
 Modify your Prime finder code such that given a list, it checks each element of the list to see if it's prime.
 
@@ -423,7 +434,7 @@ Here are some sample lists:
 
 Yes, the last one is intentionally empty.
 
-## 4.3 Tuples and Strings
+## 2.1.2 Tuples and Strings
 Tuples are very similar to lists and almost everything from the previous section that worked with lists will work with tuples with the exception that they're immutable - once assigned they can't be changed. You can copy sections of a tuple or elements out of a tuple and modify those, but you can't change the ones inside a tuple.
 
 Tuples are normally declared as a series of objects separated by commas and encapsulated in a pair of round brackets.
@@ -498,11 +509,11 @@ However this isn't particularly descriptive, so instead we can allocate names to
 
 There's quite a bit more to Python strings such as bytes formatting, the format strings of 3.6 and unicode, but these are more specialist topics so we'll leave it there for now.
 
-## 4.4 **** Problem [5 Minutes] ****
+## **** Problem [5 Minutes] ****
 Modify the print statement in your prime finder code to use the format method when printing which numbers are prime. 
 
 
-## 4.5 Dictionaries
+### 2.1.3 Dictionaries
 
 Dictionaries are a bit different. Whereas Lists and Tuples use an index as a key to the elements stored in the collection, dictionaries use a string. This is termed a 'key value pair'.
 
@@ -531,7 +542,7 @@ Looping over a dictionary loops over the keys, not the values, the values can be
 Removal is somewhat fiddlier and is best left alone unless there is a particularly good reason.
 
 
-## 4.7 Where are the arrays?
+### 2.1.4 Where are the arrays?
 
 While we're here, I'll briefly emphasise that lists are **not** vectors.
 
@@ -546,7 +557,7 @@ You could do it yourself with a simple loop, or we can wait until we get the pro
 Arrays and other mathematically minded objects are in numpy, we'll get there later.
 
 
-## 4.8 Getting into the weeds
+## 2.1.5 Getting into the weeds
 
 There are a few tricks with lists that I'd normally like to avoid, but are somewhat important. 
 
@@ -575,13 +586,13 @@ As we can see, the 'b_list' is a list of lists, each is a copy of 'a_list'. So i
 >>> b_list[0][0] = 2
 ```
 
-## 4.9 **** Problem [5 Minutes] ****
+##  **** Problem [5 Minutes] ****
 Try running the above code and satisfy for yourself that what is happening is both perfectly logical given what a list is, and is also very silly.
 
 There is a solution to this problem, but we'll get to it later.
 
 
-## 5. Python files
+## 2.2 Python files
 
 It's a bit hard to reproduce code if it's always in the CLI, so we can instead put the code in a file and get the Python interpreter to read the file line by line and execute the code. These Python files normally have the `.py` extension, and can be run from the command line using 
 
@@ -589,11 +600,11 @@ It's a bit hard to reproduce code if it's always in the CLI, so we can instead p
 python my_file.py
 ```
 
-## 5.1 **** Problem [5 Minutes] ****
+## **** Problem [5 Minutes] ****
 
 Try moving your Prime finder code to a file and run it from the command line.
 
-## 5.2 Command Line Input
+### 2.2.1 Command Line Input
 
 Occasionally it's useful for a program to not just be a hard coded blob that needs to be opened and modified before. One way this can be achieved is by passing command line arguments. 
 
@@ -639,7 +650,7 @@ This input will always be in string format, so you'll need to convert it to what
 | Ascii Character | Int | `ord` | 
 
 
-## 5.3 **** Problem [10 minutes] ****
+## **** Problem [10 minutes] ****
 The (Collatz conjecture)[https://en.wikipedia.org/wiki/Collatz_conjecture] has a reasonably straight forward implementation as the 'hailstone problem'. 
 
 Implement the hailstone problem in a Python file, your program will take a single integer as a command line argument for a starting value, you should print each intermediary value.  
@@ -649,7 +660,7 @@ Implement the hailstone problem in a Python file, your program will take a singl
 - If the number is odd multiply is by 3 and add one
 
 
-## 5.4 Standard Input
+## 2.1.2 Standard Input
 Just as you can read and write to files, you can read and write to processes. This includes your running Python program. You should be used to reading things out using the print command, but writing requires all of one more command; `input`. (Note that in Python 2 it was called `raw_input` and this code won't be backwards compatible).
 
 ```python
@@ -660,12 +671,14 @@ Just as you can read and write to files, you can read and write to processes. Th
 ```
 As with the command line arguments, the input is in the form of a string. Unlike the command line arguments, the string is not delimited by white-space, but by a new line character (the enter button, or `\n`).
 
-## 5.4 **** Problem [5 minutes] ****
+## **** Problem [5 minutes] ****
 
 Modify your hailstone problem file to read from standard input instead of taking a command line argument.
 
 
-# 6. Functions
+# 3. Advanced Python programming
+
+## 3.1. Functions
 At this point some of the code you have written will begin to seem somewhat unwieldy; large and long chunks of code, some repetition of code, and the start of the long descent into the general mess of spaghetti code.
 
 In an effort to help clean this up, Python has functions, which are callable chunks of code that you have likely been using for a while now (if in other languages, then the `type` `help` and `abs` functions you used before). 
@@ -693,7 +706,7 @@ a, b = some_function()
 ```
 
 
-## 6.1 **** Problem [5 minutes] ****
+## **** Problem [5 minutes] ****
 
 Write a modulus power function. The function takes three arguments in order, the base, the exponent and the modulus and calculates: 
 
@@ -706,7 +719,7 @@ Your function definition should something look like
 def modpow(base, exponent, modulus):
 ```
 
-## 6.2 Keyword Arguments
+### 3.1.1 Keyword Arguments
 
 Sometimes you want a function to have a 'default' argument, that is assumed to always the case until specified otherwise. This generally makes for neater function arguments when the function in question may have a large number of potential arguments that you don't want to explicitly specify each time.
 
@@ -718,7 +731,7 @@ def function_name(arguments, keyword_arguments=default_value):
 ```
 
 
-## 6.3 **** Problem [5 minutes] ****
+## **** Problem [5 minutes] ****
 
 Modify your modpow function such that it has a default modulus of `None`. If no modulus is specified it should act like a regular power function.
 
@@ -727,7 +740,7 @@ def modpow(base, exponent, modulus=None):
 ```
 
 
-## 6.4 Arbitrary arguments
+### 3.1.2 Arbitrary arguments
 You may wonder at this point, that if you can simply pass a list to a function, then what's the point of ever having more than one argument? Just group all your arguments into a single list and throw that in. 
 
 You would be right (ignoring keyword arguments), but it would look a little ugly, so there's a slightly neater inbuilt approach `*args`.  
@@ -757,7 +770,7 @@ This is of course how the format method was working earlier, the position argume
 IndexError: tuple index out of range
 ``` 
 
-## 6.4 **** Problem [10-15 Minutes] ****
+## **** Problem [10-15 Minutes] ****
 
 Implement a very basic version of the format function. Your function should take a string to format along with the args and kwargs. You should try to replicate the format method as closely as possible.
 
@@ -767,7 +780,7 @@ def format(format_string, *args, **kwargs):
     return formatted_string
 ```
 
-## 6.5 Iterators and Generators
+## 3.2 Iterators and Generators
 
 This section covers some more advanced looping techniques. 
 
@@ -810,12 +823,12 @@ We won't cover how to build generators from functions (using the `yield` keyword
 
 Another point or two of interest that we don't have time to cover here is the `map` function and the `lambda` keyword. 
 
-## 6.6 **** Problem [10 Minutes] ****
+## **** Problem [10 Minutes] ****
 Using whatever approach you want, use list comprehension to construct a list of the first 50 Fibonacci numbers.
 
 If you're stuck, you might want to write a function that calculates the nth Fibonacci number first.
 
-# 7. Object-oriented programming
+## 3.3 Classes and inheritance
 
 At this point you may begin to wonder what Python is really up to and how it distinguishes between and manages all these objects. Given that just about anything can be assigned to a variable, isn't an integer just a collection of function objects that act on a bit of data.
 
@@ -864,7 +877,7 @@ Notice that the abs function takes an argument 'self'. Now try running the follo
 
 The third one fails. As you may have seen from the previous help statements, the self argument is required and hence throws an error. This `self` argument is what ties our dictionary of functions together into an object or a `class`. It allows an object to reference elements of itself and hence modify or call functions that it is associated with.
 
-## 7.1 Classes
+### 3.3.1 Classes
 
 Classes in python requires a constructor, sometimes termed an initialiser. This is a function that is called when a new instance of the object is created, for instance 
 
@@ -917,7 +930,7 @@ These sorts of trivial methods that just return an element of a class is commonl
         self.is_alive = is_alive
 ```
 
-## 7.2 **** Problem [10 Minutes] ****
+## **** Problem [10 Minutes] ****
 Extend the Parrot class 
 - Write a setter to set a new 'squawk' for the parrot
 - Write a `__call__` function that makes the parrot squawk
@@ -929,7 +942,7 @@ And lastly, because the writer was press-ganged into this. We can define a `pini
 If you didn't already, your `__call__` method should call the getter for squawk, if you've made a mistake in squawk or need to change it in the future you will now only have to modify one section of code, rather than every section that references `self.squawk`.
 
 
-## 7.3 Inheritance
+### 3.3.2 Inheritance
 So far classes are just a neat way to organise functions and the data that the functions act on. And while that will remain to be true, we can take this a little further and neatly organise our classes.
 
 Part of this is inheritance, we can specify that classes 'inherit' the properties of some parent class, which saves us from having to re-write them each time. These parent classes We can also specify 'abstract' classes or functions that only the child classes implement, this allows us to have multiple classes with common function calls that invoke different behaviour. 
@@ -958,7 +971,7 @@ class Parrot(Bird):
 There also exists multiple inheritance, polymorphism and several books and philosophies on the matter of Object Orientation and class hierarchies, but the general rule of thumb is do what works best for whatever it is that you're doing. 
 
 
-## 7.4 **** Problem [10 Minutes] ****
+## **** Problem [10 Minutes] ****
 Finish off the bird class
 - Write getters and setters for air_speed_velocity
 - Check that your Parrots can now call the air speed velocity getters and setters 
@@ -968,7 +981,7 @@ Implement a Swallow class that inherits from Bird.
 - A laden swallow moves at half the speed of an unladen swallow. You should overload the getter for the swallow to reflect this property. 
 
 
-# 8. Python libraries
+##  3.4 Python libraries
 
 Here are a few useful (non-scientific) general libraries. 
 
@@ -1022,11 +1035,13 @@ This may result in fiddly behaviour when two elements of the global name-space h
 A final Python library of incredible importance is the `this` library. 
 
 
-# 9
+# 9 Python for scientific computing
 
-Here we'll give a brief introduction to a few libraries that are useful for scientific computing. If in doubt when using a new package, don't forget to `dir()` the package, and `help()` on anything within the package.
+While Python is a very popular programming language due to its simplicitly and expressiveness, it is also receiving increasingly more attention in the context of scientific computing. Today there is a vast amount of scientific libraries out there which help you to perform almost any numeric task you can think of - from Fourier transforms to differential equation solvers, or machine learning and clever data visualisation tools. In this section we take a look at three of the most commonly used libraries: [NumPy](https://numpy.org), [Scipy](https://scipy.org) and [Matplotlib](https://matplotlib.org).
 
-## 9.1 NumPy
+If in doubt when using a new package, don't forget to `dir()` the package, and `help()` on anything within the package.
+
+## 9.1 NumPy - Numerical computing in Python
 
 ```python
 import numpy as np
@@ -1093,7 +1108,7 @@ dtype('int64')
 
 Numpy also offers the `dot` and `tensordot` functions for more general matrix and tensor multiplication, along with the `kron` operation for the kronecker product.
 
-## 9.2 Matplotlib
+## 9.2 Matplotlib - Visualising data in Python
 
 Matplotlib is a matlab like interface for plotting in Python. 
 
