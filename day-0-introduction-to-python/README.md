@@ -54,7 +54,7 @@ We expect a variety of skill levels from the attendees. If you know the material
 ### Logistical comments:
   - We have scheduled long breaks so that you have ample time for discussion and review.
   - **DO NOT BRING ANY FOOD OR DRINK INTO THE COMPUTER LAB!**
-  - You are welcome to use your own computer and/or your preferred software, but we cannot promise to be able to troubleshoot any issues you encounter.
+  - You are welcome to use your own computer and/or your preferred software, but we cannot promise to be able to troubleshoot any issues you encounter. [Setup instructions here](os_setup.md).
   - If you finish an exercise before others, please help others.
   - Ask sooner, not later.
 
