@@ -581,7 +581,7 @@ Try running the above code and satisfy for yourself that what is happening is bo
 There is a solution to this problem, but we'll get to it later.
 
 
-## 5 Python files
+## 5. Python files
 
 It's a bit hard to reproduce code if it's always in the CLI, so we can instead put the code in a file and get the Python interpreter to read the file line by line and execute the code. These Python files normally have the `.py` extension, and can be run from the command line using 
 
@@ -1040,7 +1040,7 @@ np.sqrt
 np.array
 ```
 
-And at last, arrays, vectors and matricies. Numpy can convert a list to an array. The lists must be regular and all elements must be of the same type.
+And at last, arrays, vectors and matrices. Numpy can convert a list to an array. The lists must be regular and all elements must be of the same type.
 
 ```python
 x = np.array([
