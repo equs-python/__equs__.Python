@@ -11,7 +11,8 @@ Go to [https://code.visualstudio.com/download](https://code.visualstudio.com/dow
 
 ### Windows
 
-[https://code.visualstudio.com/docs/setup/windows#_installation](https://code.visualstudio.com/docs/setup/windows#_installation)
+
+(https://code.visualstudio.com/docs/setup/windows#_installation)[https://code.visualstudio.com/docs/setup/windows#_installation]
 
 Download and execute the appropriate `.exe` file, and simply follow the installation instructions.
 
@@ -75,13 +76,26 @@ brew cask install atom
 For more details on using brew, see the end of the page.
 
 ### Linux
-A .deb file can be found (here)[https://atom.io/] or if you're more comfortable building from source (or you aren't running a debian derived distro) you can build from source from (here)[https://github.com/atom/atom/blob/master/docs/build-instructions/linux.md].
+
+If you're not using ubuntu Atom may already exist in your distro's package manager, otherwise we can add the atom ppa and install it from there.
+
+```
+sudo apt update
+sudo apt install software-properties-common apt-transport-https wget
+wget -q https://packagecloud.io/AtomEditor/atom/gpgkey -O- | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main"
+sudo apt install atom
+``` 
+
+If you prefer a .deb file can be found (here)[https://atom.io/] or if you're more comfortable building from source (or you aren't running a debian derived distro) you can build from source from (here)[https://github.com/atom/atom/blob/master/docs/build-instructions/linux.md].
 
 ## Git Integration
 
+Go to settings and install packages. From there search for "git-plus" and install it.
 
 ## Linting
 
+Go to settings and install packages. From there search for "linter-pylint" and install it.
 
 # Sublime Text
 
@@ -139,10 +153,10 @@ Open the command palette and go to `Package Control: Install Package` (typing wi
 ## Linting
 Open the command palette and go to `Package Control: Install Package` (typing will search and auto-complete). A second list will appear, this time displaying available packages. Find and select the `Pylinter` package. 
 
-# (Chocolatey)[https://chocolatey.org/]
+# Chocolatey
 A package manager for the Windows operating system. This allows you to install software packages from your terminal. 
 Installation instructions can be found (here)[https://chocolatey.org/install]. You will need administrator privileges to do this installation, and as a result cannot install it to the lab machines.
 
-# (Brew)[https://brew.sh/]
+# Brew
 A package manager for the OSX operating system. This allows you to install software packages from your terminal. 
 Installation instructions can be found (here)[https://brew.sh/].
