@@ -112,6 +112,7 @@ Go to the [Python.org download page](https://www.python.org/downloads/) and down
 
 ## Git Setup
 
+You should already have git installed. If not, please ask for help!
 
 # Linux
 
