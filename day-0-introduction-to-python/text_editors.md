@@ -7,16 +7,43 @@ Once installed, you can launch it from your terminal with the `code` command.
 
 ## Installation
 
+Go to [https://code.visualstudio.com/download](https://code.visualstudio.com/download) and download the appropriate installer for your operating system.
+
 ### Windows
 
+[https://code.visualstudio.com/docs/setup/windows#_installation](https://code.visualstudio.com/docs/setup/windows#_installation)
+
+Download and execute the appropriate `.exe` file, and simply follow the installation instructions.
 
 ### Mac
 
+[https://code.visualstudio.com/docs/setup/mac](https://code.visualstudio.com/docs/setup/mac)
+
+1. Download Visual Studio Code for macOS.
+2. Double-click on the downloaded archive to expand the contents.
+3. Drag Visual Studio Code.app to the Applications folder, making it available in the Launchpad.
+4. Add VS Code to your Dock by right-clicking on the icon and choosing Options, Keep in Dock.
+
+
 ### Linux
+
+[https://code.visualstudio.com/docs/setup/linux](https://code.visualstudio.com/docs/setup/linux)
+
+Download the appropriate installer. For debian based system, navigate to the Downloads directory and run:
+
+```bash
+$ sudo dpkg -i <vscode_installer>.deb
+```
+
+And replace the name in the angled brackets by the actual name of the installer.
 
 ## Git Integration
 
+VS Code should take care of this automatically. Let us know if you need a hand.
+
 ## Linting
+
+Install the Python extention for this. In the sidebar on the left, click on the `Extensions` symbol and install the `ms-python.python` extension. Note that in order for this to work you need to have a working Python environment set up with a linting module. We recomment `pylint` for that, which is shipped per default with the Anaconda distribution.
 
 
 # Atom
