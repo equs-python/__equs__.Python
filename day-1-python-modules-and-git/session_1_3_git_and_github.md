@@ -16,7 +16,7 @@ By far the most popular choice for this is Git, which is an incredibly powerful,
 
 Git is cross-platform compatible and can be used with or without GitHub, which is an online platform that integrates Git into an online host for code projects. In order to use GitHub, you need a GitHub account. To use Git, you merely need to provide Git with some user information (like name and email) for it to keep track of what changes were made by your identity.
 
-## 2.1 Using Git in the command line (15 minutes)
+## 2.1 Using Git in the command line
 
 For this tutorial, we have installed [Git for Windows](https://git-scm.com/download/win) on the lab computers, which ships with its own Bash console.
 
@@ -128,7 +128,7 @@ nothing to commit, working directory clean
 ```
 
 
-### \*\*\*\* PROBLEM: Change the file, add and commit (5 minutes)\*\*\*\*
+### \*\*\*\* PROBLEM: Change the file, add and commit (10 minutes)\*\*\*\*
 
 Now let's make a change to our file, and then add and commit the new version. Check the output of `git status` between the different stages.
 
@@ -139,14 +139,23 @@ Then have a look at the output of `git log`.
 There are a variety of options to compare different versions of a file, the most convenient ones are when using code editors that integrate with Git, like VSCode for example. GitHub too allows for a user-friendly comparison. Git also allows us to go back in time to specific versions of the code, but we won't go into much more detail on this at this stage.
 
 
-## 2.2 Using GitHub to share code and collaborate (15 Minutes)
+## 2.2 Using GitHub to share code and collaborate
 
 GitHub allows us to host our repositories online, which is a great way of collaborating or publishing code projects. To get started on an online repository you can:
 
 - Upload an existing repository from your local machine
 - Download an existing repository from GitHub
 
-Here we will walk through an example of downloading an existing repository, making a change to it (add and commit that change), and then uploading this change to the online repository.
+## **** Problem: Upload your project to GitHub (15 minutes) ***
+
+Upload the repository that you've made in the previous problem to GitHub.
+
+- Make a GitHub account
+- Follow the instructions on GitHub to upload your local repository
+ 
+## ****
+
+Now we will walk through an example of downloading an existing repository, making a change to it (add and commit that change), and then uploading this change to the online repository.
 
 For this demonstration, we will use the remote repository hosted here:
 
@@ -154,10 +163,16 @@ For this demonstration, we will use the remote repository hosted here:
 
 Note that this will also form our coding project for the afternoon.
 
-We begin by making a local copy of this repository. In Git-speak this is called *cloning*.
+## **** Problem: Fork the two-qubit-simulator repository (5 minutes) ***
+
+Make your own fork of the repository linked above.
+ 
+## ****
+
+And now we begin by making a local copy of this repository. In Git-speak this is called *cloning*.
 
 ```bash
-$ git clone https://github.com/equs-python/two-qubit-simulator
+$ git clone https://github.com/<your-user-name>/two-qubit-simulator
 Cloning into 'two-qubit-simulator'...
 remote: Enumerating objects: 7, done.
 remote: Counting objects: 100% (7/7), done.
@@ -175,6 +190,8 @@ $ git status
 On branch master
 nothing to commit, working directory clean
 ```
+
+## **** Problem: Add a new feature (25 minutes) ***
 
 Now we have the project code locally. Before we start developing any code, let's install the package using:
 
