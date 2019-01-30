@@ -1,6 +1,8 @@
 import sys
 import socket
 import traceback
+import time
+import numpy as np
 
 from PyQt5 import QtWidgets, QtCore
 from ui_power_supply import Ui_MainWindow
@@ -127,38 +129,89 @@ class PowerSupplyLogic(QtCore.QObject):
         self.socket_thread = QtCore.QThread()
         self.rc_server = RemoteControlServer()
         self.rc_server.moveToThread(self.socket_thread)
-        self.socket_thread.started.connect(self.rc_server.loop)
+        self.socket_thread.started.connect(self.rc_server.startup)
         self.rc_server.new_command.connect(self.handle_remote_command)
         self.socket_thread.start()
 
-    def set_voltage(self, channel, new_v):
+        # Dictionary of allowable arguments 
+        self.arg_parser = {
+            'True': True,
+            'T': True,
+            'true': True,
+            'False': False,
+            'F': False,
+            'false': False,
+            True : True,
+            False : False,
+        }
+
+        for i in np.linspace(0,30, 301):
+            self.arg_parser[str(i)] = i
+
+        # Define command set
+        self.command_dict = {'setactive': self.activate_output,
+                             'voltage': self.set_voltage,
+                             'v_set?' : self.get_v_set,
+                             'i_set?' : self.get_i_set,
+                             'v_act?' : self.get_v_act,
+                             'i_set?' : self.get_i_act
+        }
+
+    def set_voltage(self, channel, new_v, rc=False):
         self._v_set[channel] = new_v
         self._update_output(channel)
 
-    def set_current(self, channel, new_i):
+        if rc:
+            self.rc_server.send('{}'.format(new_v))
+
+    def set_current(self, channel, new_i, rc=False):
         self._i_set[channel] = new_i
         self._update_output(channel)
 
-    def get_v_act(self, channel):
+        if rc:
+            self.rc_server.send('{}'.format(new_v))
+
+    def get_v_act(self, channel, rc=False):
+        if rc:
+            self.rc_server.send('{}'.format(self._v_act[channel]))
+
         return self._v_act[channel]
 
-    def get_i_act(self, channel):
+    def get_i_act(self, channel, rc=False):
+        if rc:
+            self.rc_server.send('{}'.format(self._i_act[channel]))
+
         return self._i_act[channel]
 
-    def get_v_set(self, channel):
+    def get_v_set(self, channel, rc=False):
+        if rc:
+            self.rc_server.send('{}'.format(self._v_set[channel]))
+
         return self._v_set[channel]
 
-    def get_i_set(self, channel):
+    def get_i_set(self, channel, rc=False):
+        if rc:
+            self.rc_server.send('{}'.format(self._i_set[channel]))
+
         return self._i_set[channel]
 
-    def get_active_state(self, channel):
+    def get_active_state(self, channel, rc=False):
+
+        if rc:
+            self.rc_server.send('{}'.format(self._active[channel]))
+
         return self._active[channel]
 
-    def activate_output(self, channel, state):
+    def activate_output(self, channel, state, rc=False):
         if state is not self._active[channel]:
             self._active[channel] = state
             self._update_output(channel)
-            self.rc_server.send(b'active')
+            if rc:
+                if state:
+                    self.rc_server.send('activated {}'.format(channel))
+                else:
+                    self.rc_server.send('deactivated {}'.format(channel))
+            
 
     def _update_output(self, channel):
         """ Update the output of specified channel.
@@ -204,9 +257,38 @@ class PowerSupplyLogic(QtCore.QObject):
         """
         cmd = command.decode()
 
-        if cmd == 'activate 1':
-            self.activate_output(0, True)
+        args = ['']
+        try:
+            method, args = cmd.split(':')
+            args = args.split(';')
 
+            for i, arg in enumerate(args):
+                if arg in self.arg_parser:
+                    args[i] = self.arg_parser[arg]
+                elif arg.isdigit():
+                    args[i] = int(arg)
+                elif '.' in arg:
+                    arg_parts = arg.split('.')
+                    if len(arg_parts) == 2 and not False in [p.isdigit() for p in arg_parts]:
+                        args[i] = float(arg)
+                    else:
+                        print('Found a dot in {} but cannot read it as a float.'.format(arg))
+                else:
+                    print('No idea what {} means!'.format(arg))
+
+        except ValueError:
+            method = cmd
+
+        args.append(True)
+
+        print(method, args)
+
+        if method in self.command_dict.keys():
+            handler = self.command_dict[method]
+            return handler(*args)
+        else:
+            self.rc_server.send('-7')
+    
     def shutdown(self):
         self.rc_server.stop()
 
@@ -220,53 +302,73 @@ class RemoteControlServer(QtCore.QObject):
 
         self.HOST = '127.0.0.1'
         self.PORT = 65431
+        self.REPLY_WAIT = 0.1
         self.is_running = False
 
-        # Create the socket object
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.socket.bind((self.HOST, self.PORT))
+        self.active = True
+        self.connection = None
 
-    def loop(self):
-        """ Start an infinite loop in the background waiting for remote commands."""
+        self.recv_buffer = bytes()
+        self.send_buffer = bytes()
 
-        self.is_running = True
-        self.socket.settimeout(1)
-        self.socket.listen(1)
+    def startup(self):
+        """Start the socket and wait for connection."""
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.s.settimeout(1.0)
+        self.s.bind((self.HOST, self.PORT))
+        self.s.listen(0)
 
-        while self.is_running:
+        # Cycle through and wait for a connection
+        try:
+            sys.stdout.flush()
+        except:
+            pass
+
+        while self.active:
             try:
-                # Use a listen timeout to keep the thread "breathing"
-                # (Otherwise socket.listen() is blocking)
-                connection, client_address = self.socket.accept()
-            except socket.timeout:
-                    pass
-            else:
+                connection, address = self.s.accept()
+                break
+            except socket.timeout as ex:
+                print(".", end='')
                 try:
-                    print('Connected by', client_address)
-                    request = connection.recv(1024)
-                    if not request:
-                        break
-                    self.handle_request(request)
-                    connection.close()
-                except Exception:
-                    # If something goes wrong, we don't wan't to interrupt the server
-                    sys.stderr.write(traceback.format_exc())
-                    connection.close()
+                    sys.stdout.flush()
+                except:
+                    pass
 
-    def handle_request(self, request):
-        """ Handles a request received via a remote command. """
-        # Emit the pyqtsignal to forward the request to the GUI
-        self.new_command.emit(request)
-        # Do every other part of handling the request here
+        print('Connected by', address)
+
+        self.loop(connection)
+
+    def loop(self, connection):
+        """Message handling loop"""
+        while self.active:
+            try:
+                self.recv_buffer += connection.recv(1024)
+            except socket.timeout:
+                print('TimeOut')
+            except socket.error as ex:
+                print(ex)
+            else:
+                cmd = self.recv_buffer
+                print(cmd)
+                self.recv_buffer = bytes()
+                self.new_command.emit(cmd)
+
+                    # Give the instrument time to generate a response
+                while not self.send_buffer:
+                    time.sleep(self.REPLY_WAIT)
+
+                connection.sendall(self.send_buffer)
+                self.send_buffer = bytes()
 
     def send(self, message):
-        """Send a response back to the client."""
-        # I do not know how to do this yet.
-        pass
+        """Fill send buffer with data to send back to the client."""
+        self.send_buffer += message.encode()
+        print(self.send_buffer)
 
     def stop(self):
-        self.socket.close()
+        self.s.close()
         sys.exit()
 
 
