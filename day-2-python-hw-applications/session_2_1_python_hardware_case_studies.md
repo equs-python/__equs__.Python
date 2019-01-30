@@ -18,9 +18,13 @@ This measurement consists recording spectra at two wavelengths, at every combina
 
 Far too laborious even for a Masters student...
 
+## \*\*\*\* SOAPBOX: \*\*\*\*
 ![historical picture of soapbox speaker](images/soapbox_speaker.jpg)
 
-It's actually not about the problem of labour. Humans work slow and make mistakes.
+*It's actually not about the problem of labour. Humans work slow and make mistakes.*
+
+## \*\*\*\*
+
 
 ### Structuring the problem
 
