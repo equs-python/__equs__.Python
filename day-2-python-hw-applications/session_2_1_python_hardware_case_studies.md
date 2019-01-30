@@ -18,6 +18,9 @@ This measurement consists recording spectra at two wavelengths, at every combina
 
 Far too laborious even for a Masters student...
 
+![historical picture of soapbox speaker](images/soapbox_speaker.jpg)
+It's actually not about the problem of labour. Humans work slow and make mistakes.
+
 ### Structuring the problem
 
 We can think of this experiment as:
@@ -192,7 +195,7 @@ Do a quick search online to find out what the `encode()` method does.
 ## \*\*\*\*
 
 
-## 1.3 Thorlabs APT-motor rotational stage (Windows DLL and ctypes)
+## 1.4 Thorlabs APT-motor rotational stage (Windows DLL and ctypes)
 
 Sometimes there will be a DLL file giving us access to the device driver.
 
@@ -230,7 +233,7 @@ Loading the DLL gives us an object that has methods which can be called. This is
 The requirement to think of variables with C mentality may be a serious stumbling block for python programmers. 
 
 
-## 1.4 Deeper levels of hell 
+## 1.5 Deeper levels of hell 
 
 When working with hardware, you are at the mercy of whoever designed the hardware and its programming interface. This is the most frustrating example I have ever encountered. With this piezo stage, the only way out was to use python to send text strings of visual basic code through to a device...
 
@@ -276,3 +279,8 @@ for axis in ['x', 'y', 'z']:
 
 ```
 
+## 1.6 
+
+Sometimes the only way out is some creative thinking!
+
+![photo of motor turning power supply dial](images/lateral_thinking_ps_control.jpg)
