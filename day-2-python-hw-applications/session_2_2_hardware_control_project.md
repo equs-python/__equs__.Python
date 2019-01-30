@@ -32,6 +32,18 @@ Error codes
 
 ## 2.3 Remote control of the device
 
+| Command | Arguments | Description |
+| ------------- |:-------------:|:-------------:|
+|`'setactive'` | channel, state | Turn the output on or off on a given channel |
+|`'v_set'` | channel, voltage | Set the nominal voltage on a given channel |
+|`'i_set'` | channel, current | Set the nominal current on a given channel |
+|`'v_set?'` | channel | Get the nominal voltage on a given channel |
+|`'i_set?'` | channel | Get the nominal current on a given channel |
+|`'v_act?'` | channel | Get the actual voltage on a given channel |
+|`'i_act?'` | channel | Get the actual current on a given channel |
+|`'*IDN?*'` | None | Get the device identifier as a string |
+
+
 ## 2.4 Automating an experiment
 
 Channel 2 has an old tungsten filament light bulb attached as a load. The experiment is to measure 
