@@ -176,6 +176,8 @@ class PowerSupplyGui(QtWidgets.QMainWindow):
 
 
 class PowerSupplyLogic(QtCore.QObject):
+    """ Provides the logic associated with the virtual power supply.
+    """
 
     # Signals for the GUI to listen to for changes to power supply settings.
     outputs_updated_signal = QtCore.pyqtSignal(int)
@@ -229,10 +231,46 @@ class PowerSupplyLogic(QtCore.QObject):
         }
     
     def get_dev_id(self, rc=False):
+        """ Get the device ID
+
+            Parameters
+            -------
+                rc: bool, optional
+                    Flag that decides whether or not to send a reply
+                    via the remove server
+            
+            Returns
+            -------
+                none
+
+            If the rc flag is set to True, this function sends a
+            string containing a device identifier via the remote server.
+        """
         if rc:
             self.rc_server.send('EQUS PY19 Power Supply')
 
     def set_voltage(self, channel, new_v, rc=False):
+        """ Set a new output voltage on a given channel
+
+            Parameters
+            -------
+                channel : int
+                    The channel of the power supply. Can be 0 or 1
+
+                new_v : float
+                    The desired output voltage for the given channel
+
+                rc: bool, optional
+                    Flag that decides whether or not to send a reply
+                    via the remove server
+            
+            Returns
+            -------
+                none
+
+            If the rc flag is set to True, this function sends a
+            string containing the new voltage via the remote server.
+        """
         self._v_set[channel] = new_v
         self._update_output(channel)
 
@@ -240,37 +278,153 @@ class PowerSupplyLogic(QtCore.QObject):
             self.rc_server.send('{}'.format(new_v))
 
     def set_current(self, channel, new_i, rc=False):
+        """ Set a new output current on a given channel
+
+            Parameters
+            -------
+                channel : int
+                    The channel of the power supply. Can be 0 or 1
+
+                new_i : float
+                    The desired output current for the given channel
+
+                rc: bool, optional
+                    Flag that decides whether or not to send a reply
+                    via the remove server
+            
+            Returns
+            -------
+                none
+
+            If the rc flag is set to True, this function sends a
+            string containing the new current via the remote server.
+        """
         self._i_set[channel] = new_i
         self._update_output(channel)
 
         if rc:
-            self.rc_server.send('{}'.format(new_v))
+            self.rc_server.send('{}'.format(new_i))
 
     def get_v_act(self, channel, rc=False):
+        """ Gets the output voltage on a given channel
+
+            Parameters
+            -------
+                channel : int
+                    The channel of the power supply. Can be 0 or 1
+
+                rc: bool, optional
+                    Flag that decides whether or not to send a reply
+                    via the remove server
+            
+            Returns
+            -------
+                float
+                    The output voltage on the given channel
+
+            If the rc flag is set to True, this function sends a
+            string containing the current voltage via the remote server.
+        """
         if rc:
             self.rc_server.send('{}'.format(self._v_act[channel]))
 
         return self._v_act[channel]
 
     def get_i_act(self, channel, rc=False):
+        """ Gets the output current on a given channel
+
+            Parameters
+            -------
+                channel : int
+                    The channel of the power supply. Can be 0 or 1
+
+                rc: bool, optional
+                    Flag that decides whether or not to send a reply
+                    via the remove server
+            
+            Returns
+            -------
+                float
+                    The output current on the given channel
+
+            If the rc flag is set to True, this function sends a
+            string containing the output current via the remote server.
+        """
         if rc:
             self.rc_server.send('{}'.format(self._i_act[channel]))
 
         return self._i_act[channel]
 
     def get_v_set(self, channel, rc=False):
+        """ Gets the nominal voltage on a given channel
+
+            Parameters
+            -------
+                channel : int
+                    The channel of the power supply. Can be 0 or 1
+
+                rc: bool, optional
+                    Flag that decides whether or not to send a reply
+                    via the remove server
+            
+            Returns
+            -------
+                float
+                    The nominal voltage on the given channel
+
+            If the rc flag is set to True, this function sends a
+            string containing the nominal voltage via the remote server.
+        """
         if rc:
             self.rc_server.send('{}'.format(self._v_set[channel]))
 
         return self._v_set[channel]
 
     def get_i_set(self, channel, rc=False):
+        """ Gets the nominal output current on a given channel
+
+            Parameters
+            -------
+                channel : int
+                    The channel of the power supply. Can be 0 or 1
+
+                rc: bool, optional
+                    Flag that decides whether or not to send a reply
+                    via the remove server
+            
+            Returns
+            -------
+                float
+                    The nominal current on the given channel
+
+            If the rc flag is set to True, this function sends a
+            string containing the nominal current via the remote server.
+        """
         if rc:
             self.rc_server.send('{}'.format(self._i_set[channel]))
 
         return self._i_set[channel]
 
     def get_active_state(self, channel, rc=False):
+        """ Gets the output state on a given channel
+
+            Parameters
+            -------
+                channel : int
+                    The channel of the power supply. Can be 0 or 1
+
+                rc: bool, optional
+                    Flag that decides whether or not to send a reply
+                    via the remove server
+            
+            Returns
+            -------
+                int
+                    The output state on the given channel
+
+            If the rc flag is set to True, this function sends a
+            string containing the output state via the remote server.
+        """
 
         if rc:
             self.rc_server.send('{}'.format(self._active[channel]))
@@ -278,6 +432,29 @@ class PowerSupplyLogic(QtCore.QObject):
         return self._active[channel]
 
     def activate_output(self, channel, state, rc=False):
+        """ Modifies the output state on a given channel
+
+            Parameters
+            -------
+                channel : int
+                    The channel of the power supply. Can be 0 or 1
+                
+                state : int
+                    The desired output state. Can be 0 (output off)
+                    or 1 (output on)
+
+                rc: bool, optional
+                    Flag that decides whether or not to send a reply
+                    via the remove server
+            
+            Returns
+            -------
+                none
+
+            If the rc flag is set to True, this function sends a
+            string containing whether the channel has been activated
+            or deactivated via the remote server.
+        """
         if state is not self._active[channel]:
             self._active[channel] = state
             self._update_output(channel)
@@ -290,7 +467,8 @@ class PowerSupplyLogic(QtCore.QObject):
             
 
     def _update_output(self, channel):
-        """ Update the output of specified channel.
+        """ Private method that modifies the output state of a given
+            channel. See class method activate_output.
         """
         if self._active[channel] and channel == 0:
             out_v, out_i = self._calc_output(self._v_set[channel],
