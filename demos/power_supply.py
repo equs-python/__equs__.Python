@@ -18,6 +18,19 @@ class PowerSupplyGui(QtWidgets.QMainWindow):
 
         self.ps_logic = PowerSupplyLogic()
 
+        # Populate ch1 load combobox
+        self.ui.ch1_load_comboBox.addItem('0')
+        self.ui.ch1_load_comboBox.addItem('10')
+        self.ui.ch1_load_comboBox.addItem('18.5')
+        self.ui.ch1_load_comboBox.addItem('inf')
+
+        self.load_dict = {
+            '0' : 0,
+            '10' : 10,
+            '18.5' : 18.5,
+            'inf' : np.inf
+        }
+
         # Connect GUI input events
         self.ui.ch1_volt_dial.valueChanged.connect(self.gui_set_ch1_volt)
         self.ui.ch1_amps_dial.valueChanged.connect(self.gui_set_ch1_amps)
@@ -26,6 +39,8 @@ class PowerSupplyGui(QtWidgets.QMainWindow):
 
         self.ui.ch1_activate_radioButton.clicked.connect(self.gui_activate_ch1)
         self.ui.ch2_activate_radioButton.clicked.connect(self.gui_activate_ch2)
+
+        self.ui.ch1_load_comboBox.currentIndexChanged.connect(self.set_ch1_load)
 
         # Connect signals from Logic
         self.ps_logic.outputs_updated_signal.connect(self.display_updated_outputs)
@@ -95,6 +110,9 @@ class PowerSupplyGui(QtWidgets.QMainWindow):
             volt_lcd[channel].display(self.ps_logic.get_v_act(channel))
             amps_lcd[channel].display(self.ps_logic.get_i_act(channel))
 
+            if channel == 1:
+                self.set_filament_colour(self.ps_logic.get_v_act(channel), self.ps_logic.get_i_act(channel))
+
             if self.ps_logic.get_v_act(channel) == self.ps_logic.get_v_set(channel):
                 v_limit_led[channel].setStyleSheet(self.led_on_style)
                 amps_limit_led[channel].setStyleSheet("")
@@ -109,6 +127,48 @@ class PowerSupplyGui(QtWidgets.QMainWindow):
             amps_lcd[channel].display(self.ps_logic.get_i_set(channel))
             v_limit_led[channel].setStyleSheet("")
             amps_limit_led[channel].setStyleSheet("")
+
+            if channel == 1:
+                self.set_filament_colour(0, 0)
+
+    def set_ch1_load(self):
+        """ Respond to ch1 load combobox selection changing.
+        """
+        selection = self.ui.ch1_load_comboBox.currentText()
+        newload = self.load_dict[selection]
+        self.ps_logic.set_load(0, newload)
+
+    def set_filament_colour(self, v, i):
+        """ Set the drawn filament colour to correspond to the electrical output.
+        """
+        # Temp is proportional to power dissipated by filament
+        power = v * i  
+        
+        # max power at 24 V is 96 W, corresponding to temperature of 4000 K
+        temperature = 4000.0 * power / 96
+
+        red = 255
+        green = 190 * (np.sqrt(temperature/4000)) / (1 + np.exp(-0.005 * (temperature-800)))
+        blue = 160 * (temperature/4000) / (1 + np.exp(-0.004 * (temperature-2000)))
+
+        # Let the low colour temperatures be also less bright
+        brightness = 1 / (1 + np.exp(-0.001 * (temperature-700)))
+
+        red = red * brightness
+        green = green * brightness
+        blue = blue * brightness
+
+        if red > 255:
+            red = 255
+        if green > 255:
+            green = 255
+        if blue > 255:
+            blue = 255
+
+        filament_style = ("QLabel { background-color: rgba(0, 0, 0, 255); "
+                         + "color:rgba(" + str(int(red)) + ", " + str(int(green)) + ", " + str(int(blue)) + ", 255); }")
+        
+        self.ui.ch2_filament_label.setStyleSheet(filament_style)
 
     def shutdown(self):
         print("I'm shutting down")
@@ -125,7 +185,7 @@ class PowerSupplyLogic(QtCore.QObject):
     def __init__(self):
         super(PowerSupplyLogic, self).__init__()
 
-        self.loads = [0, 10]
+        self.load = [0, 6]
 
         self._v_set = [0, 0]
         self._i_set = [0, 0]
@@ -227,11 +287,16 @@ class PowerSupplyLogic(QtCore.QObject):
     def _update_output(self, channel):
         """ Update the output of specified channel.
         """
-        if self._active[channel]:
+        if self._active[channel] and channel == 0:
             out_v, out_i = self._calc_output(self._v_set[channel],
                                              self._i_set[channel],
-                                             self.loads[channel]
-                                             )
+                                             self.load[channel]
+                                            )
+
+        if self._active[channel] and channel == 1:
+            out_v, out_i = self._calc_filament_output(self._v_set[channel],
+                                                      self._i_set[channel]
+                                                     )
 
         # Otherwise the outputs are zero
         else:
@@ -246,9 +311,9 @@ class PowerSupplyLogic(QtCore.QObject):
     def _calc_output(self, v_set, i_set, load):
         """ Use Ohm's law to determine whether we are limited by V or I setting.
         """
-        # If no load, then no current regardless of V setting
+        # If no load, then max current regardless of V setting
         if load == 0:
-            return v_set, 0
+            return 0, i_set
 
         # Now we consider Ohm's law
         out_v = i_set * load
@@ -260,6 +325,30 @@ class PowerSupplyLogic(QtCore.QObject):
         else:
             out_i = v_set / load
             return v_set, out_i
+
+    def _calc_filament_output(self, v_set, i_set):
+        """Calculate the actual output V and I for a tungsten filament load with varying resistance.
+        """
+        # We will assume that I as a function of V is a kind of ln(V) shape.
+        #
+        # Take    I = 1.8 * ln (V + 1)
+
+        # Assume I limited.
+        out_v = np.exp(i_set / 1.8) - 1
+
+        if out_v <= v_set:  # current limited is correct
+            return out_v, i_set
+
+        # Otherwise we are voltage limited
+        else:
+            out_i = 1.8 * np.log(v_set + 1)
+            return v_set, out_i
+
+    def set_load(self, channel, load):
+        """Set a new load resistance on a channel.
+        """
+        self.load[channel] = load
+        self._update_output(channel)
 
     def handle_remote_command(self, command):
         """Parse the remote command and perform the desired action.
