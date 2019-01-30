@@ -1,7 +1,9 @@
-from PyQt5 import QtWidgets, QtCore
-from ui_power_supply import Ui_MainWindow
 import sys
 import socket
+import traceback
+
+from PyQt5 import QtWidgets, QtCore
+from ui_power_supply import Ui_MainWindow
 
 
 class PowerSupplyGui(QtWidgets.QMainWindow):
@@ -96,6 +98,10 @@ class PowerSupplyGui(QtWidgets.QMainWindow):
             v_limit_led[channel].setStyleSheet("")
             amps_limit_led[channel].setStyleSheet("")
 
+    def shutdown(self):
+        print("I'm shutting down")
+        self.ps_logic.shutdown()
+
 
 class PowerSupplyLogic(QtCore.QObject):
 
@@ -121,7 +127,7 @@ class PowerSupplyLogic(QtCore.QObject):
         self.socket_thread = QtCore.QThread()
         self.rc_server = RemoteControlServer()
         self.rc_server.moveToThread(self.socket_thread)
-        self.socket_thread.started.connect(self.rc_server.startup)
+        self.socket_thread.started.connect(self.rc_server.loop)
         self.rc_server.new_command.connect(self.handle_remote_command)
         self.socket_thread.start()
 
@@ -201,6 +207,9 @@ class PowerSupplyLogic(QtCore.QObject):
         if cmd == 'activate 1':
             self.activate_output(0, True)
 
+    def shutdown(self):
+        self.rc_server.stop()
+
 
 class RemoteControlServer(QtCore.QObject):
 
@@ -211,75 +220,61 @@ class RemoteControlServer(QtCore.QObject):
 
         self.HOST = '127.0.0.1'
         self.PORT = 65431
+        self.is_running = False
 
-        self.active = True
+        # Create the socket object
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.socket.bind((self.HOST, self.PORT))
 
-        self.connection = None
+    def loop(self):
+        """ Start an infinite loop in the background waiting for remote commands."""
 
-        self.recv_buffer = bytes()
-        self.send_buffer = bytes()
+        self.is_running = True
+        self.socket.settimeout(1)
+        self.socket.listen(1)
 
-    def startup(self):
-        """Start the socket and wait for connection."""
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.s.settimeout(1.0)
-        self.s.bind((self.HOST, self.PORT))
-        self.s.listen(0)
-
-        # Cycle through and wait for a connection
-        try:
-            sys.stdout.flush()
-        except:
-            pass
-
-        while True:
+        while self.is_running:
             try:
-                connection, address = self.s.accept()
-                break
-            except socket.timeout as ex:
-                print(".", end='')
-                try:
-                    sys.stdout.flush()
-                except:
+                # Use a listen timeout to keep the thread "breathing"
+                # (Otherwise socket.listen() is blocking)
+                connection, client_address = self.socket.accept()
+            except socket.timeout:
                     pass
+            else:
+                try:
+                    print('Connected by', client_address)
+                    request = connection.recv(1024)
+                    if not request:
+                        break
+                    self.handle_request(request)
+                    connection.close()
+                except Exception:
+                    # If something goes wrong, we don't wan't to interrupt the server
+                    sys.stderr.write(traceback.format_exc())
+                    connection.close()
 
-        print('Connected by', address)
+    def handle_request(self, request):
+        """ Handles a request received via a remote command. """
+        # Emit the pyqtsignal to forward the request to the GUI
+        self.new_command.emit(request)
+        # Do every other part of handling the request here
 
-        self.loop(connection)
+    def send(self, message):
+        """Send a response back to the client."""
+        # I do not know how to do this yet.
+        pass
 
-    def loop(self, connection):
-        """Message handling loop"""
-        while self.active:
-            try:
-                self.recv_buffer += connection.recv(1024)
-            except self.s.timeout:
-                print('to')
-                pass
-            except self.s.error as ex:
-                print(ex)
-
-            print('a')
-
-            if self.recv_buffer:
-                cmd = self.recv_buffer
-                print(cmd)
-                self.recv_buffer = bytes()
-                self.new_command.emit(cmd)
-
-            if self.send_buffer:
-                connection.sendall(self.send_buffer)
-                self.send_buffer = bytes()
-
-    def send(self, data):
-        """Fill send buffer with data to send back to the client."""
-        self.send_buffer += data
-        print(self.send_buffer)
+    def stop(self):
+        self.socket.close()
+        sys.exit()
 
 
 def main():
     app = QtWidgets.QApplication([])
     application = PowerSupplyGui()
     application.show()
+    app.aboutToQuit.connect(application.shutdown)
     sys.exit(app.exec())
 
 if __name__ == "__main__":
