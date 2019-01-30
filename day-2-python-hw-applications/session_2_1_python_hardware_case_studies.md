@@ -1,53 +1,11 @@
 # \_\_equs\_\_.Python workshop 2019
 ## Day 2 - Putting python to work
 
-We've covered a fair bit of _how_ to code in Python. Today the focus will shift to putting this superpower to work. For experiments we'll typically need to interact with and control hardware devices - and Python is great for this (but has limits). The nuts and bolts can get laborious and are mostly too time consuming for this workshop. We'll explore some case studies to build up a picture of the challenges, focussing on what Python can do (and where its limits are). We will write code to control a simple hardware device, and put it to work automating an experiment.
-
-Here are the specific topics of the day:
-
-1. [Motivating Python in the lab with case studies](session_2_1_python_hardware_case_studies.md)
-   1. Overview of goal
-   2. Simple text-based communication
-   3. Windows DLL control (with ctypes)
-   4. Deeper levels of hell...
-2. [Experiment automation project](session_2_2_hardware_control_project.md)
-   1. Querying a hardware device
-   2. Controlling a hardware device
-   3. Doing physics faster (better?) through automation
-3. [Introduction to Qudi as a deeper case study](session_2_3_introduction_to_qudi.md)
-4. Introduction to pyQuil
-
-*Caveat*: I make no claim to be "the best" at this stuff. Many of my code examples are taken from real lab software I have worked on; it works, but it may not be optimal.
-
-
-
-## Getting started
-
-To get started, download the tutorial content to your local machine. If you haven't been here yet, open Git Bash and type:
-
-```bash
-$ git clone https://github.com/equs-python/__equs__.Python
-$ cd __equs__.Python/day-2-python-hw-applications
-$ code .
-```
-
-If you already have the repository cloned to your comptuer, then open Git Bash and navigate to the __equs__.Python directory and type:
-
-```bash
-$ git checkout master
-$ git pull
-$ cd __equs__.Python/day-2-python-hw-applications
-$ code .
-```
-
-
-And with that, let's go!
-
-# 1. Motivating Python in the lab (1 hour)
+# 1. Motivating Python in the lab
 
 In this section we present a variety of case studies to highlight how useful Python can be in the lab, and also to illustrate the range of challenges that can be encountered when talking to hardware.
 
-## 1.1 Automated experiment
+## 1.1 Automated experimentC
 
 ### Topical example
 
@@ -86,6 +44,8 @@ Doing this experiment autonomously requires Python to:
 Clearly we need to think a bit about Python and hardware.
 
 ## 1.2 Text-based querying for logging (PCM60x charge controller)
+
+![Photo of PCM 60x charge controller](images/pcm60x_photo.jpg)
 
 Excellent simple example as a warm-up. The charge controller for my home-built solar-charged home battery. I wanted to produce a live online plot of the charging current and battery voltage so that I could monitor progress while not at home.
 
@@ -150,20 +110,6 @@ full_response = ''.join(response)
 
 Most of this is quite readable Python code. The message to send to the OBIS laser is a bit cryptic. It can be read as `SOURce:POWer:LEVel:IMMediate:AMPLitude <value>` and is described in the Operators Manual (Appendix C):
 
-> Set/Query Laser Power Level
-> 
-> Sets present laser power level in watts. Setting power level does not turn the laser on.
-> 
-> Command: SOURce:POWer:LEVel:IMMediate:AMPLitude \<value\>
->
-> Query: SOURce:POWer:LEVel:IMMediate:AMPLitude?
->
-> Reply: \<x.xxxxx\>
->
-> The reply string represents the present laser power level setting as an NRf value in watts.
-
-**TODO:** Decide whether quote (above) or screenshot (below) is better.
-
 ![Snippet of Obis operators manual](images/obis_manual_set_power.png)
 
 Of course, there are plenty more commands available in this communication vocabulary. Appendix C lists more than 3 pages in its opening Quck Reference table:
@@ -174,7 +120,14 @@ We want to use many of these commands, but do not want to have to write out the 
 
 **Note:** *Code duplication is EVIL.*
 
-**Exercise:** Can you think of some reasons why?
+## \*\*\*\* PROBLEM: code duplication (2-3 minutes) \*\*\*\*
+
+Can you think of 2 or more reasons why code duplication is EVIL?
+
+Discuss with people near you.
+
+## \*\*\*\*
+
 
 So let's write some methods that we can reuse multiple times.
 
@@ -228,10 +181,20 @@ def set_power(self, power):
     self._communicate('SOUR:POW:LEV:IMM:AMPL {}'.format(power))
 ```
 
+## \*\*\*\* PROBLEM: What's `encode()` (5 minutes) \*\*\*\*
+
+Do a quick search online to find out what the `encode()` method does.
+
+- Open an ipython console and make a variable holding some string.
+- Print that string, and then print the string "encoded".
+- Check that `decode()` does what it should do (take an "encoded" string and return it to a plain string)
+
+## \*\*\*\*
+
 
 ## 1.3 Thorlabs APT-motor rotational stage (Windows DLL and ctypes)
 
-Sometimes there will be a DLL file givng us access to the device driver.
+Sometimes there will be a DLL file giving us access to the device driver.
 
 ```python
 from ctypes import c_long, c_buffer, c_float, windll, pointer
@@ -239,21 +202,77 @@ from ctypes import c_long, c_buffer, c_float, windll, pointer
 path_dll = 'thirdparty/thorlabs/win64/APT.dll'
 aptdll = windll.LoadLibrary(path_dll)
 
+SERIAL_NUM = 11782019
+SerialNumber = c_long(SERIAL_NUM)
+
+result = aptdll.InitHWDevice(SerialNumber)
+if result == 0:
+    print('initializeHardwareDevice connection SUCESS')
+else:
+    raise Exception('Connection Failed. Check Serial Number!')
+
+# Get position
+position = c_float()
+aptdll.MOT_GetPosition(SerialNumber, pointer(position))
+
+print('motor at {} degrees'.format(position.value))
+
+# Rotate to position
+new_pos = 45.0
+absolutePosition = c_float(new_pos)
+
+wait_until_done = True
+aptdll.MOT_MoveAbsoluteEx(SerialNumber, absolutePosition, wait_until_done)
+```
+
+Loading the DLL gives us an object that has methods which can be called. This is elegant.
+
+The requirement to think of variables with C mentality may be a serious stumbling block for python programmers. 
+
+
 ## 1.4 Deeper levels of hell 
 
-Sometimes the only way out is to use python to send text strings of visual basic code through to a device...
+When working with hardware, you are at the mercy of whoever designed the hardware and its programming interface. This is the most frustrating example I have ever encountered. With this piezo stage, the only way out was to use python to send text strings of visual basic code through to a device...
+
+```python
+# Move to new_pos
+
+to_pos = new_pos /1e-6  # NT-MDT scanner communication in microns
+
+command = ('SetParam tScanner, scPosition, {scanner}, {channel}, {position}\n'
+            'Do\n'
+            'idle\n'
+            'Loop Until GetParam(tScanner, cStatus, {scanner}) = False'
+            .format(channel=channel, position=to_pos, scanner=scanner))
+
+novadll.RunScriptText(command.encode())
+time.sleep(0.1)
+```
+
+When we need to query some parameter and ask it to send the info back to us, things get worse! Again we need to send a command as visual basic in a string. Then we ask it to set a value in a shared memory (requiring `c_types`) and then use `c_types` in python to access the value that was set in that memory slot.
+
+```python
+pos_dict = {}
+
+for axis in ['x', 'y', 'z']:
+    command = ('{axis}Pos = GetParam(tScanner, scPosition, {scanner}, {channel})\n\n'
+               'SetSharedDataVal "shared_{axis}Pos", {axis}Pos, "F64", 8'
+               .format(axis=axis, channel=channel, scanner=scanner)
+              )
 
 
-# 2. Experiment control project
+    novadll.RunScriptText(command.encode())
+    time.sleep(0.1)
 
-## 2.1 Load the device.
+    variable = 'shared_{axis}Pos'.format(axis=axis)
 
-It's too hard to have physical experimental equipment attached to every computer here. Instead, a "virtual power supply" is ready to run!
+    outbuf = ctypes.c_double()
+    buflen = ctypes.c_int()
 
-**TODO:** Instructions to start the virtual device running
+    novadll.GetSharedData(variable.encode(), None, ctypes.byref(buflen))  # get the required buffer size
+    novadll.GetSharedData(variable.encode(), ctypes.byref(outbuf), ctypes.byref(buflen))  # fill the buffer
 
-## 2.2 Read things from device
+    pos_dict[axis] = outbuf.value * 1e-6  # NT-MDT scanner communication in microns
 
-## 2.3 Remote control of the device
+```
 
-## 2.4 Automating an experiment
