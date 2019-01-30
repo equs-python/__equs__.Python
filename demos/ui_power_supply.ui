@@ -211,9 +211,9 @@
         </layout>
        </item>
        <item>
-        <widget class="QPushButton" name="ch1_activate_pushButton">
+        <widget class="QRadioButton" name="ch1_activate_radioButton">
          <property name="text">
-          <string>Activate Output</string>
+          <string>Activate O&amp;utput</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -419,7 +419,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPushButton" name="ch2_activate_pushButton">
+        <widget class="QRadioButton" name="ch2_activate_radioButton">
          <property name="text">
           <string>Activate Output</string>
          </property>

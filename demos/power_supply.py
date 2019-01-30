@@ -24,8 +24,8 @@ class PowerSupplyGui(QtWidgets.QMainWindow):
         self.ui.ch2_volt_dial.valueChanged.connect(self.gui_set_ch2_volt)
         self.ui.ch2_amps_dial.valueChanged.connect(self.gui_set_ch2_amps)
 
-        self.ui.ch1_activate_pushButton.clicked.connect(self.gui_activate_ch1)
-        self.ui.ch2_activate_pushButton.clicked.connect(self.gui_activate_ch2)
+        self.ui.ch1_activate_radioButton.clicked.connect(self.gui_activate_ch1)
+        self.ui.ch2_activate_radioButton.clicked.connect(self.gui_activate_ch2)
 
         # Connect signals from Logic
         self.ps_logic.outputs_updated_signal.connect(self.display_updated_outputs)
@@ -54,14 +54,14 @@ class PowerSupplyGui(QtWidgets.QMainWindow):
         self.ps_logic.set_current(1, new_amps)
 
     def gui_activate_ch1(self):
-        if self.ui.ch1_activate_pushButton.isChecked():
+        if self.ui.ch1_activate_radioButton.isChecked():
             self.ps_logic.activate_output(0, True)
 
         else:
             self.ps_logic.activate_output(0, False)
 
     def gui_activate_ch2(self):
-        if self.ui.ch2_activate_pushButton.isChecked():
+        if self.ui.ch2_activate_radioButton.isChecked():
             self.ps_logic.activate_output(1, True)
 
         else:
@@ -78,11 +78,20 @@ class PowerSupplyGui(QtWidgets.QMainWindow):
         @param int channel: Index of channel. This is passed in the signal from the logic
         """
         volt_lcd = [self.ui.ch1_volt_lcdNumber, self.ui.ch2_volt_lcdNumber]
+        volt_dial = [self.ui.ch1_volt_dial, self.ui.ch2_volt_dial]
         amps_lcd = [self.ui.ch1_amps_lcdNumber, self.ui.ch2_amps_lcdNumber]
+        amps_dial = [self.ui.ch1_amps_dial, self.ui.ch2_amps_dial]
         v_limit_led = [self.ui.ch1_v_limited_led_label, self.ui.ch2_v_limited_led_label]
         amps_limit_led = [self.ui.ch1_amps_limited_led_label, self.ui.ch2_amps_limited_led_label]
+        active_button = [self.ui.ch1_activate_radioButton, self.ui.ch2_activate_radioButton]
+        
+        # Update dial, but block signals while doing so to prevent signal looping.
+        volt_dial[channel].blockSignals(True)
+        volt_dial[channel].setValue(self.ps_logic.get_v_set(channel)*10)  # value is 1/10 of slider pos to get pseudo float
+        volt_dial[channel].blockSignals(False)
 
         if self.ps_logic.get_active_state(channel):
+            active_button[channel].setChecked(True)
             volt_lcd[channel].display(self.ps_logic.get_v_act(channel))
             amps_lcd[channel].display(self.ps_logic.get_i_act(channel))
 
@@ -95,6 +104,7 @@ class PowerSupplyGui(QtWidgets.QMainWindow):
 
         # Otherwise channel is not active, so display set values.
         else:
+            active_button[channel].setChecked(False)
             volt_lcd[channel].display(self.ps_logic.get_v_set(channel))
             amps_lcd[channel].display(self.ps_logic.get_i_set(channel))
             v_limit_led[channel].setStyleSheet("")
@@ -206,11 +216,12 @@ class PowerSupplyLogic(QtCore.QObject):
         if state is not self._active[channel]:
             self._active[channel] = state
             self._update_output(channel)
-            if rc:
-                if state:
-                    self.rc_server.send('activated {}'.format(channel))
-                else:
-                    self.rc_server.send('deactivated {}'.format(channel))
+
+        if rc:
+            if state:
+                self.rc_server.send('activated {}'.format(channel))
+            else:
+                self.rc_server.send('deactivated {}'.format(channel))
             
 
     def _update_output(self, channel):
@@ -269,19 +280,22 @@ class PowerSupplyLogic(QtCore.QObject):
                     args[i] = int(arg)
                 elif '.' in arg:
                     arg_parts = arg.split('.')
-                    if len(arg_parts) == 2 and not False in [p.isdigit() for p in arg_parts]:
+                    if (len(arg_parts) == 2 and not False in [p.isdigit() for p in arg_parts]):
                         args[i] = float(arg)
                     else:
                         print('Found a dot in {} but cannot read it as a float.'.format(arg))
+                        self.rc_server.send('-3')
+                        return
                 else:
                     print('No idea what {} means!'.format(arg))
+                    self.rc_server.send('-3')
+                    return
 
         except ValueError:
             method = cmd
+            self.rc_server.send('-4')
 
         args.append(True)
-
-        print(method, args)
 
         if method in self.command_dict.keys():
             handler = self.command_dict[method]
@@ -351,7 +365,6 @@ class RemoteControlServer(QtCore.QObject):
                 print(ex)
             else:
                 cmd = self.recv_buffer
-                print(cmd)
                 self.recv_buffer = bytes()
                 self.new_command.emit(cmd)
 
@@ -365,7 +378,7 @@ class RemoteControlServer(QtCore.QObject):
     def send(self, message):
         """Fill send buffer with data to send back to the client."""
         self.send_buffer += message.encode()
-        print(self.send_buffer)
+        self.send_buffer += '\n'.encode()  # separate messages on new lines
 
     def stop(self):
         self.s.close()
