@@ -222,7 +222,8 @@ class PowerSupplyLogic(QtCore.QObject):
 
         # Define command set
         self.command_dict = {'setactive': self.activate_output,
-                             'voltage': self.set_voltage,
+                             'v_set': self.set_voltage,
+                             'i_set': self.set_current,
                              'v_set?' : self.get_v_set,
                              'i_set?' : self.get_i_set,
                              'v_act?' : self.get_v_act,
