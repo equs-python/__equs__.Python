@@ -18,7 +18,15 @@ You should see a small graphical-user-interface (GUI) that shows the front contr
 
 **Don't worry about the strange display below Channel 2 just yet!**
 
-**TODO:** Documentation of remote commands
+## 2.2 Read The Flimsy Manual
+
+This 
+
+Error codes
+
+-3 Invalid argument
+-4 No arguments given
+-7 Command not known
 
 ## 2.2 Read things from device
 

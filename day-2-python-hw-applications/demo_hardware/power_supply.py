@@ -224,8 +224,13 @@ class PowerSupplyLogic(QtCore.QObject):
                              'v_set?' : self.get_v_set,
                              'i_set?' : self.get_i_set,
                              'v_act?' : self.get_v_act,
-                             'i_set?' : self.get_i_act
+                             'i_set?' : self.get_i_act,
+                             '*IDN?' : self.get_dev_id
         }
+    
+    def get_dev_id(self, rc=False):
+        if rc:
+            self.rc_server.send('EQUS PY19 Power Supply')
 
     def set_voltage(self, channel, new_v, rc=False):
         self._v_set[channel] = new_v
@@ -382,9 +387,13 @@ class PowerSupplyLogic(QtCore.QObject):
 
         except ValueError:
             method = cmd
-            self.rc_server.send('-4')
+            if method != '*IDN?':
+                self.rc_server.send('-4')
 
         args.append(True)
+
+        if method == '*IDN?':
+            args = [True]
 
         if method in self.command_dict.keys():
             handler = self.command_dict[method]
