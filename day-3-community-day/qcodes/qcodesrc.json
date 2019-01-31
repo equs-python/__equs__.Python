@@ -4,7 +4,7 @@
         "file_loglevel": "INFO",
         "default_fmt": "data/{date}/#{counter}_{name}_{time}",
         "register_magic": true,
-        "db_location": "/Users/jana/equs/__equs__.Python/day-3-community-day/qcodes/experiments.db",
+        "db_location": "./experiments.db",
         "db_debug": false
     },
     "gui" :{
@@ -14,12 +14,12 @@
         "defaultcolormap": "hot"
     },
     "user": {
-        "scriptfolder": "/Users/jana/equs/__equs__.Python/day-3-community-day/qcodes",
-        "mainfolder": "/Users/jana/equs/__equs__.Python/day-3-community-day/qcodes"
+        "scriptfolder": ".",
+        "mainfolder": "."
     },
     "station_configurator": {
         "enable_forced_reconnect": false,
-        "default_folder": "/Users/jana/Documents/code/qdev_wrappers/examples/station_configurator",
+        "default_folder": "",
         "default_file": ""
     }
 }
