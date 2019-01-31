@@ -15,13 +15,14 @@ source $BASHRC
 #################
 echo "Installing required packages..."
 sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get update
 sudo apt-get -y install vim
 sudo apt-get -y install git
 sudo apt-get -y install docker.io
 sudo apt-get -y install apt-transport-https
-sudo apt-get -y install
+sudo apt-get -y install gcc
+sudo apt-get -y install libxml2-dev
+sudo apt-get -y install libxsl1-dev
+sudo apt-get -y install zlib1g-dev
 sudo apt-get -y install g++
 
 # Add the user to the docker group
