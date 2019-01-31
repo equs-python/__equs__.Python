@@ -477,7 +477,7 @@ class PowerSupplyLogic(QtCore.QObject):
                                              self.load[channel]
                                             )
 
-        if self._active[channel] and channel == 1:
+        elif self._active[channel] and channel == 1:
             out_v, out_i = self._calc_filament_output(self._v_set[channel],
                                                       self._i_set[channel]
                                                      )
