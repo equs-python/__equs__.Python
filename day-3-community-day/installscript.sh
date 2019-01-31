@@ -150,16 +150,20 @@ PYGSTI_GIT=https://github.com/pyGSTio/pyGSTi.git
 # # Clone Repo
 git -C $AUR clone $PYGSTI_GIT
 
-# # Setup Environment
+# Setup Environment
 $CONDA create -n pygsti -y
 $ACTIVATE pygsti
 
-# # Setup dependencies
+# Setup dependencies
 $CONDA install numpy -y
 $CONDA install matplotlib -y
 
-# # Install pygsti
+# Install pygsti
 python3 -m pip install $PYGSTI
+
+# Notebook Kernels
+python3 -m install ipykernel
+$CONDA install nb_conda_kernels
 
 # # And clear
 $CONDA deactivate
@@ -187,6 +191,10 @@ $CONDA activate qcodes
 # Install 
 python3 -m pip install $QCODES
 
+# Notebook Kernels
+python3 -m install ipykernel
+$CONDA install nb_conda_kernels
+
 # And clear
 $CONDA deactivate
 
@@ -211,6 +219,10 @@ $ACTIVATE qiskit
 # Install some helpful things
 python3 -m pip install matplotlib
 python3 -m pip install pyplot
+
+# Notebook Kernels
+python3 -m install ipykernel
+$CONDA install nb_conda_kernels
 
 # And clear
 $CONDA deactivate
@@ -240,6 +252,10 @@ python3 -m pip install pyplot
 
 # Install qinfer
 python3 -m pip install $QINFER
+
+# Notebook Kernels
+python3 -m install ipykernel
+$CONDA install nb_conda_kernels
 
 # And clear
 $CONDA deactivate
@@ -271,6 +287,10 @@ python3 -m pip install pyplot
 # Build from source wasn't working
 python3 -m pip install qutip
 
+# Notebook Kernels
+python3 -m install ipykernel
+$CONDA install nb_conda_kernels
+
 # And clear
 $CONDA deactivate
 
@@ -292,8 +312,11 @@ $CONDA create -n openfermion -y
 $ACTIVATE openfermion
 
 python3 -m pip install -r OPENFERMION_REQUIREMENTS
-
 python3 -m pip install $OPENFERMION
+
+# Notebook Kernels
+python3 -m install ipykernel
+$CONDA install nb_conda_kernels
 
 $CONDA deactivate
 
