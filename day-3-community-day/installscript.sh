@@ -111,7 +111,7 @@ ACTIVATE="source $MINICONDA_BIN/activate"
 DEACTIVATE=$MINICONDA_BIN/deactivate
 
 # Update
-$CONDA update -n base -c defaults conda
+$CONDA update -n base -c defaults conda -y
 $CONDA init
 $CONDA init bash
 source $BASHRC
