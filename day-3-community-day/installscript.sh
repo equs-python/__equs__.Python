@@ -288,7 +288,7 @@ fi
 # Qiskit
 #########
 if INST_QISKIT; then
-    echo "Installing Qiskit..."
+    echo "${f1}Installing Qiskit...${f7}"
 
     QISKIT=$AUR/qiskit-tutorials
     QISKIT_GIT=https://github.com/Qiskit/qiskit-tutorials.git
@@ -319,7 +319,7 @@ fi
 # #########
 # # qinfer
 # #########
-echo "Installing qinfer..."
+echo "${f1}Installing qinfer...${f7}"
 QINFER=$AUR/python-qinfer
 QINFER_GIT=https://github.com/QInfer/python-qinfer.git
 QINFER_REQUIREMENTS=$QINFER/requirements.txt
@@ -355,7 +355,7 @@ $CONDA deactivate
 #################
 # Qutip
 #################
-echo "Installing qutip..."
+echo "${f1}Installing qutip...${f7}"
 QUTIP=$AUR/qutip
 QUTIP_GIT=https://github.com/qutip/qutip.git
 QUTIP_REQUIREMENTS=$QUTIP/requirements.txt
@@ -391,7 +391,7 @@ $CONDA deactivate
 #################
 # OpenFermion
 #################
-echo "Installing OpenFermion..."
+echo "${f1}Installing OpenFermion...${f7}"
 
 OPENFERMION=$AUR/openfermion
 OPENFERMION_GIT=https://github.com/quantumlib/openfermion.git

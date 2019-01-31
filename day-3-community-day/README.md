@@ -13,3 +13,44 @@ $ cd jupyter_notebooks
 $ conda activate pygsti
 $ jupyter notebook START_HERE.ipynb
 ```
+
+## Qcodes setup instructions
+
+To set up your qcodes environment, run the following commands
+
+```bash
+$ conda activate qcodes
+$ pip install ~/aur/Qcodes
+```
+
+## Qinfer Setup Instructions
+
+To set up your qinfer environment, run the following commands
+
+```bash
+$ conda activate qinfer
+$ pip install matplotlib
+$ pip install pyplot
+$ pip install ~/aur/python-qinfer
+```
+
+## Qutip Setup Instructions
+
+To set up your qutip environment run the following commands
+
+```bash
+$ conda activate qutip
+$ pip install cython
+$ pip install numpy
+$ pip install scipy
+$ pip install ~/aur/qutip
+```
+
+## Openfermion Setup Instructions
+
+To set up your Open Fermion environment run the following commands
+
+```bash
+$ conda activate openfermion
+$ pip install ~/aur/openfermion
+```
