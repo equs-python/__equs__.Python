@@ -227,7 +227,7 @@ class PowerSupplyLogic(QtCore.QObject):
                              'v_set?' : self.get_v_set,
                              'i_set?' : self.get_i_set,
                              'v_act?' : self.get_v_act,
-                             'i_set?' : self.get_i_act,
+                             'i_act?' : self.get_i_act,
                              '*IDN?' : self.get_dev_id
         }
     
