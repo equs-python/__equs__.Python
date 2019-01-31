@@ -286,15 +286,16 @@ OPENFERMION_REQUIREMENTS=$OPENFERMION/requirements.txt
 
 git -C $AUR clone $OPENFERMION_GIT
 
-sudo docker build -t openfermion_docker $OPENFERMION_DOCKER
 
-# And in case the docker install fails, here's an environment too
-
-/bin/bash -c "$CONDA create -n openfermion -y"
+# In case the docker install fails, here's an environment too
+$CONDA create -n openfermion -y
 $ACTIVATE openfermion
 
 python3 -m pip install -r OPENFERMION_REQUIREMENTS
 
 python3 -m pip install $OPENFERMION
 
-conda deactivate
+$CONDA deactivate
+
+# And the docker install at the end
+sudo docker build -t openfermion_docker $OPENFERMION_DOCKER
