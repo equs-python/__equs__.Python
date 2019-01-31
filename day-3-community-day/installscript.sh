@@ -176,7 +176,7 @@ QCODES_GIT=https://github.com/QCoDeS/Qcodes.git
 QCODES_YML=$QCODES/environment.yml
 
 # Clone Repo
-# git -C $AUR clone $QCODES_GIT
+git -C $AUR clone $QCODES_GIT
 
 # Create environment
 $CONDA env create -f $QCODES_YML
