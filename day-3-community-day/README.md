@@ -1,6 +1,6 @@
 # GOOD MORNING!
 
-## and welcome to day 3 of the Python workshop!
+## And welcome to day 3 of the Python workshop!
 
 For today's sessions, we have set up your computers with Virtual Boxes running Linux Mint, with all the software we need today pre-installed.
 
