@@ -10,3 +10,5 @@ cd ~
 wget https://raw.githubusercontent.com/equs-python/__equs__.Python/master/day-3-community-day/openfermion/open-fermion.ipynb
 jupyter-notebook --allow-root --no-browser --port 8888 --ip=0.0.0.0
 ```
+
+You may remember that `control + shift + v` pastes to the command line and may save you from typing out all of the above.
