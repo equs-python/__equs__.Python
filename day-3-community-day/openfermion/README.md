@@ -21,12 +21,16 @@ You may remember that `control + shift + v` pastes to the command line and may s
 
 ### Conda
 
-Alternatively, you can use your anaconda environment:
+Alternatively, you can use your anaconda environment. Remember to pull:
 
 ```bash
-conda activate openfermion
-pip install openfermionpyscf
-pip install openfermioncirq
+$ git pull
+```
+
+```bash
+$ conda activate openfermion
+$ pip install openfermionpyscf
+$ pip install openfermioncirq
 ```
 
 And then you will find the ipython notebook in the `day-3-community-day` directory in the workshop git repository. Simply run `jupyter-notebook` to access it.
