@@ -67,6 +67,13 @@ $ pip install ~/aur/qutip
 To set up your Open Fermion environment run the following commands
 
 ```bash
-$ conda activate openfermion
-$ pip install ~/aur/openfermion
+conda activate openfermion
+pip install openfermionpyscf
+pip install openfermioncirq
 ```
+
+And then you will find the ipython notebook in the `day-3-community-day` directory in the workshop git repository. Simply run `jupyter-notebook` to access it.
+
+If you can't find the notebook, don't forget to `git pull` to update your local copy of the repository.
+
+If you want to use the docker image, you can find instructions in the `README.md` file in the `openfermion` directory
