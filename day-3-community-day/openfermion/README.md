@@ -5,5 +5,8 @@
 
 To use the docker image for open fermion you can enter
 ```bash
-sudo docker run -it openfermion_docker
+sudo docker run -it -p 8888:8888 openfermion_docker
+cd ~
+wget https://raw.githubusercontent.com/equs-python/__equs__.Python/master/day-3-community-day/openfermion/open-fermion.ipynb
+jupyter-notebook --allow-root --no-browser --port 8888 --ip=0.0.0.0
 ```
