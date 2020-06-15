@@ -1,6 +1,6 @@
 # EQUS Python workshop 2020
 
-This workshop introduces Python programming for people working in quantum science and quantum computing, and is run by the [ARC Centre of Excellence for Engineered Quantum Systems](https://equs.org) (EQUS). The workshop runs from Tuesday, 14/06 to Wednesday, 05/06 and will be held online.
+This workshop introduces Python programming for people working in quantum science and quantum computing, and is run by the [ARC Centre of Excellence for Engineered Quantum Systems](https://equs.org) (EQUS). The workshop runs from Tuesday, 14/06 to Wednesday, 15/06 and will be held online.
 
 This will be a hands-on workshop. We provide computers for every attendee and all the presentations will be held in tutorial style so that people can code along.
 
