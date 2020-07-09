@@ -347,7 +347,7 @@ This input will always be in string format, so you'll need to convert it to what
 
 
 ## **** Problem [10 minutes] ****
-The (Collatz conjecture)[https://en.wikipedia.org/wiki/Collatz_conjecture] has a reasonably straight forward implementation as the 'hailstone problem'. 
+The [Collatz conjecture](https://en.wikipedia.org/wiki/Collatz_conjecture) has a reasonably straight forward implementation as the 'hailstone problem'. 
 
 Implement the hailstone problem in a Python file, your program will take a single integer as a command line argument for a starting value, you should print each intermediary value.  
 - If the number is negative or zero then the program stops
