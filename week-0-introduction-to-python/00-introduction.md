@@ -146,6 +146,7 @@ and_the_other_way = '''lm"no'''
 a_complex_number = 1j
 a_boolean = True
 a_none_type_object = None
+a_bytes_object = b"001010"
 ``` 
 
 The assignment operator may also be used to assign the value of one variable to another:
@@ -212,7 +213,7 @@ Some operators are also more verbose than those above:
  - `and`
  - `or`
 
-This list is not exhaustive, especially the compound operators.
+This list is not exhaustive, especially the compound operators. Pay special attention to the division operators, what implicit type conversion occurs in each case?
 
 ## *[Problem - 5 minutes] - Binary Logic*
 Distinguish between the `and` and `&` operator and the `or` and `|` operator. Consider the following cases:
@@ -220,7 +221,34 @@ Distinguish between the `and` and `&` operator and the `or` and `|` operator. Co
  - `5 and 2` vs `5 & 2`
  - `5 or 2` vs `5 | 2`
 
-### 1.2.3 Truth and Falsehood
+### 1.2.3 Casting
+
+We can cast between different types using the appropriate functions.
+
+```python
+print(int(5.1))
+print(float(7))
+print(chr(42)) # Have a look at the ascii table for this one - `man ascii`
+print(ord('a'))
+print(str(5))
+print(str(5.0))
+print(bin(5))
+```
+
+## *[Problem - 5 minutes] - Casting Logic*
+
+ - Demonstrate that `ord` and `chr` are each other's inverse
+ - Distinguish between the str and chr casts.
+ - Consider the following casts:
+
+ ```python
+ int("5.0")
+ int("50", 12)
+ int("101010110", 2)
+ ```
+  - The `hex` function also contains an implicit cast, how would you invert the `hex` function?
+
+### 1.2.4 Truth and Falsehood
 
 Python has an interesting relationship with the notions of binary truth. Consider the following comparisons
 
@@ -238,7 +266,7 @@ Python has an interesting relationship with the notions of binary truth. Conside
  - `'' == True`
  - `'' == False`
 
-We're now posed with an object that is neither true nor false. At this point we adopt a model of "truthyness" and "falseyness", for the purposes of binary logic non-zero integers are considered to be "truthy" and hence will, when forced, evaluate to True, this is also true for non-empty strings. 
+We're now posed with an object that is neither true nor false. At this point we adopt a model of "truthyness" and "falseyness", for the purposes of binary logic non-zero integers are considered to be "truthy" and hence will, when forced, evaluate to True, this is also true for non-empty strings. Conversely empty strings and the None type are considered to be "falsey" and will evaluate to false.
 
 
 ## [Theory] Python's Memory Model
@@ -372,3 +400,19 @@ print(y)
 ```
 
 This code will function correctly if `x` evaluates to `True` but will throw an error regarding `y` being undefined if `x` evaluates to `False`.
+
+
+### *[Problem - Homework] - No Ifs*
+Write a program that takes three integer inputs from standard input (see the next section):
+
+ - If all inputs are equal print their sum
+ - If one input differs, print the input that differs
+ - If all inputs are different, print their product
+
+You may *not* use the if keyword or any other control flow. The following relations may be helpful:
+
+```python
+int(False)
+int(not not(x ^ 5))
+5 ^ 6 ^ 5
+```
