@@ -1,5 +1,6 @@
 # PREAMBLE
 
+You can obtain the content for this workshop from the following git repository. The content may be updated between sessions so be sure to pull appropriately.
 
 ```bash
 $ git clone https://github.com/equs-python/__equs__.Python
@@ -28,7 +29,7 @@ The goal of this workshop is to introduce you to the process of creating good co
 
 ### Why Python?
 
-Python is rapidly becoming the scripting language of choice for scientific computing. It is easy to learn, widely used, and well-designed. For these reasons, Python is also an excellent language to start with as you learn to create good code, regardless of your particular needs.
+Python is rapidly becoming the scripting language of choice for performance agnostic scientific computing. It is easy to learn, widely used, and well-designed. 
 
 Furthermore, many important and useful libraries are written in Python. Some examples include [NumPy](https://www.numpy.org), [Tensorflow](https://www.tensorflow.org).
 
@@ -45,8 +46,3 @@ We expect a variety of skill levels from the attendees. If you know the material
     - You are welcome to use your own computer and/or your preferred software, but we cannot promise to be able to troubleshoot any issues you encounter. [Setup instructions here](os_setup.md).
     - If you finish an exercise before others, please help others.
     - Ask sooner, not later.
-
-
-
-
-

@@ -117,7 +117,7 @@ True
 ```
 
 
-## **** Problem [10 minutes] ****
+## *[Problem - 10 minutes] Prime Listing*
 
 Modify your Prime finder code such that given a list, it checks each element of the list to see if it's prime.
 
@@ -205,7 +205,7 @@ However this isn't particularly descriptive, so instead we can allocate names to
 
 There's quite a bit more to Python strings such as bytes formatting, the format strings of 3.6 and unicode, but these are more specialist topics so we'll leave it there for now.
 
-## **** Problem [5 Minutes] ****
+## *[Problem - 5 Minutes] - Format*
 Modify the print statement in your prime finder code to use the format method when printing which numbers are prime. 
 
 
@@ -257,7 +257,7 @@ Arrays and other mathematically minded objects are in numpy, we'll get there lat
 
 There are a few tricks with lists that I'd normally like to avoid, but are somewhat important. 
 
-The main point is that a list object is actually a pointer in memory to where the list is stored. As a result we can get some odd behaviour when copying lists or modifying a tuple containing a list.
+The main point is that a list object is actually an address pointing to where the list is stored. As a result we can get some odd behaviour when copying lists or modifying a tuple containing a list.
 
 ```python
 >>> a_tuple = ([1,2,3],4,5)
@@ -282,21 +282,21 @@ As we can see, the 'b_list' is a list of lists, each is a copy of 'a_list'. So i
 >>> b_list[0][0] = 2
 ```
 
-##  **** Problem [5 Minutes] ****
+##  *[Problem 5 Minutes] - List Incomprehension*
 Try running the above code and satisfy for yourself that what is happening is both perfectly logical given what a list is, and is also very silly.
 
-There is a solution to this problem, but we'll get to it later.
+There is a solution to this problem, but we'll get to it later in the workshop.
 
 
 ## 2.2 Python files
 
 It's a bit hard to reproduce code if it's always in the CLI, so we can instead put the code in a file and get the Python interpreter to read the file line by line and execute the code. These Python files normally have the `.py` extension, and can be run from the command line using 
 
-```python
+```bash
 python my_file.py
 ```
 
-## **** Problem [5 Minutes] ****
+## *[Problem - 5 Minutes] - Prime Mover*
 
 Try moving your Prime finder code to a file and run it from the command line.
 
@@ -346,7 +346,7 @@ This input will always be in string format, so you'll need to convert it to what
 | Ascii Character | Int | `ord` | 
 
 
-## **** Problem [10 minutes] ****
+## *[Problem - 10 minutes] - Collatz*
 The [Collatz conjecture](https://en.wikipedia.org/wiki/Collatz_conjecture) has a reasonably straight forward implementation as the 'hailstone problem'. 
 
 Implement the hailstone problem in a Python file, your program will take a single integer as a command line argument for a starting value, you should print each intermediary value.  
@@ -367,12 +367,11 @@ Just as you can read and write to files, you can read and write to processes. Th
 ```
 As with the command line arguments, the input is in the form of a string. Unlike the command line arguments, the string is not delimited by white-space, but by a new line character (the enter button, or `\n`).
 
-## **** Problem [5 minutes] ****
+## *[Problem - 5 minutes] - Collatz Again*
 
 Modify your hailstone problem file to read from standard input instead of taking a command line argument.
 
-## 2.3 File I/O
-
+## 2.3 Basic File I/O
 
 Files can be read from or written to with the `'r'` and `'w'` arguments respectively. You can't do both at once. All files you open must be closed to avoid dirty edits.
 
@@ -384,7 +383,7 @@ file_write = open('filename', 'w')
 file_write.close()
 ```
 
-Reading comes with the `read` and `readlines` commands, read takes the file buffer while readlines splits the input by the newline character. 
+Reading comes with the `read`, `readline` and `readlines` commands, read takes the file buffer while readlines splits the input by the newline character. 
 
 ```
 file_read.readlines()
@@ -407,8 +406,23 @@ with open('filename', 'r') as f:
 
 Generally this is a good idea to avoid forgetting to close the file. 
 
-## **** Problem [5 Minutes] ****
+## *[Problem - 5 Minutes] - Hello World!*
 - Write `hello world` to a text file.
 - Use Python to open the file, and read the contents
 - Close the file, open it again in write mode and change the contents
 - Confirm that this has happened in your text editor
+
+
+## *[Problem - Homework] - Primality*
+
+- Modify your prime finder to write its output to a file
+- Modify it again to read a file of integers and filter that file for prime numbers
+
+
+## *[Problem - Homework] - Iterative implies Recursive*
+Write a program that takes a list of lists of lists... of non-collection objects of arbitrary and non-uniform depth and prints all the non-collections. As we don't have functions on hand yet you will not be able to do this recursively. Your first problem should be finding how to distinguish between a list type and a non-collection type.
+
+```python
+    target = [[1, 2], [3, [4]], [[[5]]], 6, 7, [8, 9, 10]]
+```
+Where the expected output would then be the numbers from 1 through to 10.
