@@ -43,6 +43,6 @@ We expect a variety of skill levels from the attendees. If you know the material
 
   
 ### Logistical comments:
-    - You are welcome to use your own computer and/or your preferred software, but we cannot promise to be able to troubleshoot any issues you encounter. [Setup instructions here](os_setup.md).
+    - You are welcome to use your own computer and/or your preferred software, but we cannot promise to be able to troubleshoot any issues you encounter. [Setup instructions here](tools/os_setup.md).
     - If you finish an exercise before others, please help others.
     - Ask sooner, not later.
