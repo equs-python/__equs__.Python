@@ -116,8 +116,24 @@ There's quite a lot going on in here already, but there's an `in` keyword in Pyt
 True
 ```
 
+It's pertinent to also briefly discuss the range generator; while this isn't quite a list or a collection we will wave our hands and treat it as such:
 
-## *[Problem - 10 minutes] Prime Listing*
+```python
+>>> for i in range(5)
+>>>    print(i)
+0
+1
+2
+3
+4
+```
+We can also forcibly convert this generator to a list.
+```python
+>>> list(range(5)
+[0, 1, 2, 3, 4]
+```
+
+## *[Problem - 5 minutes] Prime Listing*
 
 Modify your Prime finder code such that given a list, it checks each element of the list to see if it's prime.
 
@@ -129,6 +145,15 @@ Here are some sample lists:
 - `[]`
 
 Yes, the last one is intentionally empty.
+
+## *[Problem - 5 Minutes] - Jagged Sum*
+    Given a list of lists of uneven length, find the sum of the elements. Here are some example test cases:
+
+```python
+[[1], [1], [1]]
+[[1, 2], [1], [1, 2, 3]]
+[[1, 2, 3], [], [1, 2, 3]]
+```
 
 ## 2.1.2 Tuples and Strings
 Tuples are very similar to lists and almost everything from the previous section that worked with lists will work with tuples with the exception that they're immutable - once assigned they can't be changed. You can copy sections of a tuple or elements out of a tuple and modify those, but you can't change the ones inside a tuple.
@@ -195,7 +220,7 @@ Format searches for and replaces instances of `{}` within strings with the argum
 
 Multiple inputs can be specified by considering the ordering of the arguments to the format function as if it were a tuple itself. So `{0}` refers to the first argument passed to the format method, `{1}` to the second and so on. 
 ```python
->>> print("{0} shalt thou not count, nor either shall though count {1}".format('four', 2))
+>>> print("{0} shalt thou not count, nor either shall thou count {1}".format('four', 2))
 ```
 
 However this isn't particularly descriptive, so instead we can allocate names to the positional arguments, and specify this by name in the argument to the format function.
@@ -252,6 +277,19 @@ You could do it yourself with a simple loop, or we can wait until we get the pro
 
 Arrays and other mathematically minded objects are in numpy, we'll get there later.
 
+## *[Problem - 5 Minutes] - Matrix Multiplication*
+    With two nested loops and two two dimensional arrays write a python script that multiplies them together and prints the output.
+
+```python
+eye = [[1, 0], [0, 1]]
+x = [[0, 1], [1, 0]]
+
+# TODO Multiply
+
+print(result)
+```
+
+Consider how you would scale this up for matrices of arbitrary dimensions.
 
 ## 2.1.5 Getting into the weeds
 
