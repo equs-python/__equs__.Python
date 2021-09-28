@@ -403,7 +403,7 @@ This code will function correctly if `x` evaluates to `True` but will throw an e
 
 
 ### *[Problem - Homework] - No Ifs*
-Write a program that takes three integer inputs from standard input (see the next section):
+Write a program that takes three integer inputs:
 
  - If all inputs are equal print their sum
  - If one input differs, print the input that differs
