@@ -133,7 +133,7 @@ We can also forcibly convert this generator to a list.
 [0, 1, 2, 3, 4]
 ```
 
-## *[Problem - 5 minutes] Prime Listing*
+## *[Problem 2.1 : 5 minutes] Prime Listing*
 
 Modify your Prime finder code such that given a list, it checks each element of the list to see if it's prime.
 
@@ -146,7 +146,7 @@ Here are some sample lists:
 
 Yes, the last one is intentionally empty.
 
-## *[Problem - 5 Minutes] - Jagged Sum*
+## *[Problem 2.2 : 5 Minutes] - Jagged Sum*
     Given a list of lists of uneven length, find the sum of the elements. Here are some example test cases:
 
 ```python
@@ -230,7 +230,7 @@ However this isn't particularly descriptive, so instead we can allocate names to
 
 There's quite a bit more to Python strings such as bytes formatting, the format strings of 3.6 and unicode, but these are more specialist topics so we'll leave it there for now.
 
-## *[Problem - 5 Minutes] - Format*
+## *[Problem 2.3 : 5 Minutes] - Format*
 Modify the print statement in your prime finder code to use the format method when printing which numbers are prime. 
 
 
@@ -277,7 +277,7 @@ You could do it yourself with a simple loop, or we can wait until we get the pro
 
 Arrays and other mathematically minded objects are in numpy, we'll get there later.
 
-## *[Problem - 5 Minutes] - Matrix Multiplication*
+## *[Problem 2.4 : 5 Minutes] - Matrix Multiplication*
     With two nested loops and two two dimensional arrays write a python script that multiplies them together and prints the output.
 
 ```python
@@ -320,7 +320,7 @@ As we can see, the 'b_list' is a list of lists, each is a copy of 'a_list'. So i
 >>> b_list[0][0] = 2
 ```
 
-##  *[Problem 5 Minutes] - List Incomprehension*
+##  *[Problem 2.5 : 5 Minutes] - List Incomprehension*
 Try running the above code and satisfy for yourself that what is happening is both perfectly logical given what a list is, and is also very silly.
 
 There is a solution to this problem, but we'll get to it later in the workshop.
@@ -334,7 +334,7 @@ It's a bit hard to reproduce code if it's always in the CLI, so we can instead p
 python my_file.py
 ```
 
-## *[Problem - 5 Minutes] - Prime Mover*
+## *[Problem 2.6 : 5 Minutes] - Prime Mover*
 
 Try moving your Prime finder code to a file and run it from the command line.
 
@@ -384,7 +384,7 @@ This input will always be in string format, so you'll need to convert it to what
 | Ascii Character | Int | `ord` | 
 
 
-## *[Problem - 10 minutes] - Collatz*
+## *[Problem 2.7 : 10 minutes] - Collatz*
 The [Collatz conjecture](https://en.wikipedia.org/wiki/Collatz_conjecture) has a reasonably straight forward implementation as the 'hailstone problem'. 
 
 Implement the hailstone problem in a Python file, your program will take a single integer as a command line argument for a starting value, you should print each intermediary value.  
@@ -405,7 +405,7 @@ Just as you can read and write to files, you can read and write to processes. Th
 ```
 As with the command line arguments, the input is in the form of a string. Unlike the command line arguments, the string is not delimited by white-space, but by a new line character (the enter button, or `\n`).
 
-## *[Problem - 5 minutes] - Collatz Again*
+## *[Problem 2.8 : 5 minutes] - Collatz Again*
 
 Modify your hailstone problem file to read from standard input instead of taking a command line argument.
 
@@ -444,14 +444,14 @@ with open('filename', 'r') as f:
 
 Generally this is a good idea to avoid forgetting to close the file. 
 
-## *[Problem - 5 Minutes] - Hello World!*
+## *[Problem 2.9 : 5 Minutes] - Hello World!*
 - Write `hello world` to a text file.
 - Use Python to open the file, and read the contents
 - Close the file, open it again in write mode and change the contents
 - Confirm that this has happened in your text editor
 
 
-## *[Problem - Homework] - Primality*
+## *[Problem 2.10 : Homework] - Primality*
 
 - Modify your prime finder to write its output to a file
 - Modify it again to read a file of integers and filter that file for prime numbers

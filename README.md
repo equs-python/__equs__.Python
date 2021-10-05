@@ -14,10 +14,10 @@ Below is the preliminary workshop schedule. This schedule is not finalised yet -
 | Date | Topics |  
 | ------------- |:-------------:|
 | 28-9-21       | **Introduction to Python** <br> [Getting started with Python](week-0-introduction-to-python/README.md)<br>|
-| 5-10-21       | **Basic Python Programming** <br> Functions and Git|
-| 12-10-21      | **Advanced Python Programming**  <br> Classes and Python under the hood |
-| 19-10-21      | **Scientific Python** <br> Numpy, Scipy, Qiskit and Visualisation|
-| 26-10-21      | **Collaborative Python** <br> Python Package development and deployment |
+| 5-10-21       | **Basic Python Programming** <br> Collections and Functions|
+| 12-10-21      | **Advanced Python Programming**  <br> Functional Python and Classes|
+| 19-10-21      | **Collaborative Python** <br> Python Package development and deployment|
+| 26-10-21      | **Scientific Python** <br> Numpy, Qiskit and Visualisation |
 
 
 ## Preparation

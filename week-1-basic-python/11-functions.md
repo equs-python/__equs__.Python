@@ -28,7 +28,7 @@ a, b = some_function()
 ```
 
 
-## **** Problem [5 minutes] ****
+## *[Problem 3.1 : 5 Minutes]*
 
 Write a modulus power function. The function takes three arguments in order, the base, the exponent and the modulus and calculates: 
 
@@ -92,7 +92,7 @@ This is of course how the format method was working earlier, the position argume
 IndexError: tuple index out of range
 ``` 
 
-## **** Problem [10-15 Minutes] ****
+## *[Problem 3.2 : 10 Minutes]*
 
 Implement a very basic version of the format function. Your function should take a string to format along with the args and kwargs. You should try to replicate the format method as closely as possible.
 
@@ -141,11 +141,11 @@ We can also use the iterators for list comprehension as a bit of a cheat to buil
 [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
 ``` 
 
+We will discuss how to construct our own iterators and generators in the next session.
 
-## **** Problem [10 Minutes] ****
+
+## *[Problem - Homework]*
 Using whatever approach you want, use list comprehension to construct a list of the first 50 Fibonacci numbers.
 
 If you're stuck, you might want to write a function that calculates the nth Fibonacci number first.
 
-
-## *[Problem - Homework] - *
