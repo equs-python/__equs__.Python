@@ -242,7 +242,7 @@ In keeping with the different brackets convention, dictionaries use the curly br
 
 ```python
 >>> a_dictionary = {'key_a':'value_a', 'key_b':12}
->>> a_dictionary['key_a']
+>>> a_dictionary['key_b']
 12
 ``` 
 
