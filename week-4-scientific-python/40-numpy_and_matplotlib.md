@@ -1,5 +1,5 @@
 
-# 4. Python for scientific computing
+# 4.0 Python for scientific computing
 
 While Python is a very popular programming language due to its simplicitly and expressiveness, it is also receiving increasingly more attention in the context of scientific computing. Today there is a vast amount of scientific libraries out there which help you to perform almost any numeric task you can think of - from Fourier transforms to differential equation solvers, or machine learning and clever data visualisation tools. In this section we take a look at two of the most commonly used libraries: [NumPy](https://numpy.org) and [Matplotlib](https://matplotlib.org). For completeness, we also mention [Scipy](https://scipy.org) here, which essentially implements a variety of extra functionality to extend NumPy, but in the interest of time we will skip this library here.
 
@@ -133,7 +133,7 @@ Note that this is not a built-in Python type, but instead a type that Numpy defi
 
 **Hint:** Take a look at the `dot`, `tensordot` and/or `kron` operation in Numpy.
 
-## 4.2 Matplotlib - Visualising data in Python
+## 4.0.1 Matplotlib - Visualising data in Python
 
 Matplotlib is a matlab-like interface for plotting in Python. 
 
