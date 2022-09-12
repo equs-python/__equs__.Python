@@ -12,7 +12,6 @@ Below is the preliminary workshop schedule. This schedule is not finalised yet -
 
 | Date | Time | Topics |  
 | ------------- |:-------------:|:-------------:|
-
 | 29-9-22 | 9am - 10:15am       | **Introduction to Python** <br> [Getting started with Python](week-0-introduction-to-python/README.md)<br>|
 | 29-9-22 | 10:30am - 12pm       | **Basic Python Programming** <br> Collections and Functions|
 | 29-9-22 | 1pm - 4pm      | **Advanced Python Programming**  <br> Functional Python and Classes|
