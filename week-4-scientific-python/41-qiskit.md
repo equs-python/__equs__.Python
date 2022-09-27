@@ -48,15 +48,24 @@ circuit.measure([0], [0])
 # Draw our circuit
 circuit.draw()
 ```
+Circuits have a number of properties that produce standard gates, as ever we can see class methods and properties with `dir`. Of particular note are the gates on offer. Qiskit devices only calibrate `X`, `sqrt(X)` and `ZX` gates along with an in software implementation of `Z` gates, all other gates are constructed from this base set, circuits will typically be more accurate if they can be expressed more directly in these terms.
 
-Next we can pass the circuit object to a simulator or backend, for this we require an account and an associated token:
+The set of builtin gates which are internally decomposed include: `x, y, z, t, s, p(theta), u3(theta, phi, gamma), r[x, y, z](theta), ucr[x, y, z](theta)`. All of these (and a few others) should be supported by the circuit class. Lastly there are a few 'meta' gates that act as higher level abstractions of common gate sequences are the MCMT (multi-control multi-target) gate 
 
+
+
+Next we can pass the circuit object to a simulator or backend. Thes
+
+
+
+
+To load IBM account credentials (this may not be required for some of the simulators) we can:
 ```python
 IBMQ.save_account(token) # Saves an account to disk using an API token for loading later, can be done once per machine and then loaded from then on
 IBMQ.load_account() # Loads a saved account
 ```
 
-Next we may be interested in what simulators are available to us:
+Next we may be interested in what devices are available to us:
 
 ```python
 provider = IBMQ.get_provider()
@@ -68,6 +77,8 @@ Typically the 'open' backends are no larger than five qubits. The simulators can
 ```python
 provider.get_backend('ibmq_quito')
 ```
+If we do not wish to deal with the device queue we can also execute on a simulator;  
+
 
 To execute our code we create a job with a list of circuits, a backend and a number of shots.
 
@@ -75,7 +86,7 @@ To execute our code we create a job with a list of circuits, a backend and a num
 job = execute(circuit, backend, shots=1024)
 ```
 
-The job object contains our results in a dictionary where the keys are binary strings of measurement outcomes and the values are the count for that outcome.
+The job object contains our results in a dictionary where the keys are binary strings of measurement outcomes and the values are the count for that outcome. **Be aware that for mytsterious reasons qiskit count strings reverse the order of the qubits.**
 ```python
 results = job.result()
 print(results.get_counts())
@@ -86,6 +97,7 @@ Which we can plot as a histogram.
 ```python
 plot_histogram(results.get_counts())
 ```
+
 
 # 4.1.2 A Simple Compiler
 
