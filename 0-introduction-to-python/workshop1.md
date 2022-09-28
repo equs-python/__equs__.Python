@@ -1,21 +1,4 @@
-# Day 0 - Basic introduction to Python
-
-Here we introduce you to the basic usage of the Python language. We starting with basic syntax, including types, control flow, and functions. We then introduce object-oriented programming, a common paradigm in code development. With these concepts under our belt, we are ready to introduce the core package for numerical programming in Python: [NumPy](http://www.numpy.org/). We conclude with an introduction to two other important packages for scientific use: [matplotlib](https://www.matplotlib.org/) for plotting and [SciPy](https://www.scipy.org/) for advanced numerical functionality.
-
-Here's the detailed plan for this week:
-
- 1. Getting started
-  - Basic command line usage
-  - Hello Python!
-  - Control flow in Python
- 2. Basic Python programming
-  - Collections
-  - Pyobjects
-  - Python files
-  - Basic I/O in Python
-
-
-# 1. Getting started
+# 1.  Workshop 1 - Command Line, Git and Python, Getting started
 
 ## 1.1 Basic command line usage
 
@@ -76,18 +59,8 @@ Get used to the command line:
 - Once you've managed this, try to find the process ID of your terminal emulator and get it to terminate its own process. 
 - Re-open your terminal and navigate to `__equs__.python`, in here make a new directory titled 'problems'. Keep your code from today in here. (in later weeks we'll be converting this to a git repository).
 
-As ever, if you are stuck or unsure about what to do, ask sooner rather than later. 
+As ever, if you are stuck or unsure about what to do, ask sooner rather than later.
 
-
-## [Theory] What is a program?
-
-A computer is broadly defined as a device that carries out a sequence of operations with some specified timing (a programme or schedule). The core novelty that enabled modern computation was the design of a computer of sufficient complexity where a program could specify and simulate another computer. 
-
-This was achieved (though there are many ways of doing it) by storing the program being executed by the computer in the same region of memory that the computer was acting on. It was then possible for the computer to modify its own behaviour.
-
-A program is then a series of instructions that specify operations that may simulate another computer with some overhead. The memory address of the currently executing instruction is associated with an 'instruction pointer' register. Programming is providing those instructions.
-
-Given that a program may simulate another program we can also assert that given two different languages with which to execute programs that we may implement one programming language in the other. And from here we derive Python as written in C, as compiled to assembly and as executed on your computer.
 
 ## 1.2 Hello Version Control (Git)
 
@@ -122,7 +95,7 @@ account. This account allows you to store your software projects remotely
 on github. This can enable collaborate and for this particular workshop,
    can be used to demonstrate and display your knowledge.
 
-After creating an account, you can visit `https://github.com/Alan-Robertson/__equs__.Python` and `fork` the repository. This will allow you to have
+After creating an account, you can visit `https://github.com/equs-python/__equs__.Python` and `fork` the repository. This will allow you to have
 your own snapshot of the repository as part of your own account.
 
 ## 1.3 Hello Python!
@@ -132,8 +105,6 @@ Python is a high-level scripting language. It's quite flexible and has a well su
 For historical reasons currently Python 2 and 3 exist as slightly different languages, Python 2 support will end in less than a year and so it's not particularly worth going into the differences between the two except to suggest using Python 3. 
 
 Another key point is that Python is named after 'Monty Python', hence it is somewhat obligatory that any tutorial in the language include slightly too many references to 1970s British comedy. It is noted in advance that including jokes is a generally poor design choice for any real code.
-
-
 
 ### 1.3.1 Command line Interpreter
 
@@ -158,7 +129,20 @@ The regular maths operations are present (`+-/*`), as are powers: `**` and modul
 
 The up arrow key will iterate through previous commands, which is faster than typing them out.
 
-### 1.2.2 Literals and Variables
+### *[Problem - 2 Minutes] - Draw a box*
+
+Use multiple print statements to output a box to the terminal. Your program should output the following
+onto the terminal.
+
+```
++=======+
+|       |
+|       |
+|       |
++=======+
+```
+
+### 1.3.3 Literals and Variables
 
 In the above examples `1` is a literal value, in theory I cannot change what `1` is, for example the following operation is illegal: 
 ```python
@@ -306,22 +290,6 @@ Python has an interesting relationship with the notions of binary truth. Conside
 We're now posed with an object that is neither true nor false. At this point we adopt a model of "truthyness" and "falseyness", for the purposes of binary logic non-zero integers are considered to be "truthy" and hence will, when forced, evaluate to True, this is also true for non-empty strings. Conversely empty strings and the None type are considered to be "falsey" and will evaluate to false.
 
 
-## [Theory] Python's Memory Model
-
-Computers (ignoring any particularly fun architectures) are constructed with a linear memory. Entries in this memory are addressed, typically such that each byte in memory is uniquely associated with an address. Data is stored and retrieved by writing to and from these addresses and this process is conceptually encapsulated as a variable. 
-
-This model of memory, while sufficient for a programming language lacks a notion of typing; how do I determine the difference between four bytes storing floating point data, four bytes storing a string, or four bytes storing an integer? The answer is to associate with each variable some additional metadata indicating the type of the variable and containing the address of a table of instructions that resolves operations on it. We can access this metadata to observe the properties and methods of a given object using the `dir` function. This metadata also contains methods for interpreting the data in a variable in a human readable and hence printable form, which is why the `print` function acts over all types implicitly.
-
-Variable assignment in python with this meta-data entry gets somewhat more involved than other languages. Every assignment operation allocates a new region of memory and binds the name of that variable to the address of this newly allocated region. You can observe the address of each variable with the `id` function. This can be made somewhat more readable if we first `hex` the address.
-
-
-### 1.2.4 IPython
-
-At this point we're going to swap to an extended python CLI: `ipython`. Exit your python CLI using the `exit()` command and start up `ipython` instead. 
-
-If the ipython command throws an error, you may not have it installed, give a shout and someone will try to help you with the setup. If not this is a graphical and feature upgrade but does not constitute a change in how python itself performs.
-
-
 ## 1.3 Control flow in Python
 
 With our model of programs as a series of instructions in memory accessed by a particular address it follows that we can increment or set this address at will. If we increment by a variable we now have runtime programmatic control over the next sequence of instructions to execute. This is the basis of switches, loops, functions and more generally control flow.
@@ -329,6 +297,23 @@ With our model of programs as a series of instructions in memory accessed by a p
 It would be useful for Python to be more than a glorified if somewhat introspective calculator, so we need something to control the program flow. Typically these are switches (if statements) and loops (for and while). Unlike other languages blocks of code within these control statements are de-marked by indentation. Perhaps the biggest hurdle of learning to use Python is inconsistent use of tabs and spaces. To save time and effort, the correct approach according to Python is four spaces for an indent. 
 
 The start of an indented block is also indicated by a colon on the preceding line.
+
+
+## *[Problem 5 minutes] Cacluating your grade* 
+
+You are required to construct a program that will
+compute your current grade given the mark you have received
+from your semester.
+
+You are to read the mark from input and your program must output
+what grade that mark corresponds to.
+
+Given a mark of 85 or above, your program should output A
+Given a mark of 75 or above, your program should output B
+Given a mark of 65 or above, your program should output C
+Given a mark of 50 or above, your program should output D
+Given a mark below 50, your program should output F.
+
 
 
 ### 1.3.1 Switches
@@ -391,7 +376,7 @@ if (x > 5) and (x < 7):
 ## *[Problem 5 minutes] Multiplicative*   
 Write a simple chunk of Python code that determines if a number is a multiple of 13 and a multiple of 3 but not a multiple of 9. 
 
-## 1.3.2 Introduction to Loops
+## 1.4.2 Introduction to Loops
 
 Loops are a construct that repeat some section of code until a condition is fulfilled. If the condition cannot be fulfilled in a timely manner, they will persevere despite your efforts and you will probably need to intervene.
 
@@ -425,6 +410,13 @@ Getting used to Loops and Switches:
 - (Extension) If you have time left over increase this to primes up to 10000 and `import time` to use the time.time() function to test the speed of your code. If you don't know what this function does, don't forget to use `help()`.
 - Again, if you have spare time, try to improve the performance of your code!
 
+
+## *[Problem - 10 minutes] - Input Sum*
+
+Construct a program that will loop until the user specifies `Q`. In each iteration the program will ask the user
+to `input` a number. This number will be added to a running total.
+
+When `Q` is inputted, the program will output the running total and quit.
 
 ## 1.3.3 Scope
 
