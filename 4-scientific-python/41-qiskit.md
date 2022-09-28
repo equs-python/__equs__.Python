@@ -154,11 +154,10 @@ Extend your circuit generation to write a function that builds randomised benchm
 - Use scipy to fit your RB curves and calculate the average gate error rate
 - Compare the average gate error rates when SABRE is used for allocation, routing, routing and allocation and bare qiskit
 
-## 4.1.5 Measurement Error Calibration [Homework]
+## 4.1.5 Measurement Error Calibration [Extension]
 
 Measurement errors on IBM devices are state dependent. The error rates associated with measuring a 1 state are often double that of measuring a 0 state.
 - Construct a set of circuits that profiles the measurement error channel in the measurement basis (consider some limited tomography here)
 - Write a class that wraps the `results` object such that it will execute a target circuit along with the measurement error calibration circuits
 - Let your class return a modified set of counts that have applied the inverse of the measurement error channel to the bare qiskit results.
 Compare the accuracy of circuits both with and without your measurement error calibrating class.
-

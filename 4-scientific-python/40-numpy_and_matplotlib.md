@@ -136,10 +136,10 @@ Note that this is not a built-in Python type, but instead a type that Numpy defi
 ## 4.0.2 Scipy - Scientific Computing in Python
 Scipy is another set of useful libraries that contains a bunch of wrappers for optimised Fortran, C and C++ code that performs curve fitting, ODE solving and a range of other things. It compliments numpy well. As it's a grab bag the features of scipy are best demonstrated through their use. 
 
-- `scipy.optimize` : Minimisation functions, good for fitting
+- `scipy.optimize` : Minimisation functions, good for fitting functions
 - `scipy.linalg` : While numpy specialises in array notations scipy extends this to include sparse representations, `scipy.linalg.sparse` is practically the standard here.
 - `scipy.fft` : Bindings to FFT libraries
-- `scipy.interpolate` : Interpolation libraries ()
+- `scipy.interpolate` : Interpolation libraries
 - `scipy.integrate` : Integration libraries (Gaussian Quadratures are generally a good starting place)
 
 ## **** Problem [10 Minutes] Gaussian Fit ****
