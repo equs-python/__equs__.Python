@@ -15,8 +15,8 @@ Below is the preliminary workshop schedule. This schedule is not finalised yet -
 | 29-9-22 | 9am - 10:15am       | **Introduction to Python** <br> [Getting started with Python](week-0-introduction-to-python/README.md)<br>|
 | 29-9-22 | 10:30am - 12pm       | **Basic Python Programming** <br> Collections and Functions|
 | 29-9-22 | 1pm - 4pm      | **Advanced Python Programming**  <br> Functional Python and Classes|
-| 19-10-21 | 9am - 12pm     | **Collaborative Python** <br> Python Package development and deployment|
-| 26-10-21 | 1pm - 4pm     | **Scientific Python** <br> Numpy, Qiskit and Visualisation |
+| 30-9-22 | 9am - 12pm     | **Collaborative Python** <br> Python Package development and deployment|
+| 30-9-22 | 1pm - 4pm     | **Scientific Python** <br> Numpy, Qiskit and Visualisation |
 
 
 ## Preparation

@@ -10,7 +10,7 @@
 
 Guido van Rossum, the creator of the Python programming language made this very simple, yet incredibly meaningful statement above.
 
-What we take from this is that it is immensly important *how* you write your code - be it for yourself or for other people. Have you ever found yourself in a situation where you had to use a piece of code that you've written many months ago (without documentation), and puzzled over what the code does? Or even worse, have you perhaps changed an auxilirary file, or upgraded your compiler/interpreter since then and now the old code doesn't run anymore? Or have you ever worked on a project collaboratively and found it extremely difficult to make out what other people's code is doing?
+What we take from this is that it is immensely important *how* you write your code - be it for yourself or for other people. Have you ever found yourself in a situation where you had to use a piece of code that you've written many months ago (without documentation), and puzzled over what the code does? Or even worse, have you perhaps changed an auxiliary file, or upgraded your compiler/interpreter since then and now the old code doesn't run anymore? Or have you ever worked on a project collaboratively and found it extremely difficult to make out what other people's code is doing?
 
 For all of those reasons, there exist coding standards - these are a collection of good practices which - when taken to heart - make each and every one of us a better person. Here we want to give you an overview of the three main components of those standards: documentation, testing and linting. And because this is a Python workshop, we use the official [PEP8 Python style guide](https://www.python.org/dev/peps/pep-0008/).
 
