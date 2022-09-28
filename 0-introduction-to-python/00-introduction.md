@@ -89,7 +89,43 @@ A program is then a series of instructions that specify operations that may simu
 
 Given that a program may simulate another program we can also assert that given two different languages with which to execute programs that we may implement one programming language in the other. And from here we derive Python as written in C, as compiled to assembly and as executed on your computer.
 
-## 1.2 Hello Python!
+## 1.2 Hello Version Control (Git)
+
+Git is version control software that allows you to checkout and
+collaborate with software projects. It is designed to track updates to
+software projects through the use of `commit`s versions. Users can
+construct checkout and have their own version of a software project by
+`clone`ing the software repositoru.
+
+We will be introducing you to git by making this very repository
+a git repository. You will be able to clone your own version and
+`push` to your own account or just simply hold it on your own system.
+
+## 1.2.1 Checkout the tutorial
+
+You can checkout the tutorial by cloning the following repository
+`https://github.com/Alan-Robertson/__equs__.Python`. You will need to
+use the `clone` subcommand with git like so.
+
+```
+git clone https://github.com/Alan-Robertson/__equs__.Python
+```
+
+If this command is not working, it is likely you have encountered an
+issue with your platform's setup with git.
+
+
+## 1.2.2 Constructing a repository
+
+If you haven't already, please go to `github.com` and sign up for a github
+account. This account allows you to store your software projects remotely
+on github. This can enable collaborate and for this particular workshop,
+   can be used to demonstrate and display your knowledge.
+
+After creating an account, you can visit `https://github.com/Alan-Robertson/__equs__.Python` and `fork` the repository. This will allow you to have
+your own snapshot of the repository as part of your own account.
+
+## 1.3 Hello Python!
 
 Python is a high-level scripting language. It's quite flexible and has a well supported package library that allows it to do everything from scientific computing to running a twitter bot. The ease of use of Python does come at something of a trade-off in performance, however in most cases the faster code development will more than offset the extra time required to run the code
 
@@ -98,7 +134,8 @@ For historical reasons currently Python 2 and 3 exist as slightly different lang
 Another key point is that Python is named after 'Monty Python', hence it is somewhat obligatory that any tutorial in the language include slightly too many references to 1970s British comedy. It is noted in advance that including jokes is a generally poor design choice for any real code.
 
 
-### 1.2.1 Command line Interpreter
+
+### 1.3.1 Command line Interpreter
 
 Open up the python command line interpreter (CLI) with the `python` command from your terminal emulator. As Python is an interpreted language, each line is read and executed in order. Thanks to this feature, we can use a Python terminal and simply give it Python code to execute.
 
