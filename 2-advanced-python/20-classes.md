@@ -1,5 +1,6 @@
-## 5 Classes and inheritance
+## 4 Classes and inheritance
 
+### 4.1 Variables, Object functions and Scoping
 At this point you may begin to wonder what Python is really up to and how it distinguishes between and manages all these objects. Given that just about anything can be assigned to a variable, isn't an integer just a collection of function objects that act on a bit of data.
 
 Again, you would be right, and we can see this quite clearly using the `dir()` function.
@@ -47,7 +48,7 @@ Notice that the abs function takes an argument 'self'. Now try running the follo
 
 The third one fails. As you may have seen from the previous help statements, the self argument is required and hence throws an error. This `self` argument is what ties our dictionary of functions together into an object or a `class`. It allows an object to reference elements of itself and hence modify or call functions that it is associated with.
 
-### 3.3.1 Classes
+### 4.2 Classes
 
 Classes in python requires a constructor, sometimes termed an initialiser. This is a function that is called when a new instance of the object is created, for instance 
 
@@ -100,7 +101,7 @@ These sorts of trivial methods that just return an element of a class is commonl
         self.is_alive = is_alive
 ```
 
-## **** Problem [10 Minutes] ****
+### **** Problem [10 Minutes] ****
 Extend the Parrot class 
 - Write a setter to set a new 'squawk' for the parrot
 - Write a `__call__` function that makes the parrot squawk
@@ -141,7 +142,7 @@ class Parrot(Bird):
 There also exists multiple inheritance, polymorphism and several books and philosophies on the matter of Object Orientation and class hierarchies, but the general rule of thumb is do what works best for whatever it is that you're doing. 
 
 
-## **** Problem [10 Minutes] ****
+### **** Problem [10 Minutes] ****
 Finish off the bird class
 - Write getters and setters for air_speed_velocity
 - Check that your Parrots can now call the air speed velocity getters and setters 
@@ -151,7 +152,7 @@ Implement a Swallow class that inherits from Bird.
 - A laden swallow moves at half the speed of an unladen swallow. You should overload the getter for the swallow to reflect this property. 
 
 
-##  3.4 Python libraries
+### 4.3 Python libraries
 
 Here are a few useful (non-scientific) general libraries. 
 
@@ -163,7 +164,7 @@ Here are a few useful (non-scientific) general libraries.
 
 - time - All things to do with time and timing.
 
-- rand - Random numbers and their uses, may not be suitable for cryptographic randomness
+- random - Random numbers and their uses, may not be suitable for cryptographic randomness
 
 - sockets - For when you need a network socket (more on this in future days).
 
@@ -188,17 +189,17 @@ import numpy as np
 Each library also contains multiple Python files and functions, you can explicitly import one of those if you need, without including the entire library in your name-space. This is helpful when different libraries share keywords. 
 
 ```python
-import rand.random
+import random.random
 ```
 or
 ```python
-from rand import random 
+from random import random 
 ```
 
 You can also be incredibly lazy and just import everything to the global name-space:
 
 ```python
-from rand import *
+from random import *
 ```
 This may result in fiddly behaviour when two elements of the global name-space have the same name. Remembering that `globals()` is a dictionary, one of them will be overwritten, hence it's often much better to be more verbose. To be honest we're only really showing you this last one as an example of what not to do.
 

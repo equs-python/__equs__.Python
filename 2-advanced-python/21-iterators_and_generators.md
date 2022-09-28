@@ -1,8 +1,8 @@
-## 4 Iterators and Generators
+## 5 Iterators and Generators
 
 
-## 4.1 Try and Except
-
+### 5.1 Try and Except
+    
 When an error occurs, Python will throw an exception. These exceptions can be caught and handled, preventing the code from crashing.
 
 ```python
@@ -26,10 +26,10 @@ Exceptions can be manually raised using the `raise` keyword:
 raise TypeError
 ```
 
-## 4.2 Iterators And Generators
-
-An iterable is any object in python with the `__iter__` property. Iter can be invoked using the `iter` dispatch method.
-An iterator is any object in python with the `__next__` property. Next can be invoked using the `next` dispatch method.
+### 5.2 Iterators And Generators
+    
+An iterable is any object in python with the `__iter__` method. Iter can be invoked using the `iter` dispatch function.
+An iterator is any object in python with the `__next__` method. Next can be invoked using the `next` dispatch function.
 
 An iterator contains an internal state and will return one element of the state at a time, when it reaches the end it will raise a `StopIteration` exception. 
 
@@ -91,23 +91,75 @@ cc
 
 Consider the memory overhead between using a generator as compared to storing each element in a list. Consider what features you lose when using an iterator as compared to a collection. 
 
-## 4.4 List Comprehension and Generator Comprehension
 
-Casting an iterator to a list will exhaust its elements and store them within the list, for example": `list(range(10))`. Given that a for loop is already a generator expression, we can cast those to lists as well:
+### [Problem - 15 minutes] Linked List
+Implement an iterator for the `LinkedList` data structure provided below. Focus on `NodeIter` first and implement `LinkedListIter` using it.
 
-```python
-gen_exp = (j ** 2 for j in range(10))
-for i in gen_exp:
-    print(i)
+    ```python
+    class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+    def __iter__(self):
+        return NodeIter(self)
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def get_last_node(self):
+        if self.head is None:
+            return None
+            
+        # Uses NodeIter to get to the last node
+        for node in self.head:
+            if node.next is None:
+                return node
+
+    def append(self, value):
+        new_node = Node(value)
+        if self.head is None:
+            self.head = new_node
+            return
+
+        last_node = self.get_last_node()
+        last_node.next = new_node
+
+    def __iter__(self):
+        return LinkedListIter(self)
+
+class NodeIter:
+    def __init__(self, node):
+        self.node = node
+
+    # TODO: Implement me
+    def __iter__(self):
+        pass
+
+    # TODO: Implement me
+    def __next__(self):
+        pass
+        
+class LinkedListIter:
+    # TODO: Implement me
+    def __init__(self, lst):
+        pass
+
+    # TODO: Implement me
+    def __iter__(self):
+        pass
+
+    # TODO: Implement me
+    def __next__(self):
+        pass
 ```
 
-We can also cast this to a list and create a "list expression"
-```python
-list_exp = [j ** 2 for j in range(10)]
-print(list_exp)
-```
 
-## 4.5 Map, Reduce, Partial 
+
+
+
+### 5.3 Map, Filter, Reduce, Partial
 Each of these functions have an intutive understanding of their operation, however their implementation may at first look a little odd.
 
 Map is a generator that applies a function to every element of a collection: `f(g, [a, b, c, ...]) -> [g(a), g(b), g(c), ...]`.
@@ -117,6 +169,16 @@ def map(fn, collection):
     for i in collection:
         yield fn(i)
     return
+```
+
+Filter is a generator that removes all the elements in a collection that don't satisfy the predicate provided.
+```python
+def filter(pred, collection):
+  for i in collection:
+        if pred(i):
+            yield(i)
+
+filter(is_even, range(10))
 ```
 
 Zip is a generator that takes at least two iterables of the same length and returns their elements  
@@ -150,7 +212,31 @@ def partial(fn, *args, **kwargs):
 ```
 
 
-## 4.6 Anonymous Functions
+
+### 5.4 List Comprehension and Generator Comprehension
+
+Casting an iterator to a list will exhaust its elements and store them within the list, for example": `list(range(10))`. Given that a for loop is already a generator expression, we can cast those to lists as well:
+
+```python
+gen_exp = (j ** 2 for j in range(10))
+for i in gen_exp:
+    print(i)
+```
+You can also use `if` statements inside comprehensions 
+```python
+from math import exp, pi
+gen_exp  = (exp(j, pi) for j in range(10) if j % 2 == 0)
+for i in gen_exp:
+  print(i)
+```
+
+Using square brackets instead of parenthesis collects generator elements into a list for you. This is a list comprehension.
+```python
+list_exp = [j ** 2 for j in range(10)]
+print(list_exp)
+```
+
+### 5.5 Anonymous Functions
 
 Given the ubiquity of functions as objects it would be useful to be able to quickly declare functions as python objects without assigning them to a particular namespace. From this we have un-named or anonymous functions.
 
@@ -186,4 +272,3 @@ print(interpret_int(EXP(TWO)(EXP(TWO)(TWO))))
 ```
 
 Derive a new lambda expression that defines multiplication.
-
