@@ -1,6 +1,6 @@
 # Vim, Vi and Emacs
 
- Text editors with no mouse support, it is incredibly useful to know how to use at least one of these. The primary reason these editors have no mouse support is that they nearly predate the mouse. The arguments about the merits of Vi and Emacs pre-date the internet and have their own wikipedia page that may be considered suggested reading. In short emacs is considered more featured (having its own web browser, e-mail client and games and is often joked as being an operating system), while vim is more lightweight and is more ubiquitous. If learning vim, there is a dedicated `vimtutor` command that provides an in-vim, vim tutorial. 
+ Text editors with no mouse support, it is incredibly useful to know how to use at least one of these. The primary reason these editors have no mouse support is that they nearly predate the mouse. The arguments about the merits of Vi and Emacs pre-date the internet and have their own wikipedia page that may be considered suggested reading. In short emacs is considered more featured (having its own web browser, e-mail client and games and is often joked as being an operating system), while vim is more lightweight and is more ubiquitous. If learning vim, there is a dedicated `vimtutor` command that provides an in-vim, vim tutorial. An emacs tutorial can be accessed after opening emacs and then typing `CTRL-h t`.
 
 The utility of learning an in-terminal text editor is that it makes editing code remotely much easier; simply `ssh` into the machine, crack open your text editor and get going! Both of these editors are fully scripted and are extendable with plugins in much the same way as anything else on this list. They also have three to four decades worth of support, documentation and guidance when compared to the other options. 
 
@@ -11,60 +11,51 @@ vim
 emacs
 ```
 
-If they're not installed then 
-
-# Atom
-
-An open source "hackable" IDE written in the electron framework and developed by Github. As github is now owned by Microsoft this text editor is in competition with their other quasi-open source electron based IDE VScode. As a result Atom support seems to be in the process of quietly winding down. As it runs in electron it uses an entire chromium browser instance to run a text editor and may be quite heavy on the RAM consumption.
-
-
-That said it's still a usable text editor and doesn't have the same strings attached as some of the others listed here.
-
-Once installed, you can launch it from your terminal with the `atom` command. 
+# VSCode
+A quasi open source text editor written in the electron framework and developed by Microsoft. It's currently the most popular editor primarily to being pushed by Microsoft, integration with
+Typescript and the ecosystem that's grown around it. Once installed, you can launch it from your terminal with the `code` command.
 
 ## Installation
 
+Go to [https://code.visualstudio.com/download](https://code.visualstudio.com/download) and download the appropriate installer for your operating system.
+
 ### Windows
-An installer can be found (here)[https://atom.io/]. 
-Alternatively you can install atom using chocolatey.
 
-```
-choco install atom
-```
 
-For more details on using chocolatey, see the end of the page.
+(https://code.visualstudio.com/docs/setup/windows#_installation)[https://code.visualstudio.com/docs/setup/windows#_installation]
+
+Download and execute the appropriate `.exe` file, and simply follow the installation instructions.
 
 ### Mac
-A .rpm file can be found (here)[https://atom.io/].
-Alternatively, you can install atom using brew.
 
-```
-brew cask install atom
-```
+[https://code.visualstudio.com/docs/setup/mac](https://code.visualstudio.com/docs/setup/mac)
 
-For more details on using brew, see the end of the page.
+1. Download Visual Studio Code for macOS.
+2. Double-click on the downloaded archive to expand the contents.
+3. Drag Visual Studio Code.app to the Applications folder, making it available in the Launchpad.
+4. Add VS Code to your Dock by right-clicking on the icon and choosing Options, Keep in Dock.
+
 
 ### Linux
 
-If you're not using ubuntu Atom may already exist in your distro's package manager, otherwise we can add the atom ppa and install it from there.
+[https://code.visualstudio.com/docs/setup/linux](https://code.visualstudio.com/docs/setup/linux)
 
+Download the appropriate installer. For debian based system, navigate to the Downloads directory and run:
+
+```bash
+$ sudo dpkg -i <vscode_installer>.deb
 ```
-sudo apt update
-sudo apt install software-properties-common apt-transport-https wget
-wget -q https://packagecloud.io/AtomEditor/atom/gpgkey -O- | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main"
-sudo apt install atom
-``` 
 
-If you prefer a .deb file can be found (here)[https://atom.io/] or if you're more comfortable building from source (or you aren't running a debian derived distro) you can build from source from (here)[https://github.com/atom/atom/blob/master/docs/build-instructions/linux.md].
+And replace the name in the angled brackets by the actual name of the installer.
 
 ## Git Integration
 
-Go to settings and install packages. From there search for "git-plus" and install it.
+VS Code should take care of this automatically. Let us know if you need a hand.
 
 ## Linting
 
-Go to settings and install packages. From there search for "linter-pylint" and install it.
+Install the Python extention for this. In the sidebar on the left, click on the `Extensions` symbol and install the `ms-python.python` extension. Note that in order for this to work you need to have a working Python environment set up with a linting module. We recomment `pylint` for that, which is shipped per default with the Anaconda distribution.
+
 
 # Sublime Text
 
@@ -121,52 +112,3 @@ Open the command palette and go to `Package Control: Install Package` (typing wi
 Open the command palette and go to `Package Control: Install Package` (typing will search and auto-complete). A second list will appear, this time displaying available packages. Find and select the `Pylinter` package.
 
  
-# VSCode
-A quasi open source text editor written in the electron framework and developed by Microsoft. It's currently somewhat popular but that may be due to a much larger marketing budget rather than any strict novelty. There are concerns that features of this text editor may be paywalled (and indeed there are already annoucments for subscription only features). As it runs in electron it uses an entire chromium browser instance to run a text editor and may be quite heavy on the RAM consumption.
-
-Once installed, you can launch it from your terminal with the `code` command. 
-
-## Installation
-
-Go to [https://code.visualstudio.com/download](https://code.visualstudio.com/download) and download the appropriate installer for your operating system.
-
-### Windows
-
-
-(https://code.visualstudio.com/docs/setup/windows#_installation)[https://code.visualstudio.com/docs/setup/windows#_installation]
-
-Download and execute the appropriate `.exe` file, and simply follow the installation instructions.
-
-### Mac
-
-[https://code.visualstudio.com/docs/setup/mac](https://code.visualstudio.com/docs/setup/mac)
-
-1. Download Visual Studio Code for macOS.
-2. Double-click on the downloaded archive to expand the contents.
-3. Drag Visual Studio Code.app to the Applications folder, making it available in the Launchpad.
-4. Add VS Code to your Dock by right-clicking on the icon and choosing Options, Keep in Dock.
-
-
-### Linux
-
-[https://code.visualstudio.com/docs/setup/linux](https://code.visualstudio.com/docs/setup/linux)
-
-Download the appropriate installer. For debian based system, navigate to the Downloads directory and run:
-
-```bash
-$ sudo dpkg -i <vscode_installer>.deb
-```
-
-And replace the name in the angled brackets by the actual name of the installer.
-
-## Git Integration
-
-VS Code should take care of this automatically. Let us know if you need a hand.
-
-## Linting
-
-Install the Python extention for this. In the sidebar on the left, click on the `Extensions` symbol and install the `ms-python.python` extension. Note that in order for this to work you need to have a working Python environment set up with a linting module. We recomment `pylint` for that, which is shipped per default with the Anaconda distribution.
-
-
-
-
