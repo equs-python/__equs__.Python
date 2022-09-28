@@ -129,9 +129,9 @@ Note that this is not a built-in Python type, but instead a type that Numpy defi
 - Create the Pauli matrices using Numpy
 - Verify that the matrices are unitary
 - Write a function that calculates the commutation relations between two numpy arrays
-- [Extension] do the same for the Clifford generators + T
+- Write a function that performs a tensor product over strings of Pauli operators
 
-**Hint:** Take a look at the `dot`, `tensordot` and/or `kron` operation in Numpy.
+**Hint:** Take a look at the `dot`, `tensordot` and/or `kron` operation in Numpy. Consider how kron and reduce can be used together.
 
 ## 4.0.1 Matplotlib - Visualising data in Python
 
