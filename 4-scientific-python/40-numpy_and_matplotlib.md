@@ -91,7 +91,7 @@ What are the outputs of the following slicing operations? Try and have a guess f
 - `x[:1]`
 - `x[1::2]`
 
-## ****
+## 4.0.1 More Numpy
 
 We can also modify the shape of an array by calling the `reshape` method:
 
@@ -124,7 +124,7 @@ dtype('float64')
 Note that this is not a built-in Python type, but instead a type that Numpy defines. This is because Numpy is largely written in C and the `dtype` of an array resembles the equivalent type in C.
 
 
-## **** Problem [10 Minutes] ****
+## **** Problem [10 Minutes] Numpy Pauli ****
 
 - Create the Pauli matrices using Numpy
 - Verify that the matrices are unitary
@@ -133,7 +133,22 @@ Note that this is not a built-in Python type, but instead a type that Numpy defi
 
 **Hint:** Take a look at the `dot`, `tensordot` and/or `kron` operation in Numpy. Consider how kron and reduce can be used together.
 
-## 4.0.1 Matplotlib - Visualising data in Python
+## 4.0.2 Scipy - Scientific Computing in Python
+Scipy is another set of useful libraries that contains a bunch of wrappers for optimised Fortran, C and C++ code that performs curve fitting, ODE solving and a range of other things. It compliments numpy well. As it's a grab bag the features of scipy are best demonstrated through their use. 
+
+- `scipy.optimize` : Minimisation functions, good for fitting
+- `scipy.linalg` : While numpy specialises in array notations scipy extends this to include sparse representations, `scipy.linalg.sparse` is practically the standard here.
+- `scipy.fft` : Bindings to FFT libraries
+- `scipy.interpolate` : Interpolation libraries ()
+- `scipy.integrate` : Integration libraries (Gaussian Quadratures are generally a good starting place)
+
+## **** Problem [10 Minutes] Gaussian Fit ****
+Construct a function that generates random Gaussian functions in the range [0, 1] and that peak within this range, these Gaussians may be classes with properties or partial functions with keyword arguments.
+- Using `scipy.optimize` write a fitter that calculates the parameters of the Gaussian by sampling the function. Have a look at some of the options for constrained minimisation within scipy.
+- Using `scipy.integrate` Integrate over the original Gaussian and your fit. Compare this to a mathematical evaluation of the integral of your Gaussian over the range [0, 1]. You can find the error function in either `numpy.erf` or `scipy.special.erf`.
+- [Extension] Extend the above to a multi-Gaussian generator and fitter for an arbitrary and unknown number of Gaussians, you may want to consider moving your generator to be at least a second order function.
+
+## 4.0.3 Matplotlib - Visualising data in Python
 
 Matplotlib is a matlab-like interface for plotting in Python. 
 
@@ -204,6 +219,13 @@ These styles are all fully customisable and there is a near endless amount of ae
 
 Matplotlib also does bar plots with `plt.bar` and can do images and two dimensional plots with `imshow`. There are a range of other plots that cover most applications.
 
+
+## **** Problem [10 Minutes] Fitter **** 
+- Plot the output of your original Gaussian and your fitted Gaussian from the prior problem
+- Again momentarily pretending that the Gaussian represents a normalised control pulse, produce a two dimensional image plot of the population of qubits in the 1 state as you vary the width and amplitude of your Gaussian.
+
+## 4.0.4 More Plotting
+
 3D plots require the mplot3d package from `mpl_toolkits`.
 
 ```python
@@ -238,7 +260,7 @@ plot.plot_surface(x_coords, y_coords, z_coords)
 ```
 
 
-## **** Problem: Make a pretty plot ($\infty$ minutes) **** 
+## **** Problem ($\infty$ minutes) Make a pretty plot  **** 
 - Use your hailstone function to plot the length of each sequence for all numbers in some range.
 - Format your plot nicely enough that somebody else approves of it
 - Nitpick someone else's plot and see if they can find a way to implement your changes
